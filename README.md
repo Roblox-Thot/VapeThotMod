@@ -1,6 +1,13 @@
 # VapeThotMod
 New version of the Thot Mod
 
+# LoadString
+```lua
+--[[
+    Vape Thot Mod By @Roblox-Thot (Roblox Thot#0001)
+]]--
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()
+```
 
 # Additions 
 * Fixed auto launching on game teleport
