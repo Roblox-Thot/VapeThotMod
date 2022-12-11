@@ -10,7 +10,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 ```
 
 # Additions 
-* Fixed auto launching on game teleport
+* Fixed auto launching on game teleport ([Submited a PR](https://github.com/7GrandDadPGN/VapeV4ForRoblox/pull/86))
 * Added AnimatedCapes
 * Added Force First Person
 
