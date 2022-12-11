@@ -122,7 +122,7 @@ runcode(function()
 	local animCapebox = {["Value"] = ""}
     local animCape = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
         ["Name"] = "AnimatedCapeBeta",
-        ["HoverText"] = "You will need a video file in assets named \"VapeCape.webm\"",
+        ["HoverText"] = "Make a cape that is animated",
         ["Function"] = function(callback)
             if callback then
 				local customlink = animCapebox["Value"]:split("/")

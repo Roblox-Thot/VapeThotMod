@@ -169,6 +169,34 @@ local function getcustomassetfunc(path)
 	return getasset(path) 
 end
 
+local function getcustomthotassetfunc(path)
+	if not betterisfile(path) then
+		spawn(function()
+			local textlabel = Instance.new("TextLabel")
+			textlabel.Size = UDim2.new(1, 0, 0, 36)
+			textlabel.Text = "Downloading "..path
+			textlabel.BackgroundTransparency = 1
+			textlabel.TextStrokeTransparency = 0
+			textlabel.TextSize = 30
+			textlabel.Font = Enum.Font.SourceSans
+			textlabel.TextColor3 = Color3.new(1, 1, 1)
+			textlabel.Position = UDim2.new(0, 0, 0, -36)
+			textlabel.Parent = GuiLibrary["MainGui"]
+			repeat task.wait() until betterisfile(path)
+			textlabel:Remove()
+		end)
+		local req = requestfunc({
+			Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..path:gsub("vape/assets", "assets"),
+			Method = "GET"
+		})
+		writefile(path, req.Body)
+	end
+	return getasset(path) 
+end
+
+--Download the animated cape
+getcustomthotassetfunc("vape/assets/VapeCape.webm")
+
 shared.GuiLibrary = GuiLibrary
 local workspace = game:GetService("Workspace")
 local cam = workspace.CurrentCamera
