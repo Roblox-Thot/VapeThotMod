@@ -1691,8 +1691,8 @@ GUISettings.CreateSlider({
 local GUIbind = GUI.CreateGUIBind()
 
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
-    if State == Enum.TeleportState.Started and not shared.VapeIndependent then
-		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() end'
+    if State == Enum.TeleportState.RequestedFromServer and not shared.VapeIndependent then
+		local teleportstr = 'shared.VapeExecuted = false shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() end'
 		if shared.VapeDeveloper then
 			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
 		end
@@ -1880,7 +1880,7 @@ else
 		end	
 	elseif shared.ThotDeveloper then
 		if pcall(function() readfile("vape/CustomModules/"..game.PlaceId..".lua") end) then
-			loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
+			loadstring(readfile("vape/CustomThotModules/"..game.PlaceId..".lua"))()
 		end	
 	end
 	GuiLibrary["LoadSettings"](shared.VapeCustomProfile)
