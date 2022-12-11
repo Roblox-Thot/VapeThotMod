@@ -137,6 +137,8 @@ checkpublicrepo = function(id)
 	}) end)
 	if not suc then
 		return checkpublicvaperepo(id)
+	elseif req.StatusCode == 404 then
+		return checkpublicvaperepo(id)
 	end
 	if req.StatusCode == 200 then
 		return req.Body
