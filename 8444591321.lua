@@ -122,13 +122,14 @@ runcode(function()
 	local animCapebox = {["Value"] = ""}
     local animCape = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
         ["Name"] = "AnimatedCapeBeta",
+        ["HoverText"] = "You will need a video file in assets named \"VapeCape.webm\"",
         ["Function"] = function(callback)
             if callback then
 				local customlink = animCapebox["Value"]:split("/")
 				local successfulcustom = false
 				if #customlink > 0 and animCapebox["Value"]:len() > 3 then
 					if (not betterisfile("vape/assets/"..customlink[#customlink])) then 
-						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], game:HttpGet(animCapebox["Value"], true)) end)
+						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], requestfunc({Url=animCapebox["Value"],Method="GET"}).Body) end)
 						if not suc then 
 							createwarning("Cape", "file failed to download : "..res, 5)
 						end
@@ -145,7 +146,7 @@ runcode(function()
                 if lplr.Character then
                     task.spawn(function()
                         pcall(function() 
-                            AnimCape(lplr.Character, getasset(successfulcustom and customlink[#customlink] or "vape/assets/VapeCape.webm"), animCapeVolume["Value"])
+                            AnimCape(lplr.Character, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), animCapeVolume["Value"])
                         end)
                     end)
                 end
@@ -201,6 +202,7 @@ runcode(function()
 			else
 				lplr.CameraMode = "Classic"
 			end
-		end
+		end,
+        ["HoverText"] = "Locks your camera to first person"
 	}) 
 end)
