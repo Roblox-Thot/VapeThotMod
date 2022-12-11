@@ -1,30 +1,8 @@
 local GuiLibrary = shared.GuiLibrary
-local blockraycast = RaycastParams.new()
-blockraycast.FilterType = Enum.RaycastFilterType.Whitelist
 local players = game:GetService("Players")
-local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
-local textservice = game:GetService("TextService")
-local repstorage = game:GetService("ReplicatedStorage")
 local lplr = players.LocalPlayer
-local workspace = game:GetService("Workspace")
-local lighting = game:GetService("Lighting")
-local cam = workspace.CurrentCamera
-local chatconnection
-local modules = {}
-local targetinfo = shared.VapeTargetInfo
-local uis = game:GetService("UserInputService")
-local mouse = lplr:GetMouse()
-local remotes = {}
-local bedwars = {}
-local inventories = {}
-local lagbackevent = Instance.new("BindableEvent")
-local vec3 = Vector3.new
-local cfnew = CFrame.new
-local entity = shared.vapeentity
-local uninjectflag = false
-local matchstatetick = 0
-local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
-local teleportfunc
+local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
+
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
 local checkpublicrepo
@@ -120,38 +98,9 @@ local function AnimCape(char, texture, vol)
 	until not p or p.Parent ~= torso.Parent
 end
 
-local cachedassets = {}
-local function getcustomassetfunc(path)
-	if not betterisfile(path) then
-		task.spawn(function()
-			local textlabel = Instance.new("TextLabel")
-			textlabel.Size = UDim2.new(1, 0, 0, 36)
-			textlabel.Text = "Downloading "..path
-			textlabel.BackgroundTransparency = 1
-			textlabel.TextStrokeTransparency = 0
-			textlabel.TextSize = 30
-			textlabel.Font = Enum.Font.SourceSans
-			textlabel.TextColor3 = Color3.new(1, 1, 1)
-			textlabel.Position = UDim2.new(0, 0, 0, -36)
-			textlabel.Parent = GuiLibrary["MainGui"]
-			repeat task.wait() until betterisfile(path)
-			textlabel:Remove()
-		end)
-		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
-			Method = "GET"
-		})
-		writefile(path, req.Body)
-	end
-	if cachedassets[path] == nil then
-		cachedassets[path] = getasset(path) 
-	end
-	return cachedassets[path]
-end
-
 local function runcode(func)
 	func()
-end	
+end
 	
 local function createwarning(title, text, delay)
 	local suc, res = pcall(function()
@@ -162,56 +111,9 @@ local function createwarning(title, text, delay)
 	return (suc and res)
 end
 
-local function targetCheck(plr)
-	return plr and plr.Humanoid and plr.Humanoid.Health > 0 and plr.Character:FindFirstChild("ForceField") == nil
-end
-
-
-local function targetCheck(plr)
-	return plr and plr.Humanoid and plr.Humanoid.Health > 0 and plr.Character:FindFirstChild("ForceField") == nil
-end
-
-local function isAliveOld(plr, alivecheck)
-	if plr then
-		return plr and plr.Character and plr.Character.Parent ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild("Head") and plr.Character:FindFirstChild("Humanoid")
-	end
-	return entity.isAlive
-end
-
-
-
 local betterisfile = function(file)
 	local suc, res = pcall(function() return readfile(file) end)
 	return suc and res ~= nil
-end
-
-local cachedassets = {}
-local function getcustomassetfunc(path)
-	if not betterisfile(path) then
-		task.spawn(function()
-			local textlabel = Instance.new("TextLabel")
-			textlabel.Size = UDim2.new(1, 0, 0, 36)
-			textlabel.Text = "Downloading "..path
-			textlabel.BackgroundTransparency = 1
-			textlabel.TextStrokeTransparency = 0
-			textlabel.TextSize = 30
-			textlabel.Font = Enum.Font.SourceSans
-			textlabel.TextColor3 = Color3.new(1, 1, 1)
-			textlabel.Position = UDim2.new(0, 0, 0, -36)
-			textlabel.Parent = GuiLibrary["MainGui"]
-			repeat task.wait() until betterisfile(path)
-			textlabel:Remove()
-		end)
-		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
-			Method = "GET"
-		})
-		writefile(path, req.Body)
-	end
-	if cachedassets[path] == nil then
-		cachedassets[path] = getasset(path) 
-	end
-	return cachedassets[path]
 end
 
 runcode(function()
@@ -225,18 +127,18 @@ runcode(function()
 				local customlink = animCapebox["Value"]:split("/")
 				local successfulcustom = false
 				if #customlink > 0 and animCapebox["Value"]:len() > 3 then
-					-- if (not betterisfile("vape/assets/"..customlink[#customlink])) then 
-					-- 	local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], game:HttpGet(animCapebox["Value"], true)) end)
-					-- 	if not suc then 
-					-- 		createwarning("Cape", "file failed to download : "..res, 5)
-					-- 	end
-					-- end
+					if (not betterisfile("vape/assets/"..customlink[#customlink])) then 
+						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], game:HttpGet(animCapebox["Value"], true)) end)
+						if not suc then 
+							createwarning("Cape", "file failed to download : "..res, 5)
+						end
+					end
 					successfulcustom = true
 				end
                 vapecapeconnection = lplr.CharacterAdded:connect(function(char)
                     task.spawn(function()
                         pcall(function() 
-                            AnimCape(char, getasset(successfulcustom and customlink[#customlink] or "vape/assets/VapeCape.webm"), animCapeVolume["Value"])
+                            AnimCape(char, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), animCapeVolume["Value"])
                         end)
                     end)
                 end)
@@ -277,7 +179,7 @@ runcode(function()
 	animCapeVolume = animCape.CreateSlider({
 		["Name"] = "Volume",
 		["Function"] = function(val) 
-			if enter then 
+			if val then 
 				if animCape["Enabled"] then 
 					animCape["ToggleButton"](false)
 					animCape["ToggleButton"](false)
@@ -291,7 +193,7 @@ runcode(function()
 end)
 
 runcode(function()
-	local FPS = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+	GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "Force FPS", 
 		["Function"] = function(callback)
 			if callback then
