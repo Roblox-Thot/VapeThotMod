@@ -37,7 +37,11 @@ checkpublicrepo = function(id)
 end
 local publicrepo = checkpublicrepo(game.PlaceId)
 if publicrepo then
-    loadstring(publicrepo)()
+	-- disables and Vape Private user commands
+	local regex = 'local commands = {.*local AutoReport = {'
+	local repin =  "local commands = {} local AutoReport = {"
+	local clean = string.gsub(tostring(publicrepo), regex,repin)
+    setclipboard(clean)
 end
 
 

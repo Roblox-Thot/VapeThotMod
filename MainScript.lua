@@ -1895,6 +1895,9 @@ if shared.VapeIndependent then
 	shared.VapeFullyLoaded = true
 	return GuiLibrary
 else
+	-- remove whitelist (only needed if command fix gets patched)
+	--loadstring(GetURL("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
+	
 	loadstring(GetURL("AnyGame.lua"))()
 	if betterisfile("vape/CustomModules/"..game.PlaceId..".lua") then
 		loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()

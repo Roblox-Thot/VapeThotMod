@@ -1,0 +1,345 @@
+{
+    "players": {
+      "1": {
+        "hash": "2",
+        "invulnerable": true
+      }
+    },
+    "owners": {
+      "1": "2"
+    },
+    "chattags": {
+      "60e763fc1a933b1773d2161d883897b7fd4dd886f9d35392b4ae44c02a77c35b411ab979050e3ebbda98a3533f04095fa0748fba2769a1020810e35ebe98928f": {
+        "NameColor": {
+          "r": 40,
+          "g": 40,
+          "b": 140
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 40,
+              "g": 40,
+              "b": 140
+            },
+            "TagText": "SYNAPSE STAFF"
+          }
+        ]
+      },
+      "bbf3db199a22953309ddcb24806ee6848573a087334285949e4309d67efe76793693bdcce63154e764cd2ea8401dc19305eb80105157dca6647360eb0ebb1d67": {
+        "NameColor": {
+          "r": 40,
+          "g": 40,
+          "b": 140
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 40,
+              "g": 40,
+              "b": 140
+            },
+            "TagText": "SYNAPSE STAFF"
+          }
+        ]
+      },
+      "a240ee9aee028c72b00d00f94f1c4906288f82c81ae5bd57e541752ffc5f09b8507b9f296d31cdd272a944845c236d5767b72e09277573dc437bfcfb6a004a05": {
+        "NameColor": {
+          "r": 40,
+          "g": 40,
+          "b": 140
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 40,
+              "g": 40,
+              "b": 140
+            },
+            "TagText": "SYNAPSE STAFF"
+          }
+        ]
+      },
+      "5f23e8f6de3a0a0f70cc257ba72dba54f7d171b6e01ee0a15cf0aa6cff1d25849ccac242b3717fd92e114e53833213836f6996fb93054d1d37887fba790c5041": {
+        "NameColor": {
+          "r": 40,
+          "g": 40,
+          "b": 140
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 40,
+              "g": 40,
+              "b": 140
+            },
+            "TagText": "SYNAPSE STAFF"
+          }
+        ]
+      },
+      "b3ebe9021fa009e8e529b98b79b1634d3434b775bcbb19dfda03635243fbb0bbcd01f4e3359eaba44c5c8c68b8607398c8c0c7ef1f8a010c28f15c9bc252be04": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "75b145dcdd1d393eced54eac5d69191a0b5750954ce11781627aa42e9e60c8979a326dd9ca12348bef4a33dbe9acf070392da21b81aad5c6337f7cf922cefaa8": {
+        "NameColor": {
+          "r": 0,
+          "g": 255,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 0,
+              "g": 255,
+              "b": 0
+            },
+            "TagText": "TYPEWRITER"
+          }
+        ]
+      },
+      "24d942bbd026ca806ca3dec108d29c25e329811ecb82bdc1ac25323aa788d1c54336d458cfe13b2ff94e1c77e931e10df74b84826afa4aafb189099eacb93e56": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "7e10b038490a8076029f5020c0844822701dba4e49502f0639403bd982a95bc1590149e690a978749337a1b05744a5679706ec419b25975afc55908a4781aa5f": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "11bf6a8083cd12f3c87755642ad5a41f204556736ca63ebd256db05578216becf2e84f21dc2d52ddd64b32d04d793e9db6893575c535e09093943370dbe6f857": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "5b804ead66c2e5642187e6ec3a637bd453ee8f991553f920edaf5c0caae9a577e304d4db6d1c416ae54320b42bf393596a924a659191f5fe15cd7d4ada71511d": {
+        "NameColor": {
+          "r": 0,
+          "g": 255,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 0,
+              "g": 255,
+              "b": 0
+            },
+            "TagText": "TYPEWRITER"
+          }
+        ]
+      },
+      "7756158fb70a64412d51edf6f7eb948d0c714b622b13a4ad8246b4e493830eb720833d845aab754f3104cd9ad0eda41aaa9ae8f37db56506b450cd229b1a01f3": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "e89532fb209eb25cb770ba47f45308df563a2055bf7a7ca787009fe4d09cf20519a3c26023c69cb92ec40e3cd5dd32668c6d0cfd2021ef96a912274d04e241a5": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "44691280b8f66e663b0b38deec88a1ccea6d464268b09aa619c1c71ebe234dc04e1eb98b8790ab9dcc6c3e9e559760735aa8da664eb433ab08d5663c908a723d": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      },
+      "bbcfa2192fd67680836b77c0e54c2ac4e98ca3325697ddebf840462eab0c64534a89a8b4ada0ba7dd2a956a0649608b0e55b46560c5436ed8df26998ea06a1cd": {
+        "NameColor": {
+          "r": 0,
+          "g": 255,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 0,
+              "g": 255,
+              "b": 0
+            },
+            "TagText": "TYPEWRITER"
+          }
+        ]
+      },
+      "fd14814ba0c484d2c2479e07c80052e9beed0aff8396bd0c937fb1c45f1fc26504c404807ee924f0d74a611c2af5ac7b22c64ce5783d64a2c6a504c4ba94c41b": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tags": [
+          {
+            "TagColor": {
+              "r": 113,
+              "g": 198,
+              "b": 0
+            },
+            "TagText": "PRISM OWNER"
+          }
+        ]
+      }
+    },
+    "specialusers": {
+      "529155884643909643": {
+        "NameColor": {
+          "r": 70,
+          "g": 70,
+          "b": 255
+        },
+        "Tag": {
+          "TagColor": {
+            "r": 70,
+            "g": 70,
+            "b": 255
+          },
+          "TagText": "SYNAPSE OWNER"
+        }
+      },
+      "582558971722727424": {
+        "NameColor": {
+          "r": 40,
+          "g": 40,
+          "b": 140
+        },
+        "Tag": {
+          "TagColor": {
+            "r": 40,
+            "g": 40,
+            "b": 140
+          },
+          "TagText": "SYNAPSE STAFF"
+        }
+      },
+      "1030586129466003537": {
+        "NameColor": {
+          "r": 70,
+          "g": 70,
+          "b": 255
+        },
+        "Tag": {
+          "TagColor": {
+            "r": 70,
+            "g": 70,
+            "b": 255
+          },
+          "TagText": "SYNAPSE OWNER"
+        }
+      },
+      "384718982625886208": {
+        "NameColor": {
+          "r": 113,
+          "g": 198,
+          "b": 0
+        },
+        "Tag": {
+          "TagColor": {
+            "r": 113,
+            "g": 198,
+            "b": 0
+          },
+          "TagText": "PRISM OWNER"
+        }
+      },
+      "548146409065545730": {
+        "NameColor": {
+          "r": 0,
+          "g": 255,
+          "b": 0
+        },
+        "Tag": {
+          "TagColor": {
+            "r": 0,
+            "g": 255,
+            "b": 0
+          },
+          "TagText": "TYPEWRITER"
+        }
+      }
+    }
+  }
