@@ -18,5 +18,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 - Nothing if I don't have a mod it will load normal Vape™️
 
 # ToDo
-[ ] Remove VP whitelist
+[ ] Remove VP whitelist (not tested)
 * nothing yet I have no other ideas at this time.

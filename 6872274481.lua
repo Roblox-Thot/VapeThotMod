@@ -39,9 +39,14 @@ local publicrepo = checkpublicrepo(game.PlaceId)
 if publicrepo then
 	-- disables and Vape Private user commands
 	local regex = 'local commands = {.*local AutoReport = {'
-	local repin =  "local commands = {} local AutoReport = {"
+	local repin =  "local commands = {} local c = {"
 	local clean = string.gsub(tostring(publicrepo), regex,repin)
-    setclipboard(clean)
+	
+	-- attempls to give lplr admin (CLIENT SIDED)
+	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
+	local Arepin =  "true"
+	local admind = string.gsub(tostring(clean), Aregex,Arepin)
+    setclipboard(admind)
 end
 
 
