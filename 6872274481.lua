@@ -8,7 +8,7 @@ local checkpublicreponum = 0
 local checkpublicrepo
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/".. id ..".lua",
+		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/6872274481.lua",
 		Method = "GET"
 	}) end)
 	if not suc then
@@ -46,7 +46,7 @@ if publicrepo then
 	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
 	local Arepin =  "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
-    setclipboard(admind)
+    loadstring(admind)()
 end
 
 
