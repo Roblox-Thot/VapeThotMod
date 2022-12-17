@@ -56,8 +56,8 @@ if not (getasset and requestfunc and queueteleport) then
 end
 
 if shared.VapeExecuted then
-	error("Vape Already Injected")
-	return
+	error("Vape Was Already Injected Reloading")
+	shared.GuiLibrary["SelfDestructEvent"]
 else
 	shared.VapeExecuted = true
 end
