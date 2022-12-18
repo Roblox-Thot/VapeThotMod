@@ -48,10 +48,18 @@ if publicrepo then
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
 	
 	-- attempls to give lplr admin (CLIENT SIDED)
-	local Kregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
+	local Kregex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
 	local Krepin = "false"
 	local Fclean = string.gsub(tostring(admind), Kregex,Krepin)
-    loadstring(Fclean)()
+	
+	-- attemps to remove private invulnerable tags
+	local Iregex = 'private.invulnerable'
+	local Irepin = "false"
+	local Iclean = string.gsub(tostring(admind), Kregex,Krepin)
+	local Iregex = 'owner.invulnerable'
+	local Irepin = "false"
+	local Iclean = string.gsub(tostring(Iclean), Kregex,Krepin)
+    loadstring(Iclean)()
 end
 
 
