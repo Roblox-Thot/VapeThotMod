@@ -55,6 +55,11 @@ if publicrepo then
 	local Krepin = "false"
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
+	-- removes bedwarsdata kicks
+	local Kregex = '%.%.clients%.ChatStrings2%.vape'
+	local Krepin = "clients.ChatStrings2.rektsky"
+	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
+	
 	-- attemps to remove private invulnerable tags
 	local Iregex = 'private.invulnerable'
 	local Irepin = "false"
