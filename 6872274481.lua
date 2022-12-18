@@ -104,7 +104,7 @@ local function AnimCape(char, texture, vol)
 		repeat wait(1/44)
 			data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
 			if data-0.51 <= 0 then 
-				VF.Visible = false
+				--VF.Visible = false
 			else 
 				VF.Visible = true
 			end
