@@ -79,7 +79,7 @@ local function AnimCape(char, texture, vol)
 		torso = char:WaitForChild("Torso")
 	end
 	local p = Instance.new("Part", torso.Parent)
-	p.Name = "Cape"
+	p.Name = "AnimCape"
 	p.Anchored = false
 	p.CanCollide = false
 	p.TopSurface = 0
@@ -176,7 +176,7 @@ runcode(function()
 					if (not betterisfile("vape/assets/"..customlink[#customlink])) then 
 						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], requestfunc({Url=animCapebox["Value"],Method="GET"}).Body) end)
 						if not suc then 
-							createwarning("Cape", "file failed to download : "..res, 5)
+							createwarning("AnimCape", "file failed to download : "..res, 5)
 						end
 					end
 					successfulcustom = true
@@ -201,7 +201,7 @@ runcode(function()
                 end
                 if lplr.Character then
                     for i,v in pairs(lplr.Character:GetDescendants()) do
-                        if v.Name == "Cape" then
+                        if v.Name == "AnimCape" then
                             v:Remove()
                         end
                     end
