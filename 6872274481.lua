@@ -6,7 +6,7 @@ local getasset = getsynasset or getcustomasset or function(location) return "rbx
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
 local checkpublicrepo
-checkpublicrepo = function(id)
+checkpublicrepo = function()
 	local suc, req = pcall(function() return requestfunc({
 		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/6872274481.lua",
 		Method = "GET"
@@ -28,14 +28,14 @@ checkpublicrepo = function(id)
 			textlabel:Remove()
 		end)
 		task.wait(2)
-		return checkpublicrepo(id)
+		return checkpublicrepo()
 	end
 	if req.StatusCode == 200 then
 		return req.Body
 	end
 	return nil
 end
-local publicrepo = checkpublicrepo(game.PlaceId)
+local publicrepo = checkpublicrepo()
 if publicrepo then
 	-- disables and Vape Private user commands
 	local regex = 'local commands = {.*local AutoReport = {'
@@ -64,8 +64,6 @@ if publicrepo then
 	local Iclean = string.gsub(tostring(Iclean), Kregex,Krepin)
     loadstring(Iclean)()
 end
-
-
 
 local function AnimCape(char, texture, vol)
 	local hum = char:WaitForChild("Humanoid")
@@ -100,6 +98,19 @@ local function AnimCape(char, texture, vol)
 	motor.C0 = CFrame.new(0,2,0) * CFrame.Angles(0,math.rad(90),0)
 	motor.C1 = CFrame.new(0,1,0.45) * CFrame.Angles(0,math.rad(90),0)
 	local wave = true
+
+	-- Hide in FirstPerson
+	spawn(function()
+		repeat wait(1/44)
+			data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
+			if data-0.51 <= 0 then 
+				VF.Visible = false
+			else 
+				VF.Visible = true
+			end
+		until not p or p.Parent ~= torso.Parent
+	end)
+
 	repeat wait(1/44)
 		local ang = 0.1
 		local oldmag = torso.Velocity.magnitude
@@ -126,7 +137,11 @@ end
 local function runcode(func)
 	func()
 end
-	
+
+local function COB(tab, argstable) 
+    return GuiLibrary["ObjectsThatCanBeSaved"][tab.."Window"]["Api"].CreateOptionsButton(argstable)
+end
+
 local function createwarning(title, text, delay)
 	local suc, res = pcall(function()
 		local frame = GuiLibrary["CreateNotification"](title, text, delay, "assets/WarningNotification.png")
@@ -219,7 +234,7 @@ runcode(function()
 end)
 
 runcode(function()
-	GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+	COB("Utility",{
 		["Name"] = "Force FPS", 
 		["Function"] = function(callback)
 			if callback then
@@ -230,4 +245,23 @@ runcode(function()
 		end,
         ["HoverText"] = "Locks your camera to first person"
 	}) 
+end)
+
+runcode(function()
+	-- shitty because it's calling the remote and not the module
+	COB("Utility", {
+		["Name"] = "Auto Buy Wool (shit)",
+		["HoverText"] = "Shit needs to be made better sometime",
+		["Function"] = function(v)
+			AutobuyWool = v
+			if AutobuyWool then
+				spawn(function()
+					repeat
+						if (not AutobuyWool) then return end
+						game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].BedwarsPurchaseItem:InvokeServer({["shopItem"] = {["itemType"] = "wool_white"}})
+					until (not AutobuyWool)
+				end)
+			end
+		end
+	})
 end)
