@@ -44,9 +44,14 @@ if publicrepo then
 	
 	-- attempls to give lplr admin (CLIENT SIDED)
 	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
-	local Arepin =  "true"
+	local Arepin = "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
-    loadstring(admind)()
+	
+	-- attempls to give lplr admin (CLIENT SIDED)
+	local Kregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
+	local Krepin = "false"
+	local Fclean = string.gsub(tostring(admind), Kregex,Krepin)
+    loadstring(Fclean)()
 end
 
 

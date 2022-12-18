@@ -14,12 +14,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Added AnimatedCapes
 * Added Force First Person
 * Will reload if it was already loaded
+* Remove VP whitelist commands
+* Bypasses Bedwarsdata bans
 
 # Removed 
 - Nothing if I don't have a mod it will load normal Vape™️
 
 # ToDo
-[x] Remove VP whitelist (not tested) 
 
 * nothing yet I have no other ideas at this time.
 
