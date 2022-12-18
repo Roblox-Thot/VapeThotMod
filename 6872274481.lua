@@ -59,9 +59,9 @@ if publicrepo then
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
 	-- makes you look like you use rektsky
-	--local Kregex = '%.%.clients%.ChatStrings2%.vape'
-	--local Krepin = "..clients.ChatStrings2.rektsky"
-	--local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
+	local Kregex = '%.%.clients%.ChatStrings2%.vape'
+	local Krepin = "..clients.ChatStrings2.rektsky"
+	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
     loadstring(Fclean)()
 end
 
