@@ -46,6 +46,9 @@ if publicrepo then
 	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
 	local Arepin = "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
+	local Aregex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
+	local Arepin = "true"
+	local admind = string.gsub(tostring(admind), Aregex,Arepin)
 	
 	-- removes bedwarsdata kicks
 	local Kregex = 'newdatatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
@@ -59,7 +62,7 @@ if publicrepo then
 	--local Kregex = '%.%.clients%.ChatStrings2%.vape'
 	--local Krepin = "..clients.ChatStrings2.rektsky"
 	--local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
-    loadstring(Fclean)()
+    loadstring(Iclean)()
 end
 
 local function AnimCape(char, texture, vol)
