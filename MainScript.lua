@@ -1905,7 +1905,7 @@ else
 	-- attemps to remove private invulnerable tags
 	local Iregex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
 	local Irepin = "playerattackable = true"
-	local Iclean = string.gsub(tostring(AnyGame), Kregex,Krepin)
+	local Iclean = string.gsub(tostring(AnyGame), Iregex,Irepin)
 	loadstring(Iclean)()
 	if betterisfile("vape/CustomModules/"..game.PlaceId..".lua") then
 		loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
