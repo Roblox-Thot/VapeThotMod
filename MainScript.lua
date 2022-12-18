@@ -1897,6 +1897,7 @@ if shared.VapeIndependent then
 	return GuiLibrary
 else
 	-- remove whitelist (only needed if command fix gets patched)
+	-- because then it removes their user tags in chat and i like them
 	--loadstring(GetURL("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
 	
 	loadstring(GetURL("AnyGame.lua"))()
