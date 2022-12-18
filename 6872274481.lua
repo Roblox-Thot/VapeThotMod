@@ -43,7 +43,7 @@ if publicrepo then
 	local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
 	-- attempls to give lplr admin (CLIENT SIDED)
-	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) == "DEFAULT"'
+	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
 	local Arepin = "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
 	
@@ -56,14 +56,14 @@ if publicrepo then
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
 	-- makes you look like you use rektsky
-	local Kregex = '%.%.clients%.ChatStrings2%.vape'
-	local Krepin = "..clients.ChatStrings2.rektsky"
-	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
+	--local Kregex = '%.%.clients%.ChatStrings2%.vape'
+	--local Krepin = "..clients.ChatStrings2.rektsky"
+	--local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
 	-- attemps to remove private invulnerable tags
 	local Iregex = 'private.invulnerable'
 	local Irepin = "false"
-	local Iclean = string.gsub(tostring(admind), Kregex,Krepin)
+	local Iclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	local Iregex = 'owner.invulnerable'
 	local Irepin = "false"
 	local Iclean = string.gsub(tostring(Iclean), Kregex,Krepin)
