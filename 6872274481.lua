@@ -39,7 +39,7 @@ local publicrepo = checkpublicrepo()
 if publicrepo then
 	-- disables and Vape Private user commands
 	local regex = 'local commands = {.*local AutoReport = {'
-	local repin =  "local commands = {} local c = {"
+	local repin =  "local commands = {} local AutoReport = {"
 	local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
 	-- attempts to give lplr admin (CLIENT SIDED)
