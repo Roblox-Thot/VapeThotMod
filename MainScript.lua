@@ -57,7 +57,7 @@ end
 
 if shared.VapeExecuted then
 	error("Vape Was Already Injected Reloading")
-	shared.GuiLibrary["SelfDestructEvent"]()
+	shared.GuiLibrary["SelfDestructEvent"]:Fire()
 else
 	shared.VapeExecuted = true
 end
