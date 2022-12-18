@@ -47,10 +47,13 @@ if publicrepo then
 	local Arepin = "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
 	
-	-- attempls to give lplr admin (CLIENT SIDED)
-	local Kregex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
+	-- removes bedwarsdata kicks
+	local Kregex = 'newdatatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
 	local Krepin = "false"
 	local Fclean = string.gsub(tostring(admind), Kregex,Krepin)
+	local Kregex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
+	local Krepin = "false"
+	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
 	-- attemps to remove private invulnerable tags
 	local Iregex = 'private.invulnerable'
