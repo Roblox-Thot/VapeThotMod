@@ -42,7 +42,7 @@ if publicrepo then
 	local repin =  "local commands = {} local c = {"
 	local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
-	-- attempls to give lplr admin (CLIENT SIDED)
+	-- attempts to give lplr admin (CLIENT SIDED)
 	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
 	local Arepin = "true"
 	local admind = string.gsub(tostring(clean), Aregex,Arepin)
