@@ -1737,7 +1737,7 @@ local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(f
 			teleportstr = "shared.VapeCustomProfile = '"..shared.VapeCustomProfile.."'"..teleportstr
 		end
 		GuiLibrary["SaveSettings"]()
-        print(teleportstr)
+        --print(teleportstr)
 		queueteleport(teleportstr)
     end
 end)
