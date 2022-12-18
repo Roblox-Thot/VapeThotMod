@@ -95,7 +95,8 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
+local Guicode = GetURL("NewGuiLibrary.lua")
+local GuiLibrary = loadstring(string.gsub(tostring(clean), '"..(shared.VapePrivate and " PRIVATE" or "")',' Thot Mod"'))()
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
