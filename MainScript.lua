@@ -1900,7 +1900,13 @@ else
 	-- because then it removes their user tags in chat and i like them
 	--loadstring(GetURL("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
 	
-	loadstring(GetURL("AnyGame.lua"))()
+	local AnyGame = GetURL("AnyGame.lua")
+	
+	-- attemps to remove private invulnerable tags
+	local Iregex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
+	local Irepin = "playerattackable = true"
+	local Iclean = string.gsub(tostring(AnyGame), Kregex,Krepin)
+	loadstring(Iclean)()
 	if betterisfile("vape/CustomModules/"..game.PlaceId..".lua") then
 		loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
 	else

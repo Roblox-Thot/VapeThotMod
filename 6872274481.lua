@@ -59,15 +59,7 @@ if publicrepo then
 	--local Kregex = '%.%.clients%.ChatStrings2%.vape'
 	--local Krepin = "..clients.ChatStrings2.rektsky"
 	--local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
-	
-	-- attemps to remove private invulnerable tags
-	local Iregex = 'private.invulnerable'
-	local Irepin = "false"
-	local Iclean = string.gsub(tostring(Fclean), Kregex,Krepin)
-	local Iregex = 'owner.invulnerable'
-	local Irepin = "false"
-	local Iclean = string.gsub(tostring(Iclean), Kregex,Krepin)
-    loadstring(Iclean)()
+    loadstring(Fclean)()
 end
 
 local function AnimCape(char, texture, vol)

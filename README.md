@@ -1,6 +1,9 @@
 # VapeThotMod
 New version of the Thot Mod
 
+# Known problems
+Sometimes won't load on teleports
+
 # LoadString
 ```lua
 --[[
