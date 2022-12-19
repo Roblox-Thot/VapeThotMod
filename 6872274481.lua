@@ -284,10 +284,11 @@ runcode(function()
 			end
 		end
 	})
+	-- don't do small numbers you need to go up fast!
 	ypowerbitch = yeetOut.CreateSlider({
 		["Name"] = "Y Powwa",
 		["Function"] = function()end,
-		["Min"] = -10,
+		["Min"] = 0,
 		["Max"] = 9999999,
 		["Default"] = 6942069
 	})
