@@ -276,12 +276,19 @@ runcode(function()
 				spawn(function()
 					repeat
 						task.wait()
-						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, 9999999, math.huge)
+						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(yaxisbitch), math.huge)
 					until (not entity.isAlive)
 				end)
 				yeetOut["ToggleButton"](false)
 				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
 			end
 		end
+	})
+	yaxisbitch = yeetOut.CreateSlider({
+		["Name"] = "Y Axis",
+		["Function"] = function()end,
+		["Min"] = 0,
+		["Max"] = 9999999,
+		["Default"] = 6942069
 	})
 end)
