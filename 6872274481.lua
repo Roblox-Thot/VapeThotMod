@@ -265,3 +265,23 @@ runcode(function()
 		end
 	})
 end)
+
+runcode(function()
+	local entity = shared.vapeentity
+	yeetOut = COB("Blatant", {
+		["Name"] = "Yeet",
+		["HoverText"] = "Yeets into space (reset to turn off 💀)",
+		["Function"] = function(callmeback)
+			if callmeback then
+				spawn(function()
+					repeat
+						task.wait()
+						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, 9999999, math.huge)
+					until (not entity.isAlive)
+				end)
+				yeetOut["ToggleButton"](false)
+				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
+			end
+		end
+	})
+end)

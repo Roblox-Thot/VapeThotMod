@@ -18,6 +18,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Added Force First Person
 * Remove VP whitelist commands
 * Bypasses Bedwarsdata bans
+* Yeet (makes you super high in the sky)
 
 # Removed 
 - Nothing if I don't have a mod it will load normal Vape™️
