@@ -276,7 +276,7 @@ runcode(function()
 				spawn(function()
 					repeat
 						task.wait()
-						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(yaxisbitch), math.huge)
+						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(yaxisbitch["Value"]), math.huge)
 					until (not entity.isAlive)
 				end)
 				yeetOut["ToggleButton"](false)
