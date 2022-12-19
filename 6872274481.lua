@@ -287,7 +287,7 @@ runcode(function()
 	ypowerbitch = yeetOut.CreateSlider({
 		["Name"] = "Y Powwa",
 		["Function"] = function()end,
-		["Min"] = 0,
+		["Min"] = -10,
 		["Max"] = 9999999,
 		["Default"] = 6942069
 	})
