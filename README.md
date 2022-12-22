@@ -19,6 +19,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Remove VP whitelist commands
 * Bypasses Bedwarsdata bans
 * Yeet (makes you super high in the sky)
+* ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Auto load Inf Yield
 
 # Removed 
 - Nothing if I don't have a mod it will load normal Vape™️

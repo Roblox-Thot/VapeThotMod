@@ -295,6 +295,20 @@ runcode(function()
 end)
 
 runcode(function()
+	COB("Utility", {
+		["Name"] = "Inf Yield",
+		["HoverText"] = "Load infiniteyield",
+		["Function"] = function(callmeback)
+			if callmeback then
+				loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+			else
+				createwarning("InfYield", "Will no longer auto run", 10)
+			end
+		end
+	})
+end)
+
+runcode(function()
 	local entity = shared.vapeentity
 	chatLog = COB("Utility", {
 		["Name"] = "AntiLog",
