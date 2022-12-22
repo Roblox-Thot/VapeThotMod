@@ -12,7 +12,7 @@ Sometimes won't load on teleports
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()
 ```
 
-# Additions 
+# Additions for Bedwars
 * Fixed auto launching on game teleport ([Janky fix on main](https://github.com/7GrandDadPGN/VapeV4ForRoblox/commit/2ff4e7f0b98bec05b7826b4b0c2e7b63f96f16ba#diff-e1efa46e048a1d3fe4fe044ac0c83c73fd209a26f49c9073b10f0b5297cc627bL1679))
 * ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
