@@ -293,3 +293,125 @@ runcode(function()
 		["Default"] = 6942069
 	})
 end)
+
+runcode(function()
+	local entity = shared.vapeentity
+	chatLog = COB("Utility", {
+		["Name"] = "AntiLog",
+		["HoverText"] = "Attempts to stop Roblox from logging chat",
+		["Function"] = function(callmeback)
+			if callmeback then
+				local ChatChanged = false
+				local OldSetting = nil
+				local WhitelistedCoreTypes = {
+					"Chat",
+					"All",
+					Enum.CoreGuiType.Chat,
+					Enum.CoreGuiType.All
+				}
+				
+				local StarterGui = game:GetService("StarterGui")
+				
+				local FixCore = function(x)
+					local CoreHook; CoreHook = hookmetamethod(x, "__namecall", function(self, ...)
+						local Method = getnamecallmethod()
+						local Arguments = {...}
+						
+						if self == x and Method == "SetCoreGuiEnabled" and not checkcaller() then
+							local CoreType = Arguments[1]
+							local Enabled = Arguments[2]
+							
+							if table.find(WhitelistedCoreTypes, CoreType) and not Enabled then
+								if CoreType == ("Chat" or Enum.CoreGuiType.Chat) then
+									OldSetting = Enabled
+								end
+								ChatChanged = true
+							end
+						end
+						
+						return CoreHook(self, ...)
+					end)
+					
+					x.CoreGuiChangedSignal:Connect(function(Type)
+						if table.find(WhitelistedCoreTypes, Type) and ChatChanged then
+							task.wait()
+							if not StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
+								x:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+							end
+							wait(1)
+							if StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
+								x:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, OldSetting) -- probably defaults to false i am too tired for the making of this lol
+							end
+							ChatChanged = false
+						end
+					end)
+				end
+				
+				if StarterGui then
+					FixCore(StarterGui)
+					if not StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
+						StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+					end
+				else
+					local Connection; Connection = game.ChildAdded:Connect(function(x)
+						if x:IsA("StarterGui") then
+							FixCore(x)
+							Connection:Disconnect()
+						end
+					end)
+				end
+				
+				if not game:IsLoaded() then
+					game.Loaded:wait()
+				end
+				
+				local CoreGui = game:GetService("CoreGui")
+				local TweenService = game:GetService("TweenService")
+				local Players = game:GetService("Players")
+				
+				local Player = Players.LocalPlayer
+				
+				local PlayerGui = Player:FindFirstChildWhichIsA("PlayerGui") do
+					if not PlayerGui then
+						repeat task.wait() until Player:FindFirstChildWhichIsA("PlayerGui")
+						PlayerGui = Player:FindFirstChildWhichIsA("PlayerGui")
+					end
+				end
+				
+				local PlayerScripts = Player:WaitForChild("PlayerScripts")
+				local ChatMain = PlayerScripts:FindFirstChild("ChatMain", true) or false
+				
+				if not ChatMain then
+					local Timer = tick()
+					repeat
+						task.wait()
+					until PlayerScripts:FindFirstChild("ChatMain", true) or tick() > (Timer + 3)
+					ChatMain = PlayerScripts:FindFirstChild("ChatMain", true)
+				end
+				
+				local PostMessage = require(ChatMain).MessagePosted
+				
+				local MessageEvent = Instance.new("BindableEvent")
+				local OldFunctionHook
+				OldFunctionHook = hookfunction(PostMessage.fire, function(self, Message)
+					if not checkcaller() and self == PostMessage then
+						MessageEvent:Fire(Message)
+						return
+					end
+					return OldFunctionHook(self, Message)
+				end)
+				
+				if setfflag then
+					setfflag("AbuseReportScreenshot", "False")
+					setfflag("AbuseReportScreenshotPercentage", "0")
+				end
+				
+				if OldSetting then
+					StarterGui:SetCoreGuiEnabled(CoreGuiSettings[1], CoreGuiSettings[2])
+				end
+			else
+				createwarning("AntiLog", "Disabled Next Game", 10)
+			end
+		end
+	})
+end)
