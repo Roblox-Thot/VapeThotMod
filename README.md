@@ -14,12 +14,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 
 # Additions 
 * Fixed auto launching on game teleport ([Janky fix on main](https://github.com/7GrandDadPGN/VapeV4ForRoblox/commit/2ff4e7f0b98bec05b7826b4b0c2e7b63f96f16ba#diff-e1efa46e048a1d3fe4fe044ac0c83c73fd209a26f49c9073b10f0b5297cc627bL1679))
-* Added AnimatedCapes
-* Added Force First Person
+* ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Yeet (makes you super high in the sky)
+* Auto buy wool toggle (needs work)
 * Remove VP whitelist commands
 * Bypasses Bedwarsdata bans
-* Yeet (makes you super high in the sky)
-* ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Added Force First Person
+* Added AnimatedCapes
 * Auto load Inf Yield
 
 # Removed 
