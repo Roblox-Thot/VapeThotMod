@@ -18,6 +18,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Remove VP whitelist commands
+* AntiIdle to allow autofarms
 * Bypasses Bedwarsdata bans
 * Added Force First Person
 * Added AnimatedCapes
