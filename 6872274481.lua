@@ -434,7 +434,7 @@ end)
 
 runcode(function()
 	local entity = shared.vapeentity
-	chatLog = COB("Utility", {
+	COB("Utility", {
 		["Name"] = "AntiIdle",
 		["HoverText"] = "Attempts to stop Roblox kicking you for being idle",
 		["Function"] = function(callmeback)
