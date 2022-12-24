@@ -1723,22 +1723,30 @@ local GUIbind = GUI.CreateGUIBind()
 
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.InProgress and not shared.VapeIndependent then
-		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() end'
-		if shared.VapeDeveloper then
-			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
+
+		function try()
+			local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() end'
+			if shared.VapeDeveloper then
+				teleportstr = 'shared.VapeDeveloper = true '..teleportstr
+			end
+			if shared.ThotDeveloper then
+				teleportstr = 'shared.VapeDeveloper = true '..teleportstr
+			end
+			if shared.VapePrivate then
+				teleportstr = 'shared.VapePrivate = true '..teleportstr
+			end
+			if shared.VapeCustomProfile then 
+				teleportstr = "shared.VapeCustomProfile = '"..shared.VapeCustomProfile.."'"..teleportstr
+			end
+			GuiLibrary["SaveSettings"]()
+			--print(teleportstr)
+			queueteleport(teleportstr)
 		end
-        if shared.ThotDeveloper then
-			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
+	   
+		local success, error = pcall(try)
+		if not success then
+			queueteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()')
 		end
-		if shared.VapePrivate then
-			teleportstr = 'shared.VapePrivate = true '..teleportstr
-		end
-		if shared.VapeCustomProfile then 
-			teleportstr = "shared.VapeCustomProfile = '"..shared.VapeCustomProfile.."'"..teleportstr
-		end
-		GuiLibrary["SaveSettings"]()
-        --print(teleportstr)
-		queueteleport(teleportstr)
     end
 end)
 
