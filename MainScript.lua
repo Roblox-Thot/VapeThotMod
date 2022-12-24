@@ -1744,7 +1744,7 @@ local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(f
 	   
 		local success, error = pcall(try)
 		if not success then
-			queueteleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()')
+			queueteleport('shared.VapeSwitchServers = true  loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()')
 		end
     end
 end)
