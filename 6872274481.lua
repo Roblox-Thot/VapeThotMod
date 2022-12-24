@@ -273,12 +273,21 @@ runcode(function()
 		["HoverText"] = "Yeets into space (reset to turn off 💀)",
 		["Function"] = function(callmeback)
 			if callmeback then
+				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
+				if module then
+					if module["Api"]["Enabled"] == false then
+						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
+						module["Api"]["ToggleButton"]()
+					end
+				end
+
 				spawn(function()
 					repeat
 						task.wait()
 						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
 					until (not entity.isAlive)
 				end)
+
 				yeetOut["ToggleButton"](false)
 				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
 			end
