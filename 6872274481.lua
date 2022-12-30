@@ -2,6 +2,7 @@ local GuiLibrary = shared.GuiLibrary
 local players = game:GetService("Players")
 local lplr = players.LocalPlayer
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
+local connections = {}
 
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
@@ -64,6 +65,13 @@ if publicrepo then
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
     loadstring(Fclean)()
 end
+
+GuiLibrary["SelfDestructEvent"].Event:Connect(function()
+	for i3,v3 in pairs(connections) do
+		if v3.Disconnect then pcall(function() v3:Disconnect() end) end
+		if v3.disconnect then pcall(function() v3:disconnect() end) end
+	end
+end)
 
 local function AnimCape(char, texture, vol)
 	local hum = char:WaitForChild("Humanoid")
@@ -459,5 +467,127 @@ runcode(function()
 				createwarning("AntiIdle", "Disabled Next Game", 10)
 			end
 		end
+	})
+end)
+
+
+
+runcode(function()
+	local Keystrokes = GuiLibrary.CreateCustomWindow({
+		["Name"] = "Keystrokes", 
+		["Icon"] = "vape/assets/keyboard.png", -- currently you have to use vape assets for icons, this may change in the future
+		["IconSize"] = 16, -- size in width to not look ugly
+	})
+
+    local KeyColor = Keystrokes.CreateColorSlider({
+        ["Name"] = "Player Color", 
+        ["Function"] = function(cbt)
+        end
+    })
+
+    local KeySat = Keystrokes.CreateSlider({
+        ["Name"] = "Sat", -- name of object
+        ["Min"] = 0,
+        ["Max"] = 100,
+        ["Function"] = function(CBT)end,
+        ["HoverText"] = "Idk", -- text that will show up after hovering over the button (optional)
+        ["Default"] = 100 -- default value (optional)
+    })
+
+    local KeyValue = Keystrokes.CreateSlider({
+        ["Name"] = "Brightness Value", -- name of object
+        ["Min"] = 0,
+        ["Max"] = 100,
+        ["Function"] = function(CBT)end,
+        ["HoverText"] = "Idk", -- text that will show up after hovering over the button (optional)
+        ["Default"] = 100 -- default value (optional)
+    })
+
+    task.spawn(function()
+        local ts = game:GetService("TweenService")
+        local main4 = Instance.new("Frame")
+        main4.BackgroundTransparency = 1
+        main4.Size = UDim2.new(0, 195, 0, 205)
+        main4.Position = UDim2.new(0.02, 0, 0.127, 0)
+        main4.BorderSizePixel = 0
+        main4.Parent = Keystrokes.GetCustomChildren()
+        local w = Instance.new("TextLabel")
+        w.BackgroundColor3 = Color3.fromHSV(KeyColor["Hue"], KeyColor["Sat"], KeyColor["Value"])  
+        w.BackgroundTransparency = 0.5
+        w.BorderSizePixel = 0
+        w.Size = UDim2.new(0, 65, 0, 65)
+        w.Position = UDim2.new(0.333, 0, 0, 0)
+        w.Text = "W"
+        w.Font = Enum.Font.GothamMedium
+        w.TextSize = 28
+        w.TextTransparency = 0.2
+        w.TextColor3 = Color3.fromRGB(255, 255, 255)
+        Instance.new("UICorner", w)
+        w.Parent = main4
+        local a = w:Clone()
+        a.Text = "A"
+        a.Position = UDim2.new(0, 0, 0.317, 0)
+        a.Parent = main4
+        local s = w:Clone()
+        s.Text = "S"
+        s.Position = UDim2.new(0.333, 0, 0.317, 0)
+        s.Parent = main4
+        local d = w:Clone()
+        d.Text = "D"
+        d.Position = UDim2.new(0.667, 0, 0.317, 0)
+        d.Parent = main4
+        local space = w:Clone()
+        space.Size = UDim2.new(0, 195, 0, 30)
+        space.Position = UDim2.new(0, 0, 0.678, 0)
+        space.Text = "SPACE"
+        space.Parent = main4
+        
+        Keystrokes["Bypass"] = true
+
+        connections[#connections+1] = game:GetService("UserInputService").InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.W then
+                ts:Create(w, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+            elseif input.KeyCode == Enum.KeyCode.A then
+                ts:Create(a, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+            elseif input.KeyCode == Enum.KeyCode.S then
+                ts:Create(s, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+            elseif input.KeyCode == Enum.KeyCode.D then
+                ts:Create(d, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+            elseif input.KeyCode == Enum.KeyCode.Space then
+                ts:Create(space, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+            end
+        end)
+        connections[#connections+1] = game:GetService("UserInputService").InputEnded:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.W then
+                ts:Create(w, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
+            elseif input.KeyCode == Enum.KeyCode.A then
+                ts:Create(a, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
+            elseif input.KeyCode == Enum.KeyCode.S then
+                ts:Create(s, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
+            elseif input.KeyCode == Enum.KeyCode.D then
+                ts:Create(d, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
+            elseif input.KeyCode == Enum.KeyCode.Space then
+                ts:Create(space, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
+            end
+        end)
+
+        
+        connections[#connections+1] = game:GetService("RunService").RenderStepped:Connect(function(input)
+            color = Color3.fromHSV(KeyColor["Value"],(KeySat["Value"]/100),(KeyValue["Value"]/100))
+            w.BackgroundColor3 = color
+            a.BackgroundColor3 = color
+            s.BackgroundColor3 = color
+            d.BackgroundColor3 = color
+            space.BackgroundColor3 = color
+        end)
+    end)
+
+	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
+		["Name"] = "Keystrokes", 
+		["Icon"] = "vape/assets/keyboard.png", 
+		["Function"] = function(callback)
+			Keystrokes.SetVisible(callback) 
+		end, 
+		["Priority"] = 3
 	})
 end)

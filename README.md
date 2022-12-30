@@ -23,6 +23,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Added Force First Person
 * Added AnimatedCapes
 * Auto load Inf Yield
+* Keypress overlay
 
 # Removed 
 - Nothing if I don't have a mod it will load normal Vape™️
