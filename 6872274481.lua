@@ -539,6 +539,10 @@ runcode(function()
         space.Position = UDim2.new(0, 0, 0.678, 0)
         space.Text = "SPACE"
         space.Parent = main4
+
+		Keystrokes.GetCustomChildren().Parent:GetPropertyChangedSignal("Size"):Connect(function()
+			main4.Position = UDim2.new(0, 0, 0, (Keystrokes.GetCustomChildren().Parent.Size.Y.Offset == 0 and 45 or 0))
+		end)
         
         Keystrokes["Bypass"] = true
 
