@@ -470,8 +470,6 @@ runcode(function()
 	})
 end)
 
-
-
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
