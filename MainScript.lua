@@ -1,6 +1,4 @@
-if not game:IsLoaded() then game.Loaded:Wait() end
-shared.VapeDeveloper = false
-shared.ThotDeveloper = false
+repeat task.wait() until game:IsLoaded()
 local injected = true
 local oldrainbow = false
 local customdir = (shared.VapePrivate and "vapeprivate/" or "vape/")
@@ -1721,14 +1719,31 @@ GUISettings.CreateSlider({
 
 local GUIbind = GUI.CreateGUIBind()
 
+
+local teleported = false
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
+    if (not teleported) and (not shared.VapeIndependent) then
+		teleported = true
+		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))() end'
+		if shared.VapeDeveloper then
+			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
+		end
+		if shared.VapePrivate then
+			teleportstr = 'shared.VapePrivate = true '..teleportstr
+		end
+		if shared.VapeCustomProfile then 
+			teleportstr = "shared.VapeCustomProfile = '"..shared.VapeCustomProfile.."'"..teleportstr
+		end
+		GuiLibrary["SaveSettings"]()
+		queueteleport(teleportstr)
+    end
+end)
+
+--[[local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.InProgress and not shared.VapeIndependent then
 		function try()
 			local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() end'
 			if shared.VapeDeveloper then
-				teleportstr = 'shared.VapeDeveloper = true '..teleportstr
-			end
-			if shared.ThotDeveloper then
 				teleportstr = 'shared.VapeDeveloper = true '..teleportstr
 			end
 			if shared.VapePrivate then
@@ -1747,7 +1762,7 @@ local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(f
 			queueteleport('shared.VapeSwitchServers = true  loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()')
 		end
     end
-end)
+end)]]
 
 local savecheck = true
 GuiLibrary["SelfDestruct"] = function()
@@ -1925,10 +1940,6 @@ else
 	if shared.VapePrivate then
 		if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".lua") end) then
 			loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".lua"))()
-		end	
-	elseif shared.ThotDeveloper then
-		if pcall(function() readfile("vape/CustomModules/"..game.PlaceId..".lua") end) then
-			loadstring(readfile("vape/CustomThotModules/"..game.PlaceId..".lua"))()
 		end	
 	end
 	GuiLibrary["LoadSettings"](shared.VapeCustomProfile)
