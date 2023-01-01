@@ -476,7 +476,7 @@ runcode(function()
 		["Icon"] = "vape/assets/keyboard.png", -- currently you have to use vape assets for icons, this may change in the future
 		["IconSize"] = 16, -- size in width to not look ugly
 	})
-
+--[[
     local KeyColor = Keystrokes.CreateColorSlider({
         ["Name"] = "Player Color", 
         ["Function"] = function(cbt)
@@ -500,7 +500,7 @@ runcode(function()
         ["HoverText"] = "Idk", -- text that will show up after hovering over the button (optional)
         ["Default"] = 100 -- default value (optional)
     })
-
+]]--
     task.spawn(function()
         local ts = game:GetService("TweenService")
         local main4 = Instance.new("Frame")
@@ -510,7 +510,7 @@ runcode(function()
         main4.BorderSizePixel = 0
         main4.Parent = Keystrokes.GetCustomChildren()
         local w = Instance.new("TextLabel")
-        w.BackgroundColor3 = Color3.fromHSV(KeyColor["Hue"], KeyColor["Sat"], KeyColor["Value"])  
+        w.BackgroundColor3 = Color3.fromHSV(1, 0, 0)
         w.BackgroundTransparency = 0.5
         w.BorderSizePixel = 0
         w.Size = UDim2.new(0, 65, 0, 65)
@@ -575,7 +575,8 @@ runcode(function()
 
         
         connections[#connections+1] = game:GetService("RunService").RenderStepped:Connect(function(input)
-            color = Color3.fromHSV(KeyColor["Value"],(KeySat["Value"]/100),(KeyValue["Value"]/100))
+            --color = Color3.fromHSV(KeyColor["Value"],(KeySat["Value"]/100),(KeyValue["Value"]/100))
+            color = Color3.fromHSV(0,0,0)
             w.BackgroundColor3 = color
             a.BackgroundColor3 = color
             s.BackgroundColor3 = color
