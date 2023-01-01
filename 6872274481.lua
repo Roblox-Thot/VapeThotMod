@@ -242,17 +242,54 @@ runcode(function()
 end)
 
 runcode(function()
+	local Send = function(Key)
+		local VM = game:GetService('VirtualInputManager')
+		VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
+		VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
+	end
+
+	function counter()
+		local count = 0
+		local numbers = {
+		  "One", "Two", "Three", "Four", "Five",
+		  "Six", "Seven", "Eight", "Nine"
+		}
+		return function(num)
+		  count = count + num
+		  if count > 9 then
+			count = 1
+		  elseif count < 0 then
+			count = 9
+		  end
+		  Send(numbers[count])
+		end
+	end
+	local KeyCount = counter()
 	COB("Utility",{
 		["Name"] = "Force FPS", 
 		["Function"] = function(callback)
 			if callback then
 				lplr.CameraMode = "LockFirstPerson"
+				local mouse = lplr:GetMouse()
+
+				local function onWheelBackward()
+					KeyCount(-1)
+				end
+				downconnection = mouse.WheelBackward:Connect(onWheelBackward)
+
+				local function onWheelForward()
+					KeyCount(1)
+				end
+				upconnection = mouse.WheelForward:Connect(onWheelForward)
+
 			else
 				lplr.CameraMode = "Classic"
+				downconnection:Disconnect()
+				upconnection:Disconnect()
 			end
 		end,
-        ["HoverText"] = "Locks your camera to first person"
-	}) 
+        ["HoverText"] = "Locks your camera to first person and allow scrollwheel"
+	})
 end)
 
 runcode(function()
