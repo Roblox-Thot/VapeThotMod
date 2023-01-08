@@ -1,6 +1,8 @@
 # VapeThotMod
 New version of the Thot Mod
 
+Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
+
 # Known problems
 Sometimes won't load on teleports
 
