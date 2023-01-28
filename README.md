@@ -24,6 +24,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Bypasses Bedwarsdata bans
 * Added AnimatedCapes
 * Auto load Inf Yield
+* Ragdoll kill effect
 * Keypress overlay
 
 # Removed 

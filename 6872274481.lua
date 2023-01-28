@@ -631,3 +631,127 @@ runcode(function()
 		["Priority"] = 3
 	})
 end)
+
+
+GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
+runcode(function()
+	DefaultKillEffect = require(lplr.PlayerScripts.TS.controllers.game.locker["kill-effect"].effects["default-kill-effect"])
+
+	local oldkilleffect
+	local killdatboy = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "KillEffect",
+		["Function"] = function(callback)
+			if callback then
+				if deathselected["Value"] == "Classic Vape" then
+					lplr:SetAttribute("KillEffectType", "none")
+					oldkilleffect = DefaultKillEffect.onKill
+					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
+						p5:BreakJoints()
+						task.spawn(function()
+							local partvelo = {}
+							for i,v in pairs(p5:GetDescendants()) do 
+								if v:IsA("BasePart") then 
+									partvelo[v.Name] = v.Velocity * 3
+								end
+							end
+							p5.Archivable = true
+							local clone = p5:Clone()
+							clone.Humanoid.Health = 100
+							clone.Parent = workspace
+							local nametag = clone:FindFirstChild("Nametag", true)
+							if nametag then nametag:Destroy() end
+							game:GetService("Debris"):AddItem(clone, 30)
+							p5:Destroy()
+							task.wait(0.01)
+							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+							clone:BreakJoints()
+							task.wait(0.01)
+							for i,v in pairs(clone:GetDescendants()) do 
+								if v:IsA("BasePart") then 
+									local bodyforce = Instance.new("BodyForce")
+									bodyforce.Force = Vector3.new(0, (workspace.Gravity - 10) * v:GetMass(), 0)
+									bodyforce.Parent = v
+									v.CanCollide = true
+									v.Velocity = partvelo[v.Name] or Vector3.zero
+								end
+							end
+						end)
+					end
+				elseif deathselected["Value"] == "Ragdoll" then
+					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
+						p5:BreakJoints()
+						task.spawn(function()
+							local partvelo = {}
+							for i,v in pairs(p5:GetDescendants()) do 
+								if v:IsA("BasePart") then 
+									partvelo[v.Name] = v.Velocity * 3
+								end
+							end
+							p5.Archivable = true
+							local clone = p5:Clone()
+							clone.Humanoid.Health = 100
+							clone.Parent = workspace
+							local nametag = clone:FindFirstChild("Nametag", true)
+							if nametag then nametag:Destroy() end
+							game:GetService("Debris"):AddItem(clone, 2)
+							p5:Destroy()
+							task.wait(0.01)
+							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+							
+							local m = Instance.new("Model")
+							m.Parent = game.Workspace
+							game:GetService("Debris"):AddItem(m,10)
+							local g = clone:GetChildren()
+							clone.HumanoidRootPart.CanCollide = false
+							
+						
+							for _, v in pairs(clone:GetDescendants()) do
+								if v.Parent == clone then
+									v.Parent = m
+								end
+								if v:IsA("Motor6D") then
+									local Att0, Att1 = Instance.new("Attachment"), Instance.new("Attachment")
+									Att0.CFrame = v.C0
+									Att1.CFrame = v.C1
+									Att0.Parent = v.Part0
+									Att1.Parent = v.Part1
+									local BSC = Instance.new("BallSocketConstraint")
+									BSC.Attachment0 = Att0
+									BSC.Attachment1 = Att1
+									BSC.Parent = v.Part0
+									if v.Part1.Name ==  "Head" then
+										BSC.LimitsEnabled = true
+										BSC.TwistLimitsEnabled = true
+									end
+									v.Enabled = false
+								end
+								if v.Name == "AccessoryWeld" then
+									local WC = Instance.new("WeldConstraint")
+									WC.Part0 = v.Part0
+									WC.Part1 = v.Part1
+									WC.Parent = v.Parent
+									v.Enabled = false
+								end
+								if v.Name == "Head" and v:IsA("BasePart") then
+									v.CanCollide = true
+								end
+								if v:IsA("BasePart") then
+									v.CanCollide = true
+									v.Velocity = partvelo[v.Name] or Vector3.zero
+								end
+							end
+						end)
+					end
+				end
+			else
+				DefaultKillEffect.onKill = oldkilleffect
+			end
+		end
+	})
+
+	deathselected = killdatboy.CreateDropdown({
+		["Name"] = "Effect",
+		["Function"] = function() end,
+		["List"] = {"Classic Vape", "Ragdoll"}
+	})
+end)
