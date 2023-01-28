@@ -28,7 +28,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Keypress overlay
 
 # Removed 
-- Nothing if I don't have a mod it will load normal Vape™️
+- Normal KillEffect is now a drop down in the cusom Kill Effect
+- Nothing else I don't have a mod it will load normal Vape™️
 
 # ToDo
 
