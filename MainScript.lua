@@ -113,7 +113,7 @@ local function downloadVapeAsset(path)
 	return getcustomasset(path) 
 end
 
-local function downloadVapeAsset(path)
+local function downloadThotAsset(path)
 	if not isfile(path) then
 		task.spawn(function()
 			local textlabel = Instance.new("TextLabel")
