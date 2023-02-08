@@ -64,6 +64,29 @@ local function vapeGithubRequest(scripturl)
 	end
 end
 
+local function thotGithubRequest(scripturl)
+	if shared.VapeDeveloper then
+		if not isfile("vape/"..scripturl) then
+			displayErrorPopup("File not found : vape/"..scripturl.." : "..res)
+			error("File not found : vape/"..scripturl)
+		end
+		return readfile("vape/"..scripturl)
+	else
+		local suc, res
+		task.delay(15, function()
+			if not res and not errorPopupShown then 
+				errorPopupShown = true
+				displayErrorPopup("The connection to github is taking a while, Please be patient.")
+			end
+		end)
+		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..scripturl, true) end)
+		if not suc then
+			return vapeGithubRequest(scripturl)
+		end
+		return res
+	end
+end
+
 local function downloadVapeAsset(path)
 	if not isfile(path) then
 		task.spawn(function()
@@ -90,9 +113,9 @@ local function downloadVapeAsset(path)
 	return getcustomasset(path) 
 end
 
-local function downloadThotAsset(path)
-	if not betterisfile(path) then
-		spawn(function()
+local function downloadVapeAsset(path)
+	if not isfile(path) then
+		task.spawn(function()
 			local textlabel = Instance.new("TextLabel")
 			textlabel.Size = UDim2.new(1, 0, 0, 36)
 			textlabel.Text = "Downloading "..path
@@ -102,17 +125,18 @@ local function downloadThotAsset(path)
 			textlabel.Font = Enum.Font.SourceSans
 			textlabel.TextColor3 = Color3.new(1, 1, 1)
 			textlabel.Position = UDim2.new(0, 0, 0, -36)
-			textlabel.Parent = GuiLibrary["MainGui"]
-			repeat task.wait() until betterisfile(path)
-			textlabel:Remove()
+			textlabel.Parent = GuiLibrary.MainGui
+			repeat task.wait() until isfile(path)
+			textlabel:Destroy()
 		end)
-		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..path:gsub("vape/assets", "assets"),
-			Method = "GET"
-		})
-		writefile(path, req.Body)
+		local suc, req = pcall(function() return thotGithubRequest(path:gsub("vape/assets", "assets")) end)
+        if suc and req then
+		    writefile(path, req)
+        else
+            return ""
+        end
 	end
-	return getasset(path) 
+	return getcustomasset(path) 
 end
 
 --Download the animated cape
