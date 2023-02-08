@@ -1,3 +1,6 @@
+# Mainscript.lua requires a rewrite so this may or may not be broken rn
+
+
 # VapeThotMod
 New version of the Thot Mod
 
