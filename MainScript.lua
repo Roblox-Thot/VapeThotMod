@@ -164,6 +164,7 @@ task.spawn(function()
 end)
 
 Guicode = vapeGithubRequest("NewGuiLibrary.lua")
+Guicode = string.gsub(tostring(Guicode), 'wjRYjVWkya',' tbB9SnyH58') -- make it my invite 😈
 GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod"'))()
 shared.GuiLibrary = GuiLibrary
 
