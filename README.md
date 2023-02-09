@@ -1,6 +1,8 @@
 # VapeThotMod
 [Support/Update Discord](https://discord.gg/tbB9SnyH58)
 
+This edit will more than likely be only for BedWars
+
 Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
 
 # LoadString
