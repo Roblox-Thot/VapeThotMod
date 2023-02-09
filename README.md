@@ -21,8 +21,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Remove VP whitelist commands
 * AntiIdle to allow autofarms
 * Bypasses Bedwarsdata bans
-* Client Side host panel
 * Added AnimatedCapes
+* Client Side host panel
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Keypress overlay
