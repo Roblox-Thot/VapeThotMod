@@ -1,5 +1,5 @@
 # VapeThotMod
-[Support/Update Discord](https://discord.gg/tbB9SnyH58
+[Support/Update Discord](https://discord.gg/tbB9SnyH58)
 
 Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
 
