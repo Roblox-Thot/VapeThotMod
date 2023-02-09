@@ -1,8 +1,5 @@
-# Mainscript.lua requires a rewrite so this may or may not be broken rn
-
-
 # VapeThotMod
-New version of the Thot Mod
+[Support/Update Discord](https://discord.gg/tbB9SnyH58
 
 Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
 
