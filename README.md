@@ -6,9 +6,6 @@ New version of the Thot Mod
 
 Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
 
-# Known problems
-Sometimes won't load on teleports
-
 # LoadString
 ```lua
 --[[
@@ -37,8 +34,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # Broken
 * Yeet (makes you super high in the sky)
 
-# ToDo
+# Known problems
+* None
 
+# ToDo
 * nothing yet I have no other ideas at this time.
 
 <img width="349" alt="image" src="https://user-images.githubusercontent.com/67937010/208275873-147fac94-e631-4ee4-9896-55d692cc0fd8.png">
