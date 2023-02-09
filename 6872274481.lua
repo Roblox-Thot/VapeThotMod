@@ -311,42 +311,43 @@ runcode(function()
 	})
 end)
 
-runcode(function()
-	local entity = shared.vapeentity
-	yeetOut = COB("Blatant", {
-		["Name"] = "Yeet",
-		["HoverText"] = "Yeets into space (reset to turn off 💀)",
-		["Function"] = function(callmeback)
-			if callmeback then
-				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
-				if module then
-					if module["Api"]["Enabled"] == false then
-						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
-						module["Api"]["ToggleButton"]()
-					end
-				end
+-- Currently patched(?)
+-- runcode(function()
+-- 	local entity = shared.vapeentity
+-- 	yeetOut = COB("Blatant", {
+-- 		["Name"] = "Yeet",
+-- 		["HoverText"] = "Yeets into space (reset to turn off 💀)",
+-- 		["Function"] = function(callmeback)
+-- 			if callmeback then
+-- 				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
+-- 				if module then
+-- 					if module["Api"]["Enabled"] == false then
+-- 						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
+-- 						module["Api"]["ToggleButton"]()
+-- 					end
+-- 				end
 
-				spawn(function()
-					repeat
-						task.wait()
-						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
-					until (not entity.isAlive)
-				end)
+-- 				spawn(function()
+-- 					repeat
+-- 						task.wait()
+-- 						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
+-- 					until (not entity.isAlive)
+-- 				end)
 
-				yeetOut["ToggleButton"](false)
-				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
-			end
-		end
-	})
-	-- don't do small numbers you need to go up fast!
-	ypowerbitch = yeetOut.CreateSlider({
-		["Name"] = "Y Powwa",
-		["Function"] = function()end,
-		["Min"] = 0,
-		["Max"] = 9999999,
-		["Default"] = 6942069
-	})
-end)
+-- 				yeetOut["ToggleButton"](false)
+-- 				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
+-- 			end
+-- 		end
+-- 	})
+-- 	-- don't do small numbers you need to go up fast!
+-- 	ypowerbitch = yeetOut.CreateSlider({
+-- 		["Name"] = "Y Powwa",
+-- 		["Function"] = function()end,
+-- 		["Min"] = 0,
+-- 		["Max"] = 9999999,
+-- 		["Default"] = 6942069
+-- 	})
+-- end)
 
 runcode(function()
 	COB("Utility", {
@@ -754,4 +755,24 @@ runcode(function()
 		["Function"] = function() end,
 		["List"] = {"Classic Vape", "Ragdoll"}
 	})
+end)
+
+runcode(function()
+	local Host = {["Enabled"] = false}
+	
+	local v2 = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
+	local OfflinePlayerUtil = v2.OfflinePlayerUtil
+	local v6 = OfflinePlayerUtil.getPlayer(game.Players.LocalPlayer);
+
+    Host = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+        ["Name"] = "HostExploit",
+		["HoverText"] = "Client Sided",
+        ["Function"] = function(callback)
+            if callback then
+				v6:SetAttribute("Cohost", true)
+			else
+				v6:SetAttribute("Cohost", false)
+            end
+		end
+    })
 end)

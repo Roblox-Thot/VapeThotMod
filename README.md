@@ -20,11 +20,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # Additions for Bedwars
 * Added Force First Person that allows scrollwheel for items
 * ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
-* Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Remove VP whitelist commands
 * AntiIdle to allow autofarms
 * Bypasses Bedwarsdata bans
+* Client-Side host panel
 * Added AnimatedCapes
 * Auto load Inf Yield
 * Ragdoll kill effect
@@ -33,6 +33,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect
 - Nothing else I don't have a mod it will load normal Vape™️
+
+# Broken
+* Yeet (makes you super high in the sky)
 
 # ToDo
 
