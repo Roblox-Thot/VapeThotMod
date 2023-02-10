@@ -1671,7 +1671,7 @@ local teleportConnection = playersService.LocalPlayer.OnTeleport:Connect(functio
 		local teleportScript = [[
 			shared.VapeSwitchServers = true 
 			if shared.VapeDeveloper then 
-				loadstring(readfile("vape/NewMainScript.lua"))() 
+				loadstring(readfile("vape/MainScript.lua"))() 
 			else 
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() 
 			end
@@ -1750,7 +1750,7 @@ GeneralSettings.CreateButton2({
 		shared.VapeSwitchServers = true
 		shared.VapeOpenGui = true
 		shared.VapePrivate = vapePrivateCheck
-		loadstring(vapeGithubRequest("NewMainScript.lua"))()
+		loadstring(vapeGithubRequest("MainScript.lua"))()
 	end
 })
 GUISettings.CreateButton2({
