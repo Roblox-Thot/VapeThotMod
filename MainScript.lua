@@ -1836,8 +1836,8 @@ local function loadVape()
 		else
 	
 			local suc, req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/"..game.PlaceId..".lua") end)
-			if not req:find(".lua") then
-				suc,req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..id..".lua") end)
+			if not suc then
+				suc,req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..game.PlaceId..".lua") end)
 			end
 			if suc and req and req ~= "404: Not Found" then
 				writefile("vape/CustomModules/"..game.PlaceId..".lua", "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..req)
