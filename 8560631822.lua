@@ -1,9 +1,11 @@
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
 local checkpublicrepo
+local commit = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits", true))[1].commit.url:split("/commits/")[2]
+
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..id..".lua",
+		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..commit.."/"..id..".lua",
 		Method = "GET"
 	}) end)
 	if not suc then
