@@ -1,8 +1,14 @@
 -- get newest commit ids
-local suc, commit = pcall(function() game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/7GrandDadPGN/VapeV4ForRoblox/commits", true))[1].commit.url:split("/commits/")[2] end)
+local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
+
+local function getCommit(url)
+    return game:GetService("HttpService"):JSONDecode(game:HttpGet(url, true))[1].commit.url:split("/commits/")[2]
+end
+
+local suc, commit = pcall(function() return getCommit("https://api.github.com/repos/7GrandDadPGN/VapeV4ForRoblox/commits") end)
 if not suc then commit = "main" end
 
-local RTsuc, RTcommit = pcall(function() game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits", true))[1].commit.url:split("/commits/")[2] end)
+local RTsuc, RTcommit = pcall(function() return getCommit("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits") end)
 if not RTsuc then RTcommit = "main" end
 
 if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= commit or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
