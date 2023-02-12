@@ -515,31 +515,7 @@ runcode(function()
 		["Icon"] = "vape/assets/keyboard.png", -- currently you have to use vape assets for icons, this may change in the future
 		["IconSize"] = 16, -- size in width to not look ugly
 	})
---[[
-    local KeyColor = Keystrokes.CreateColorSlider({
-        ["Name"] = "Player Color", 
-        ["Function"] = function(cbt)
-        end
-    })
-
-    local KeySat = Keystrokes.CreateSlider({
-        ["Name"] = "Sat", -- name of object
-        ["Min"] = 0,
-        ["Max"] = 100,
-        ["Function"] = function(CBT)end,
-        ["HoverText"] = "Idk", -- text that will show up after hovering over the button (optional)
-        ["Default"] = 100 -- default value (optional)
-    })
-
-    local KeyValue = Keystrokes.CreateSlider({
-        ["Name"] = "Brightness Value", -- name of object
-        ["Min"] = 0,
-        ["Max"] = 100,
-        ["Function"] = function(CBT)end,
-        ["HoverText"] = "Idk", -- text that will show up after hovering over the button (optional)
-        ["Default"] = 100 -- default value (optional)
-    })
-]]--
+	
     task.spawn(function()
         local ts = game:GetService("TweenService")
         local main4 = Instance.new("Frame")
@@ -579,6 +555,13 @@ runcode(function()
         space.Text = "SPACE"
         space.Parent = main4
 
+		color = Color3.fromHSV(0,0,0)
+		w.BackgroundColor3 = color
+		a.BackgroundColor3 = color
+		s.BackgroundColor3 = color
+		d.BackgroundColor3 = color
+		space.BackgroundColor3 = color
+
 		Keystrokes.GetCustomChildren().Parent:GetPropertyChangedSignal("Size"):Connect(function()
 			main4.Position = UDim2.new(0, 0, 0, (Keystrokes.GetCustomChildren().Parent.Size.Y.Offset == 0 and 45 or 0))
 		end)
@@ -610,17 +593,6 @@ runcode(function()
             elseif input.KeyCode == Enum.KeyCode.Space then
                 ts:Create(space, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
             end
-        end)
-
-        
-        connections[#connections+1] = game:GetService("RunService").RenderStepped:Connect(function(input)
-            --color = Color3.fromHSV(KeyColor["Value"],(KeySat["Value"]/100),(KeyValue["Value"]/100))
-            color = Color3.fromHSV(0,0,0)
-            w.BackgroundColor3 = color
-            a.BackgroundColor3 = color
-            s.BackgroundColor3 = color
-            d.BackgroundColor3 = color
-            space.BackgroundColor3 = color
         end)
     end)
 
