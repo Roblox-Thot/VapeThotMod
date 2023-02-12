@@ -1,6 +1,10 @@
--- get newest vape commit id
-local commit = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/7GrandDadPGN/VapeV4ForRoblox/commits", true))[1].commit.url:split("/commits/")[2]
-local RTcommit = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits", true))[1].commit.url:split("/commits/")[2]
+-- get newest commit ids
+local suc, commit = pcall(function() game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/7GrandDadPGN/VapeV4ForRoblox/commits", true))[1].commit.url:split("/commits/")[2] end)
+local RTsuc, RTcommit = pcall(function() game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits", true))[1].commit.url:split("/commits/")[2] end)
+
+if not RTsuc then RTcommit = "main" end
+if not suc then commit = "main" end
+
 if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= commit or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
 	for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
 		if isfile(v) and readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
