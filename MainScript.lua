@@ -1842,21 +1842,6 @@ GeneralSettings.CreateButton2({
 	Function = GuiLibrary.SelfDestruct
 })
 
-checkpublicrepo = function(id)
-	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/"..id..".lua",
-		Method = "GET"
-	}) end)
-	if not suc then
-		return pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..id..".lua") end)
-	elseif req.StatusCode == 404 then
-		return pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..id..".lua") end)
-	end
-	if req.StatusCode == 200 then
-		return req.Body
-	end
-	return nil
-end
 
 local function loadVape()
 	if not shared.VapeIndependent then
@@ -1875,9 +1860,14 @@ local function loadVape()
 		if isfile("vape/CustomModules/"..game.PlaceId..".lua") then
 			loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
 		else
-			local suc, publicrepo = checkpublicrepo(game.PlaceId)
-			if suc and publicrepo then
-				loadstring(publicrepo)()
+	
+			local suc, req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/"..game.PlaceId..".lua") end)
+			if not req:find(".lua") then
+				suc,req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..id..".lua") end)
+			end
+			if suc and req and req ~= "404: Not Found" then
+				writefile("vape/CustomModules/"..game.PlaceId..".lua", "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..req)
+				loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
 			end
 		end
 		if shared.VapePrivate then
