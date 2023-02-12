@@ -24,6 +24,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Keypress overlay
+* Open all chests
 
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect

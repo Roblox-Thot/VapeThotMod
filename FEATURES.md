@@ -9,6 +9,7 @@
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Keypress overlay
+* Open all chests
 
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect

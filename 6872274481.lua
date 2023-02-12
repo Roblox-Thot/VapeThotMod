@@ -749,3 +749,30 @@ runcode(function()
 		end
     })
 end)
+
+runcode(function()
+	Chest = COB("World", {
+		["Name"] = "OpenChests",
+		["HoverText"] = "Makes all chests look opened for everyone",
+		["Function"] = function(callmeback)
+			if callmeback then
+				local client = require(game:GetService("ReplicatedStorage").TS.remotes).default.Client
+				for i,v in pairs(game:GetService("CollectionService"):GetTagged("chest")) do
+					task.spawn(function()
+						if v:FindFirstChild("ChestFolderValue") then
+							local chest = v:FindFirstChild("ChestFolderValue")
+							chest = chest and chest.Value or nil
+							local chestitems = chest and chest:GetChildren() or {}
+							if #chestitems > 0 then
+								client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(chest)
+							end
+						end
+					end)
+				end
+				client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(nil)
+				Chest["ToggleButton"](false)
+				createwarning("Chests", "All chests opened!", 10)
+			end
+		end
+	})
+end)
