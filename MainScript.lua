@@ -169,6 +169,7 @@ end
 
 --Download the animated cape
 downloadThotAsset("vape/assets/VapeCape.webm")
+downloadThotAsset("vape/assets/keyboard.png")
 
 assert(not shared.VapeExecuted, "Vape Already Injected")
 shared.VapeExecuted = true
