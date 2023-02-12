@@ -144,6 +144,12 @@ end
 downloadThotAsset("vape/assets/VapeCape.webm")
 downloadThotAsset("vape/assets/keyboard.png")
 
+--delete Vape's files and stop kid's bitchin about it being broken
+if betterisfile("vape/CustomModules/8444591321.lua") then delfile("vape/CustomModules/8444591321.lua") end
+if betterisfile("vape/CustomModules/8560631822.lua") then delfile("vape/CustomModules/8560631822.lua") end
+if betterisfile("vape/CustomModules/8560631822.lua") and readfile("vape/CustomModules/8560631822.lua"):find("--this is my watermark kekw") then delfile("vape/CustomModules/8560631822.lua") end
+
+
 assert(not shared.VapeExecuted, "Vape Already Injected")
 shared.VapeExecuted = true
 
