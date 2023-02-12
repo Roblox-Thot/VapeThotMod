@@ -137,7 +137,6 @@ local function downloadThotAsset(path)
             return ""
         end
 	end
-	return getcustomasset(path) 
 end
 
 --Download the animated cape
