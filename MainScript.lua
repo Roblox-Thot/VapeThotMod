@@ -65,6 +65,7 @@ if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= co
 	writefile("vape/commithash.txt", commit)
 end
 
+local RTcommit = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits", true))[1].commit.url:split("/commits/")[2]
 
 local function vapeGithubRequest(scripturl)
 	if shared.VapeDeveloper then
@@ -105,7 +106,7 @@ local function thotGithubRequest(scripturl)
 				displayErrorPopup("The connection to github is taking a while, Please be patient.")
 			end
 		end)
-		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..scripturl, true) end)
+		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/"..scripturl, true) end)
 		if not suc then
 			return vapeGithubRequest(scripturl)
 		end
@@ -1842,23 +1843,7 @@ GeneralSettings.CreateButton2({
 
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..id..".lua",
-		Method = "GET"
-	}) end)
-	if not suc then
-		return checkpublicvaperepo(id)
-	elseif req.StatusCode == 404 then
-		return checkpublicvaperepo(id)
-	end
-	if req.StatusCode == 200 then
-		return req.Body
-	end
-	return nil
-end
-
-checkpublicrepo = function(id)
-	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/"..id..".lua",
+		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/"..id..".lua",
 		Method = "GET"
 	}) end)
 	if not suc then
