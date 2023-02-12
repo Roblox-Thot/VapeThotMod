@@ -1,6 +1,4 @@
 -- get newest commit ids
-local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
-
 local function getCommit(url)
     return game:GetService("HttpService"):JSONDecode(game:HttpGet(url, true))[1].commit.url:split("/commits/")[2]
 end
