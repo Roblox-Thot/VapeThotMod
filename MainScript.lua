@@ -144,6 +144,7 @@ end
 downloadThotAsset("vape/assets/VapeCape.webm")
 downloadThotAsset("vape/assets/keyboard.png")
 
+local betterisfile = function(file) local suc, res = pcall(function() return readfile(file) end) return suc and res ~= nil end
 --delete Vape's files and stop kid's bitchin about it being broken
 if betterisfile("vape/CustomModules/8444591321.lua") then delfile("vape/CustomModules/8444591321.lua") end
 if betterisfile("vape/CustomModules/8560631822.lua") then delfile("vape/CustomModules/8560631822.lua") end
