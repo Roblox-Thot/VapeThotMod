@@ -173,7 +173,7 @@ downloadThotAsset("vape/assets/VapeCape.webm")
 assert(not shared.VapeExecuted, "Vape Already Injected")
 shared.VapeExecuted = true
 
-for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."CustomModules", baseDirectory.."Profiles", "vape/assets"}) do 
+for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."Libraries", baseDirectory.."CustomModules", baseDirectory.."Profiles", "vape/assets"}) do 
 	if not isfolder(v) then makefolder(v) end
 end
 task.spawn(function()
@@ -191,7 +191,7 @@ task.spawn(function()
 	end
 end)
 
-Guicode = vapeGithubRequest("NewGuiLibrary.lua")
+Guicode = vapeGithubRequest("GuiLibrary.lua")
 Guicode = string.gsub(tostring(Guicode), 'wjRYjVWkya',' tbB9SnyH58') -- make it my invite 😈
 GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod"'))()
 shared.GuiLibrary = GuiLibrary
@@ -1864,7 +1864,7 @@ local function loadVape()
 		-- because then it removes their user tags in chat and i like them
 		--loadstring(vapeGithubRequest("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
 		
-		local AnyGame = vapeGithubRequest("AnyGame.lua")
+		local AnyGame = readfile("vape/Universal.lua")
 		
 		-- attemps to remove private invulnerable tags
 		local Iregex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
