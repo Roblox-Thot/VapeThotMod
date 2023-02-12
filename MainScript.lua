@@ -177,9 +177,9 @@ for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."CustomMod
 	if not isfolder(v) then makefolder(v) end
 end
 task.spawn(function()
-	local success, assetver = pcall(function() return vapeGithubRequest("assetsversion.dat") end)
-	if not isfile("vape/assetsversion.dat") then writefile("vape/assetsversion.dat", "0") end
-	if success and assetver > readfile("vape/assetsversion.dat") then
+	local success, assetver = pcall(function() return vapeGithubRequest("assetsversion.txt") end)
+	if not isfile("vape/assetsversion.txt") then writefile("vape/assetsversion.txt", "0") end
+	if success and assetver > readfile("vape/assetsversion.txt") then
 		redownloadedAssets = true
 		if isfolder("vape/assets") and not shared.VapeDeveloper then
 			if delfolder then
@@ -187,7 +187,7 @@ task.spawn(function()
 				makefolder("vape/assets")
 			end
 		end
-		writefile("vape/assetsversion.dat", assetver)
+		writefile("vape/assetsversion.txt", assetver)
 	end
 end)
 
