@@ -10,7 +10,7 @@ Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeM
 --[[
     Vape Thot Mod By @Roblox-Thot (Roblox Thot#0001)
 ]]--
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/Run.lua", true))()
 ```
 
 # Additions for Bedwars
