@@ -1675,7 +1675,7 @@ local teleportConnection = playersService.LocalPlayer.OnTeleport:Connect(functio
 			if shared.VapeDeveloper then 
 				loadstring(readfile("vape/MainScript.lua"))() 
 			else 
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/MainScript.lua", true))() 
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/]]..readfile("vape/RTcommithash.txt")..[[/MainScript.lua", true))() 
 			end
 		]]
 		if shared.VapeDeveloper then
