@@ -1864,7 +1864,7 @@ local function loadVape()
 		-- because then it removes their user tags in chat and i like them
 		--loadstring(vapeGithubRequest("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
 		
-		local AnyGame = readfile("vape/Universal.lua")
+		local AnyGame = vapeGithubRequest("Universal.lua")
 		
 		-- attemps to remove private invulnerable tags
 		local Iregex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
