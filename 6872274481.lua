@@ -750,7 +750,7 @@ runcode(function()
 end)
 
 runcode(function()
-	Chest = COB("World", {
+	Chest = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "OpenChests",
 		["HoverText"] = "Makes all chests look opened for everyone",
 		["Function"] = function(callmeback)
