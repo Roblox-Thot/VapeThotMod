@@ -1,4 +1,3 @@
---this is my watermark kekw
 local GuiLibrary = shared.GuiLibrary
 local players = game:GetService("Players")
 local lplr = players.LocalPlayer
