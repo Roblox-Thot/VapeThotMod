@@ -1,13 +1,19 @@
 -- get newest commit ids
 local function getCommit(url)
-    return game:GetService("HttpService"):JSONDecode(game:HttpGet(url, true))[1].commit.url:split("/commits/")[2]
+	for i,v in pairs(game:HttpGet(url):split("\n")) do 
+		if v:find("commit") and v:find("fragment") then 
+			local str = v:split("/")[5]
+			return str:sub(0, str:find('"') - 1)
+			break
+		end
+	end
+	return nil
 end
 
-local suc, commit = pcall(function() return getCommit("https://api.github.com/repos/7GrandDadPGN/VapeV4ForRoblox/commits") end)
-if not suc then commit = "main" end
+-- Get the commit hashes or if failed set it to "main" to attempt to grab the code
+local commit = (getCommit("https://github.com/7GrandDadPGN/VapeV4ForRoblox") or "main")
 
-local RTsuc, RTcommit = pcall(function() return getCommit("https://api.github.com/repos/Roblox-Thot/VapeThotMod/commits") end)
-if not RTsuc then RTcommit = "main" end
+local RTcommit = (getCommit("https://github.com/Roblox-Thot/VapeThotMod") or "main")
 
 if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= commit or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
 	for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
