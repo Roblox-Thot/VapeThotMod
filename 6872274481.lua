@@ -59,7 +59,7 @@ if publicrepo then
 	local Krepin = "false"
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
 	
-	-- makes you look like you use rektsky
+	-- makes you look like you use rektsky to vp users
 	local Kregex = '%.%.clients%.ChatStrings2%.vape'
 	local Krepin = "..clients.ChatStrings2.rektsky"
 	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)

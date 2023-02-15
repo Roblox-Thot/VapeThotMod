@@ -14,6 +14,12 @@ local commit = (getCommit("https://github.com/7GrandDadPGN/VapeV4ForRoblox") or 
 
 local RTcommit = (getCommit("https://github.com/Roblox-Thot/VapeThotMod") or "main")
 
+
+-- Save hashes
+writefile("vape/commithash.txt", commit)
+
+writefile("vape/RTcommithash.txt", RTcommit)
+
 if isfolder("vape") then
 	if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= commit or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
 		for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
@@ -39,9 +45,5 @@ if isfolder("vape") then
 else
 	makefoler("vape")
 end
-
--- Save hashes
-writefile("vape/commithash.txt", commit)
-writefile("vape/RTcommithash.txt", RTcommit)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/MainScript.lua", true))()
