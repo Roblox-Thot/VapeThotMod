@@ -4,7 +4,6 @@ local function getCommit(url)
 		if v:find("commit") and v:find("fragment") then 
 			local str = v:split("/")[5]
 			return str:sub(0, str:find('"') - 1)
-			break
 		end
 	end
 	return nil
