@@ -311,43 +311,43 @@ runcode(function()
 	})
 end)
 
--- Currently patched(?)
--- runcode(function()
--- 	local entity = shared.vapeentity
--- 	yeetOut = COB("Blatant", {
--- 		["Name"] = "Yeet",
--- 		["HoverText"] = "Yeets into space (reset to turn off 💀)",
--- 		["Function"] = function(callmeback)
--- 			if callmeback then
--- 				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
--- 				if module then
--- 					if module["Api"]["Enabled"] == false then
--- 						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
--- 						module["Api"]["ToggleButton"]()
--- 					end
--- 				end
+-- Simi-patched
+runcode(function()
+	local entity = shared.vapeentity
+	yeetOut = COB("Blatant", {
+		["Name"] = "Yeet",
+		["HoverText"] = "Yeets into space (reset to turn off 💀)",
+		["Function"] = function(callmeback)
+			if callmeback then
+				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
+				if module then
+					if module["Api"]["Enabled"] == false then
+						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
+						module["Api"]["ToggleButton"]()
+					end
+				end
 
--- 				spawn(function()
--- 					repeat
--- 						task.wait()
--- 						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
--- 					until (not entity.isAlive)
--- 				end)
+				spawn(function()
+					repeat
+						task.wait()
+						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
+					until (not entity.isAlive)
+				end)
 
--- 				yeetOut["ToggleButton"](false)
--- 				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
--- 			end
--- 		end
--- 	})
--- 	-- don't do small numbers you need to go up fast!
--- 	ypowerbitch = yeetOut.CreateSlider({
--- 		["Name"] = "Y Powwa",
--- 		["Function"] = function()end,
--- 		["Min"] = 0,
--- 		["Max"] = 9999999,
--- 		["Default"] = 6942069
--- 	})
--- end)
+				yeetOut["ToggleButton"](false)
+				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
+			end
+		end
+	})
+	-- don't do small numbers you need to go up fast!
+	ypowerbitch = yeetOut.CreateSlider({
+		["Name"] = "Y Powwa",
+		["Function"] = function()end,
+		["Min"] = 0,
+		["Max"] = 99999999,
+		["Default"] = 6942069
+	})
+end)
 
 runcode(function()
 	COB("Utility", {
