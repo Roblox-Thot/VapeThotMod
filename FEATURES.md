@@ -20,7 +20,7 @@
 * none
 
 # Known problems
-* None
+* yeet is kinda iffy
 
 # ToDo
 * nothing yet I have no other ideas at this time.
