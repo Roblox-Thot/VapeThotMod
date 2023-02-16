@@ -3,6 +3,7 @@ local players = game:GetService("Players")
 local lplr = players.LocalPlayer
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local connections = {}
+local repstorage = game:GetService("ReplicatedStorage")
 
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
@@ -66,7 +67,7 @@ if publicrepo then
     loadstring(Fclean)()
 end
 
-
+local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 local BedwarsAppIds = require(game:GetService("StarterPlayer").StarterPlayerScripts.TS.ui.types["app-config"])["BedwarsAppIds"]
 
 GuiLibrary["SelfDestructEvent"].Event:Connect(function()
@@ -306,7 +307,7 @@ runcode(function()
 				spawn(function()
 					repeat
 						if (not AutobuyWool) then return end
-						game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].BedwarsPurchaseItem:InvokeServer({["shopItem"] = {["itemType"] = "wool_white"}})
+						repstorage["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].BedwarsPurchaseItem:InvokeServer({["shopItem"] = {["itemType"] = "wool_white"}})
 					until (not AutobuyWool)
 				end)
 			end
@@ -735,9 +736,9 @@ end)
 runcode(function()
 	local Host = {["Enabled"] = false}
 	
-	local v2 = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
+	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
 	local OfflinePlayerUtil = v2.OfflinePlayerUtil
-	local v6 = OfflinePlayerUtil.getPlayer(game.Players.LocalPlayer);
+	local v6 = OfflinePlayerUtil.getPlayer(lplr);
 
     Host = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
         ["Name"] = "HostExploit",
@@ -758,7 +759,7 @@ runcode(function()
 		["HoverText"] = "Makes all chests look opened for everyone",
 		["Function"] = function(callmeback)
 			if callmeback then
-				local client = require(game:GetService("ReplicatedStorage").TS.remotes).default.Client
+				local client = require(repstorage.TS.remotes).default.Client
 				for i,v in pairs(game:GetService("CollectionService"):GetTagged("chest")) do
 					task.spawn(function()
 						if v:FindFirstChild("ChestFolderValue") then
@@ -782,9 +783,10 @@ end)
 runcode(function()
 	local OpenDaApps = {["Enabled"] = false}
 	
-	local AppController = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
+	local AppController = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
 	OpenDaApps = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "AppOpener",
+		["HoverText"] = "Allows you open any \"app\"",
 		["Function"] = function(cb)
 			if cb then
 				OpenDaApps.ToggleButton(false)
@@ -795,7 +797,32 @@ runcode(function()
 
 	AppSelected = OpenDaApps.CreateDropdown({
 		["Name"] = "App",
+		["HoverText"] = "What app to open",
 		["Function"] = function() end,
 		["List"] = (function() local list = {} for _, value in pairs(BedwarsAppIds) do table.insert(list, value) end table.sort(list, function(a, b) return tostring(a) < tostring(b) end) return list end)()
 	})
 end)
+
+runcode(function()
+	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
+	local OfflinePlayerUtil = v2.OfflinePlayerUtil
+	local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
+
+	local InvAll = {["Enabled"] = false}
+	InvAll = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "InvAll",
+		["HoverText"] = "Invite all to your party",
+		["Function"] = function(cb)
+			if cb then
+				InvAll.ToggleButton(false)
+				createwarning("InvAll", "Inviting all.", 10)
+				for i,v in pairs(players:GetChildren()) do
+					player = OfflinePlayerUtil.getPlayer(v)
+					Flamework.resolveDependency("@easy-games/lobby:client/controllers/party-controller@PartyController"):invitePlayer(player)
+					task.wait() -- Don't lag game
+				end
+			end
+		end
+	})
+end)
+
