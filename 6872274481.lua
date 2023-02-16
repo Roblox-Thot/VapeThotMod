@@ -66,6 +66,9 @@ if publicrepo then
     loadstring(Fclean)()
 end
 
+
+local BedwarsAppIds = require(game:GetService("StarterPlayer").StarterPlayerScripts.TS.ui.types["app-config"])["BedwarsAppIds"]
+
 GuiLibrary["SelfDestructEvent"].Event:Connect(function()
 	for i3,v3 in pairs(connections) do
 		if v3.Disconnect then pcall(function() v3:Disconnect() end) end
@@ -773,5 +776,26 @@ runcode(function()
 				createwarning("Chests", "All chests opened!", 10)
 			end
 		end
+	})
+end)
+
+runcode(function()
+	local OpenDaApps = {["Enabled"] = false}
+	
+	local AppController = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
+	OpenDaApps = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "AppOpener",
+		["Function"] = function(cb)
+			if cb then
+				OpenDaApps.ToggleButton(false)
+				AppController:openApp(AppSelected["Value"], {})
+			end
+		end
+	})
+
+	AppSelected = OpenDaApps.CreateDropdown({
+		["Name"] = "App",
+		["Function"] = function() end,
+		["List"] = (function() local list = {} for _, value in pairs(BedwarsAppIds) do table.insert(list, value) end table.sort(list, function(a, b) return tostring(a) < tostring(b) end) return list end)()
 	})
 end)
