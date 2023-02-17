@@ -147,7 +147,7 @@ local betterisfile = function(file) local suc, res = pcall(function() return rea
 --delete Vape's files and stop kid's bitchin about it being broken
 if betterisfile("vape/CustomModules/8444591321.lua") then delfile("vape/CustomModules/8444591321.lua") end
 if betterisfile("vape/CustomModules/8560631822.lua") then delfile("vape/CustomModules/8560631822.lua") end
-if betterisfile("vape/CustomModules/8560631822.lua") and not readfile("vape/CustomModules/8560631822.lua"):find("--this is my watermark kekw") then delfile("vape/CustomModules/8560631822.lua") end
+if betterisfile("vape/CustomModules/6872274481.lua") and not readfile("vape/CustomModules/8560631822.lua"):find("--this is my anti delete watermark kekw") then delfile("vape/CustomModules/8560631822.lua") end
 
 
 assert(not shared.VapeExecuted, "Vape Already Injected")
