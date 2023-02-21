@@ -139,10 +139,6 @@ local function downloadThotAsset(path)
 	end
 end
 
---Download the animated cape
-downloadThotAsset("vape/assets/VapeCape.webm")
-downloadThotAsset("vape/assets/keyboard.png")
-
 local betterisfile = function(file) local suc, res = pcall(function() return readfile(file) end) return suc and res ~= nil end
 --delete Vape's files and stop kid's bitchin about it being broken
 if betterisfile("vape/CustomModules/8444591321.lua") then delfile("vape/CustomModules/8444591321.lua") end
@@ -156,6 +152,11 @@ shared.VapeExecuted = true
 for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."Libraries", baseDirectory.."CustomModules", baseDirectory.."Profiles", "vape/assets"}) do 
 	if not isfolder(v) then makefolder(v) end
 end
+
+--Download the animated cape
+downloadThotAsset("vape/assets/VapeCape.webm")
+downloadThotAsset("vape/assets/keyboard.png")
+
 task.spawn(function()
 	local success, assetver = pcall(function() return vapeGithubRequest("assetsversion.txt") end)
 	if not isfile("vape/assetsversion.txt") then writefile("vape/assetsversion.txt", "0") end
