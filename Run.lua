@@ -22,7 +22,7 @@ if isfolder("vape") then
 	end
 	if isfolder("vape/CustomModules") then 
 		for i,v in pairs(listfiles("vape/CustomModules")) do 
-			if isfile(v) and readfile(v):find("--this is my anti delete watermark kekw") then
+			if isfile(v) and not readfile(v):find("--this is my anti delete watermark kekw") then
 				delfile(v)
 			end 
 		end
