@@ -14,6 +14,12 @@
 * Open all chests
 * App opener
 
+# Frontliner
+* Working Phase
+* Working Speed
+* Working Fly
+* Working ESP
+
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect
 - Vape Private whitelist commands
