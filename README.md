@@ -18,7 +18,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
-* AntiIdle to allow autofarms
 * Bypasses Bedwarsdata bans
 * Added AnimatedCapes
 * Client Side host panel

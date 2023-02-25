@@ -492,27 +492,6 @@ runcode(function()
 end)
 
 runcode(function()
-	local entity = shared.vapeentity
-	COB("Utility", {
-		["Name"] = "AntiIdle",
-		["HoverText"] = "Attempts to stop Roblox kicking you for being idle",
-		["Function"] = function(callmeback)
-			if callmeback then
-				task.spawn(function()
-					lplr.Idled:connect(function()
-						game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-						wait(1)
-						game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-					end)
-				end)
-			else
-				createwarning("AntiIdle", "Disabled Next Game", 10)
-			end
-		end
-	})
-end)
-
-runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
 		["Icon"] = "vape/assets/keyboard.png", -- currently you have to use vape assets for icons, this may change in the future
