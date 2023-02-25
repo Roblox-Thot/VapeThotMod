@@ -1847,7 +1847,7 @@ local function loadVape()
 			end
 			if suc and req and req ~= "404: Not Found" then
 				--writefile("vape/CustomModules/"..game.PlaceId..".lua", "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..req)
-				loadstring(req))()
+				loadstring(req)()
 			end
 		end
 		if shared.VapePrivate then
