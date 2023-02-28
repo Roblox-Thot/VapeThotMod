@@ -173,7 +173,7 @@ task.spawn(function()
 end)
 
 Guicode = vapeGithubRequest("GuiLibrary.lua")
-GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod"'))()
+GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod '..readfile("vape/RTcommithash.txt"):sub(1, 6)..'"'))()
 shared.GuiLibrary = GuiLibrary
 
 local saveSettingsLoop = coroutine.create(function()
