@@ -46,7 +46,7 @@ if publicrepo then
 	-- local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
 	-- disables Vape Private user commands
-	regex = 'local commands = {.*local AutoReport = {'
+	regex = 'local vapePrivateCommands = {.*local AutoReport = {'
 	repin =  "local vapePrivateCommands = {} local AutoReport = {"
 	clean = string.gsub(tostring(clean), regex,repin)
 	
