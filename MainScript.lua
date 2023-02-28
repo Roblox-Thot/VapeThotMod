@@ -171,6 +171,7 @@ task.spawn(function()
 	end
 end)
 
+--Guicode = thotGithubRequest("GuiLibrary.lua")
 Guicode = vapeGithubRequest("GuiLibrary.lua")
 GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod '..readfile("vape/RTcommithash.txt"):sub(1, 6)..'"'))()
 shared.GuiLibrary = GuiLibrary
