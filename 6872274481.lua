@@ -39,10 +39,15 @@ checkpublicrepo = function()
 end
 local publicrepo = checkpublicrepo()
 if publicrepo then
-	-- disables and Vape Private user commands
-	local regex = 'local commands = {.*local AutoReport = {'
-	local repin =  "local commands = {} local AutoReport = {"
+	-- disables and Vape Private checks (KEKW he saw my github)
+	local regex = 'commands%.kill == nil'
+	local repin =  "false"
 	local clean = string.gsub(tostring(publicrepo), regex,repin)
+	
+	-- disables and Vape Private user commands
+	local regex = 'local vapePrivateCommands = {.*local AutoReport = {'
+	local repin =  "local vapePrivateCommands = {} local AutoReport = {"
+	local clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- attempts to give lplr admin (CLIENT SIDED)
 	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
