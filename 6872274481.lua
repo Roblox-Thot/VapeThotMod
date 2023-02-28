@@ -40,12 +40,12 @@ end
 local publicrepo = checkpublicrepo()
 if publicrepo then
 	local regex, repin, clean = "","",publicrepo
-	-- disables and Vape Private checks (KEKW he saw my github)
+	-- disables Vape Private checks (KEKW he saw my github)
 	-- local regex = 'commands%.kill == nil'
 	-- local repin =  "false"
 	-- local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
-	-- disables and Vape Private user commands
+	-- disables Vape Private user commands
 	regex = 'local commands = {.*local AutoReport = {'
 	repin =  "local vapePrivateCommands = {} local AutoReport = {"
 	clean = string.gsub(tostring(clean), regex,repin)
