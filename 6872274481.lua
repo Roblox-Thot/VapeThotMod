@@ -39,36 +39,37 @@ checkpublicrepo = function()
 end
 local publicrepo = checkpublicrepo()
 if publicrepo then
+	local regex, repin, clean = "","",publicrepo
 	-- disables and Vape Private checks (KEKW he saw my github)
 	-- local regex = 'commands%.kill == nil'
 	-- local repin =  "false"
 	-- local clean = string.gsub(tostring(publicrepo), regex,repin)
 	
 	-- disables and Vape Private user commands
-	local regex = 'local commands = {.*local AutoReport = {'
-	local repin =  "local vapePrivateCommands = {} local AutoReport = {"
-	local clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'local commands = {.*local AutoReport = {'
+	repin =  "local vapePrivateCommands = {} local AutoReport = {"
+	clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- attempts to give lplr admin (CLIENT SIDED)
-	local Aregex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
-	local Arepin = "true"
-	local admind = string.gsub(tostring(clean), Aregex,Arepin)
-	local Aregex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
-	local Arepin = "true"
-	local admind = string.gsub(tostring(admind), Aregex,Arepin)
+	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
+	repin = "true"
+	clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
+	repin = "true"
+	clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- removes bedwarsdata kicks
-	local Kregex = 'newdatatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
-	local Krepin = "false"
-	local Fclean = string.gsub(tostring(admind), Kregex,Krepin)
-	local Kregex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
-	local Krepin = "false"
-	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
+	regex = 'newdatatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
+	repin = "false"
+	clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
+	repin = "false"
+	clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- makes you look like you use rektsky to vp users
-	local Kregex = '%.%.clients%.ChatStrings2%.vape'
-	local Krepin = "..clients.ChatStrings2.rektsky"
-	local Fclean = string.gsub(tostring(Fclean), Kregex,Krepin)
+	regex = '%.%.clients%.ChatStrings2%.vape'
+	repin = "..clients.ChatStrings2.rektsky"
+	clean = string.gsub(tostring(clean), regex,repin)
     loadstring(Fclean)()
 end
 
