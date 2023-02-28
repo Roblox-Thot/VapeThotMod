@@ -726,7 +726,7 @@ runcode(function()
 
 	deathselected = killdatboy.CreateDropdown({
 		["Name"] = "Effect",
-		["Function"] = function() end,
+		["Function"] = function(cbt) if cbt then  if killdatboy["Enabled"] then  killdatboy["ToggleButton"](false) killdatboy["ToggleButton"](false) end end end,
 		["List"] = {"Classic Vape", "Ragdoll"}
 	})
 end)
