@@ -70,7 +70,7 @@ if publicrepo then
 	regex = '%.%.clients%.ChatStrings2%.vape'
 	repin = "..clients.ChatStrings2.rektsky"
 	clean = string.gsub(tostring(clean), regex,repin)
-    loadstring(Fclean)()
+    loadstring(clean)()
 end
 
 local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
