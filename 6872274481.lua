@@ -717,6 +717,64 @@ runcode(function()
 							end
 						end)
 					end
+				elseif deathselected["Value"] == "Statue" then
+					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
+						p5:BreakJoints()
+						task.spawn(function()
+							local partvelo = {}
+							for i,v in pairs(p5:GetDescendants()) do 
+								if v:IsA("BasePart") then 
+									partvelo[v.Name] = v.Velocity * 3
+								end
+							end
+							p5.Archivable = true
+							local clone = p5:Clone()
+							clone.Humanoid.Health = 100
+							clone.Parent = workspace
+							local nametag = clone:FindFirstChild("Nametag", true)
+							if nametag then nametag:Destroy() end
+							game:GetService("Debris"):AddItem(clone, 2)
+							p5:Destroy()
+							task.wait(0.01)
+							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+							
+							local m = Instance.new("Model")
+							m.Parent = game.Workspace
+							game:GetService("Debris"):AddItem(m,10)
+							local g = clone:GetChildren()
+							clone.HumanoidRootPart.CanCollide = false
+							
+						
+							for _, v in pairs(clone:GetDescendants()) do
+								if v.Parent == clone then
+									v.Parent = m
+								end
+								if v:IsA("Motor6D") then
+									local Weld = Instance.new("Weld")
+									Weld.C0 = MainPart.CFrame:toObjectSpace(v.C1.CFrame)
+									Weld.Part0 = v.C0
+									Weld.Part1 = v.C1
+									Weld.Parent = v.Parent
+									v.Enabled = false
+								end
+								if v.Name == "AccessoryWeld" then
+									local Weld = Instance.new("Weld")
+									Weld.C0 = MainPart.CFrame:toObjectSpace(v.Part1.CFrame)
+									Weld.Part0 = v.Part0
+									Weld.Part1 = v.Part1
+									Weld.Parent = v.Parent
+									v.Enabled = false
+								end
+								if v.Name == "Head" and v:IsA("BasePart") then
+									v.CanCollide = true
+								end
+								if v:IsA("BasePart") then
+									v.CanCollide = true
+									v.Velocity = partvelo[v.Name] or Vector3.zero
+								end
+							end
+						end)
+					end
 				end
 			else
 				DefaultKillEffect.onKill = oldkilleffect
@@ -727,7 +785,7 @@ runcode(function()
 	deathselected = killdatboy.CreateDropdown({
 		["Name"] = "Effect",
 		["Function"] = function(cbt) if cbt then  if killdatboy["Enabled"] then  killdatboy["ToggleButton"](false) killdatboy["ToggleButton"](false) end end end,
-		["List"] = {"Classic Vape", "Ragdoll"}
+		["List"] = {"Classic Vape", "Ragdoll", "Statue"}
 	})
 end)
 
