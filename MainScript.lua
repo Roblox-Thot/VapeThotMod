@@ -1832,10 +1832,10 @@ local function loadVape()
 		local AnyGame = vapeGithubRequest("Universal.lua")
 		
 		-- attemps to remove private invulnerable tags
-		local Iregex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
-		local Irepin = "playerattackable = true                                                                  "
-		local Iclean = string.gsub(tostring(AnyGame), Iregex,Irepin)
-		loadstring(Iclean)()
+		local regex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
+		local repin = "playerattackable = true"
+		local clean = string.gsub(tostring(AnyGame), regex,repin)
+		loadstring(clean..string.rep(" ", 89-#clean))()
 		
 		if isfile("vape/CustomModules/"..game.PlaceId..".lua") then
 			loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
