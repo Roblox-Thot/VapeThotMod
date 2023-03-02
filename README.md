@@ -36,7 +36,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect
-- Vape Private whitelist commands
 
 # Broken
 * none
@@ -47,5 +46,3 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # ToDo
 * nothing yet I have no other ideas at this time.
 
-<img width="349" alt="image" src="https://user-images.githubusercontent.com/67937010/208275873-147fac94-e631-4ee4-9896-55d692cc0fd8.png">
-Vape Private users can't kick/rickroll you using this kek

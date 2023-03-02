@@ -21,7 +21,6 @@
 
 # Removed 
 - Normal KillEffect is now a drop down in the cusom Kill Effect
-- Vape Private whitelist commands
 
 # Broken
 * none

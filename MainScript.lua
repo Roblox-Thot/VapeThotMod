@@ -1830,12 +1830,19 @@ local function loadVape()
 		--loadstring(vapeGithubRequest("AnyGame.lua"):gsub("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json","https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/main/assets/whitelist2.json"))()
 		
 		local AnyGame = vapeGithubRequest("Universal.lua")
+		loadstring(AnyGame)()
 		
-		-- attemps to remove private invulnerable tags
-		local regex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
-		local repin = "playerattackable = true"
-		local clean = string.gsub(tostring(AnyGame), regex,repin)
-		loadstring(clean..string.rep(" ", 89-#clean))()
+		-- -- attemps to remove private invulnerable tags
+		-- local regex = 'playerattackable = %(not tab%) or %(not %(type%(tab%) == "table" and tab%.invulnerable or true%)%)'
+		-- local repin = "playerattackable = true"
+		-- local clean = string.gsub(tostring(AnyGame), regex,repin)
+		-- for line in AnyGame:gmatch("[^\n]+") do
+		--   -- Do something with the line
+		--   if ( tonumber(string.match(line, "%d+"))) ~= nil and line:match("#yeahok") then
+		-- 	abcd = ( tonumber(string.match(line, "%d+")))
+		--   end
+		-- end
+		-- loadstring(clean..string.rep(" ", abcd-#clean))()
 		
 		if isfile("vape/CustomModules/"..game.PlaceId..".lua") then
 			loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
