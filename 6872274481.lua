@@ -53,37 +53,20 @@ end
 local publicrepo = checkpublicrepo()
 if publicrepo then
 	local regex, repin, clean = "","",publicrepo
-	-- disables Vape Private checks (KEKW he saw my github)
-	-- local regex = 'commands%.kill == nil'
-	-- local repin =  "false"
-	-- local clean = string.gsub(tostring(publicrepo), regex,repin)
-	
-	-- -- disables Vape Private user commands
-	-- regex = 'local vapePrivateCommands = {.*local AutoReport = {'
-	-- repin =  "local vapePrivateCommands = {} local AutoReport = {"
-	-- clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- -- attempts to give lplr admin (CLIENT SIDED)
-	-- regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
-	-- repin = "true"
-	-- clean = string.gsub(tostring(clean), regex,repin)
-	-- regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
-	-- repin = "true"
-	-- clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
+	repin = "true"
+	clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
+	repin = "true"
+	clean = string.gsub(tostring(clean), regex,repin)
 	
-	-- -- removes bedwarsdata kicks
-	-- regex = 'newdatatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
-	-- repin = "false"
-	-- clean = string.gsub(tostring(clean), regex,repin)
-	-- regex = 'datatab%.KickUsers%[tostring%(lplr%.UserId%)%]'
-	-- repin = "false"
-	-- clean = string.gsub(tostring(clean), regex,repin)
-	
-	-- -- makes you look like you use rektsky to vp users
-	-- regex = '%.%.clients%.ChatStrings2%.vape'
-	-- repin = "..clients.ChatStrings2.rektsky"
-	-- clean = string.gsub(tostring(clean), regex,repin)
-    loadstring(publicrepo)()
+	-- makes you look like you use rektsky to vp users
+	regex = '%.%.clients%.ChatStrings2%.vape'
+	repin = "..clients.ChatStrings2.rektsky"
+	clean = string.gsub(tostring(clean), regex,repin)
+    loadstring(clean)()
 end
 
 local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
