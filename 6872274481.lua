@@ -5,19 +5,6 @@ local getasset = getsynasset or getcustomasset or function(location) return "rbx
 local connections = {}
 local repstorage = game:GetService("ReplicatedStorage")
 
-oldhmmi = hookmetamethod(game, "__index", function(self, method)
-	if self == lpr and method:lower() == "kick" then
-		return error("Expected ':' not '.' calling member function Kick", 2)
-	end
-	return oldhmmi(self, method)
-end)
-oldhmmnc = hookmetamethod(game, "__namecall", function(self, ...)
-	if self == lpr and getnamecallmethod():lower() == "kick" then
-		return
-	end
-	return oldhmmnc(self, ...)
-end)
-
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local checkpublicreponum = 0
 local checkpublicrepo
