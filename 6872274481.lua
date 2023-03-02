@@ -48,6 +48,12 @@ if publicrepo then
 	regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
 	repin = "true"
 	clean = string.gsub(tostring(clean), regex,repin)
+
+
+	-- Change the top ui message
+	regex = 'Moderators can ban you at any time, Always use alts%.'
+	repin = "Thanks for using Thot Mod. You are sexy!"
+	clean = string.gsub(tostring(clean), regex,repin)
 	
 	-- makes you look like you use rektsky to vp users
 	regex = '%.%.clients%.ChatStrings2%.vape'
