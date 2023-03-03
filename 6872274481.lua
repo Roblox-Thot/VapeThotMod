@@ -914,3 +914,21 @@ runcode(function()
 	})
 end)
 
+runcode(function()
+	local entity = shared.vapeentity
+	COB("Utility", {
+		["Name"] = "Ban screen",
+		["HoverText"] = "Makes ban msgs look like minecraft (by xylex)",
+		["Function"] = function(callmeback)
+			if callmeback then
+				local suc, req = pcall(function() return requestfunc({
+					Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/6872274481.lua",
+					Method = "GET"
+				}) end)
+				if suc and req.StatusCode == 200 then loadstring(req.Body)() end
+			else
+				createwarning("Ban Screen", "Disabled Next Game", 10)
+			end
+		end
+	})
+end)

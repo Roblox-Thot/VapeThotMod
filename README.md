@@ -26,6 +26,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Invite all in game
 * Keypress overlay
 * Open all chests
+* MC Ban screen
 * App opener
 
 # Frontliner
@@ -35,7 +36,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Working ESP
 
 # Removed 
-- Normal KillEffect is now a drop down in the cusom Kill Effect
+- None
 
 # Broken
 * none

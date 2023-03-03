@@ -11,6 +11,7 @@
 * Invite all in game
 * Keypress overlay
 * Open all chests
+* MC Ban screen
 * App opener
 
 # Frontliner
@@ -20,7 +21,7 @@
 * Working ESP
 
 # Removed 
-- Normal KillEffect is now a drop down in the cusom Kill Effect
+- None
 
 # Broken
 * none
