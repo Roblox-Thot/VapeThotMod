@@ -587,183 +587,239 @@ end)
 GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
 runcode(function()
 	DefaultKillEffect = require(lplr.PlayerScripts.TS.controllers.game.locker["kill-effect"].effects["default-kill-effect"])
+	QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
 
 	local oldkilleffect
-	local killdatboy = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "KillEffect",
-		["Function"] = function(callback)
-			if callback then
-				if deathselected["Value"] == "Classic Vape" then
-					lplr:SetAttribute("KillEffectType", "none")
-					oldkilleffect = DefaultKillEffect.onKill
-					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
-						p5:BreakJoints()
-						task.spawn(function()
-							local partvelo = {}
-							for i,v in pairs(p5:GetDescendants()) do 
-								if v:IsA("BasePart") then 
-									partvelo[v.Name] = v.Velocity * 3
-								end
-							end
-							p5.Archivable = true
-							local clone = p5:Clone()
-							clone.Humanoid.Health = 100
-							clone.Parent = workspace
-							local nametag = clone:FindFirstChild("Nametag", true)
-							if nametag then nametag:Destroy() end
-							game:GetService("Debris"):AddItem(clone, 30)
-							p5:Destroy()
-							task.wait(0.01)
-							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
-							clone:BreakJoints()
-							task.wait(0.01)
-							for i,v in pairs(clone:GetDescendants()) do 
-								if v:IsA("BasePart") then 
-									local bodyforce = Instance.new("BodyForce")
-									bodyforce.Force = Vector3.new(0, (workspace.Gravity - 10) * v:GetMass(), 0)
-									bodyforce.Parent = v
-									v.CanCollide = true
-									v.Velocity = partvelo[v.Name] or Vector3.zero
-								end
-							end
-						end)
+	local KillEffectMode = {Value = "Gravity"}
+	local killeffects = {
+		Gravity = function(p3, p4, p5, p6)
+			p5:BreakJoints()
+			task.spawn(function()
+				local partvelo = {}
+				for i,v in pairs(p5:GetDescendants()) do 
+					if v:IsA("BasePart") then 
+						partvelo[v.Name] = v.Velocity * 3
 					end
-				elseif deathselected["Value"] == "Ragdoll" then
-					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
-						p5:BreakJoints()
-						task.spawn(function()
-							local partvelo = {}
-							for i,v in pairs(p5:GetDescendants()) do 
-								if v:IsA("BasePart") then 
-									partvelo[v.Name] = v.Velocity * 3
-								end
-							end
-							p5.Archivable = true
-							local clone = p5:Clone()
-							clone.Humanoid.Health = 100
-							clone.Parent = workspace
-							local nametag = clone:FindFirstChild("Nametag", true)
-							if nametag then nametag:Destroy() end
-							game:GetService("Debris"):AddItem(clone, 2)
-							p5:Destroy()
-							task.wait(0.01)
-							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
-							
-							local m = Instance.new("Model")
-							m.Parent = game.Workspace
-							game:GetService("Debris"):AddItem(m,10)
-							local g = clone:GetChildren()
-							clone.HumanoidRootPart.CanCollide = false
-							
-						
-							for _, v in pairs(clone:GetDescendants()) do
-								if v.Parent == clone then
-									v.Parent = m
-								end
-								if v:IsA("Motor6D") then
-									local Att0, Att1 = Instance.new("Attachment"), Instance.new("Attachment")
-									Att0.CFrame = v.C0
-									Att1.CFrame = v.C1
-									Att0.Parent = v.Part0
-									Att1.Parent = v.Part1
-									local BSC = Instance.new("BallSocketConstraint")
-									BSC.Attachment0 = Att0
-									BSC.Attachment1 = Att1
-									BSC.Parent = v.Part0
-									if v.Part1.Name ==  "Head" then
-										BSC.LimitsEnabled = true
-										BSC.TwistLimitsEnabled = true
-									end
-									v.Enabled = false
-								end
-								if v.Name == "AccessoryWeld" then
-									local WC = Instance.new("WeldConstraint")
-									WC.Part0 = v.Part0
-									WC.Part1 = v.Part1
-									WC.Parent = v.Parent
-									v.Enabled = false
-								end
-								if v.Name == "Head" and v:IsA("BasePart") then
-									v.CanCollide = true
-								end
-								if v:IsA("BasePart") then
-									v.CanCollide = true
-									v.Velocity = partvelo[v.Name] or Vector3.zero
-								end
-							end
-						end)
+				end
+				p5.Archivable = true
+				local clone = p5:Clone()
+				clone.Humanoid.Health = 100
+				clone.Parent = workspace
+				local nametag = clone:FindFirstChild("Nametag", true)
+				if nametag then nametag:Destroy() end
+				game:GetService("Debris"):AddItem(clone, 30)
+				p5:Destroy()
+				task.wait(0.01)
+				clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+				clone:BreakJoints()
+				task.wait(0.01)
+				for i,v in pairs(clone:GetDescendants()) do 
+					if v:IsA("BasePart") then 
+						local bodyforce = Instance.new("BodyForce")
+						bodyforce.Force = Vector3.new(0, (workspace.Gravity - 10) * v:GetMass(), 0)
+						bodyforce.Parent = v
+						v.CanCollide = true
+						v.Velocity = partvelo[v.Name] or Vector3.zero
 					end
-				elseif deathselected["Value"] == "Statue" then
-					DefaultKillEffect.onKill = function(p3, p4, p5, p6)
-						p5:BreakJoints()
-						task.spawn(function()
-							local partvelo = {}
-							for i,v in pairs(p5:GetDescendants()) do 
-								if v:IsA("BasePart") then 
-									partvelo[v.Name] = v.Velocity * 3
-								end
-							end
-							p5.Archivable = true
-							local clone = p5:Clone()
-							clone.Humanoid.Health = 100
-							clone.Parent = workspace
-							local nametag = clone:FindFirstChild("Nametag", true)
-							if nametag then nametag:Destroy() end
-							game:GetService("Debris"):AddItem(clone, 2)
-							p5:Destroy()
-							task.wait(0.01)
-							clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
-							
-							local m = Instance.new("Model")
-							m.Parent = game.Workspace
-							game:GetService("Debris"):AddItem(m,10)
-							local g = clone:GetChildren()
-							clone.HumanoidRootPart.CanCollide = false
-							
-						
-							for _, v in pairs(clone:GetDescendants()) do
-								if v.Parent == clone then
-									v.Parent = m
-								end
-								if v:IsA("Motor6D") then
-									local Weld = Instance.new("Weld")
-									Weld.C0 = MainPart.CFrame:toObjectSpace(v.C1.CFrame)
-									Weld.Part0 = v.C0
-									Weld.Part1 = v.C1
-									Weld.Parent = v.Parent
-									v.Enabled = false
-								end
-								if v.Name == "AccessoryWeld" then
-									local Weld = Instance.new("Weld")
-									Weld.C0 = MainPart.CFrame:toObjectSpace(v.Part1.CFrame)
-									Weld.Part0 = v.Part0
-									Weld.Part1 = v.Part1
-									Weld.Parent = v.Parent
-									v.Enabled = false
-								end
-								if v.Name == "Head" and v:IsA("BasePart") then
-									v.CanCollide = true
-								end
-								if v:IsA("BasePart") then
-									v.CanCollide = true
-									v.Velocity = partvelo[v.Name] or Vector3.zero
-								end
-							end
-						end)
+				end
+			end)
+		end,
+		Lightning = function(p3, p4, p5, p6)
+			p5:BreakJoints()
+			local startpos = 1125
+			local startcf = p5.PrimaryPart.CFrame.p - Vector3.new(0, 8, 0)
+			local newpos = Vector3.new((math.random(1, 10) - 5) * 2, startpos, (math.random(1, 10) - 5) * 2)
+			for i = startpos - 75, 0, -75 do 
+				local newpos2 = Vector3.new((math.random(1, 10) - 5) * 2, i, (math.random(1, 10) - 5) * 2)
+				if i == 0 then 
+					newpos2 = Vector3.zero
+				end
+				local part = Instance.new("Part")
+				part.Size = Vector3.new(1.5, 1.5, 77)
+				part.Material = Enum.Material.SmoothPlastic
+				part.Anchored = true
+				part.Material = Enum.Material.Neon
+				part.CanCollide = false
+				part.CFrame = CFrame.new(startcf + newpos + ((newpos2 - newpos) * 0.5), startcf + newpos2)
+				part.Parent = workspace
+				local part2 = part:Clone()
+				part2.Size = Vector3.new(3, 3, 78)
+				part2.Color = Color3.new(0.7, 0.7, 0.7)
+				part2.Transparency = 0.7
+				part2.Material = Enum.Material.SmoothPlastic
+				part2.Parent = workspace
+				game:GetService("Debris"):AddItem(part, 0.5)
+				game:GetService("Debris"):AddItem(part2, 0.5)
+				QueryUtil:setQueryIgnored(part, true)
+				QueryUtil:setQueryIgnored(part2, true)
+				if i == 0 then 
+					local soundpart = Instance.new("Part")
+					soundpart.Transparency = 1
+					soundpart.Anchored = true 
+					soundpart.Size = Vector3.zero
+					soundpart.Position = startcf
+					soundpart.Parent = workspace
+					QueryUtil:setQueryIgnored(soundpart, true)
+					local sound = Instance.new("Sound")
+					sound.SoundId = "rbxassetid://6993372814"
+					sound.Volume = 2
+					sound.Pitch = 0.5 + (math.random(1, 3) / 10)
+					sound.Parent = soundpart
+					sound:Play()
+					sound.Ended:Connect(function()
+						soundpart:Destroy()
+					end)
+				end
+				newpos = newpos2
+			end
+		end,
+		Ragdoll = function(p3, p4, p5, p6)
+			p5:BreakJoints()
+			task.spawn(function()
+				local partvelo = {}
+				for i,v in pairs(p5:GetDescendants()) do 
+					if v:IsA("BasePart") then 
+						partvelo[v.Name] = v.Velocity * 3
 					end
+				end
+				p5.Archivable = true
+				local clone = p5:Clone()
+				clone.Humanoid.Health = 100
+				clone.Parent = workspace
+				local nametag = clone:FindFirstChild("Nametag", true)
+				if nametag then nametag:Destroy() end
+				game:GetService("Debris"):AddItem(clone, 2)
+				p5:Destroy()
+				task.wait(0.01)
+				clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+				
+				local m = Instance.new("Model")
+				m.Parent = game.Workspace
+				game:GetService("Debris"):AddItem(m,10)
+				local g = clone:GetChildren()
+				clone.HumanoidRootPart.CanCollide = false
+				
+			
+				for _, v in pairs(clone:GetDescendants()) do
+					if v.Parent == clone then
+						v.Parent = m
+					end
+					if v:IsA("Motor6D") then
+						local Att0, Att1 = Instance.new("Attachment"), Instance.new("Attachment")
+						Att0.CFrame = v.C0
+						Att1.CFrame = v.C1
+						Att0.Parent = v.Part0
+						Att1.Parent = v.Part1
+						local BSC = Instance.new("BallSocketConstraint")
+						BSC.Attachment0 = Att0
+						BSC.Attachment1 = Att1
+						BSC.Parent = v.Part0
+						if v.Part1.Name ==  "Head" then
+							BSC.LimitsEnabled = true
+							BSC.TwistLimitsEnabled = true
+						end
+						v.Enabled = false
+					end
+					if v.Name == "AccessoryWeld" then
+						local WC = Instance.new("WeldConstraint")
+						WC.Part0 = v.Part0
+						WC.Part1 = v.Part1
+						WC.Parent = v.Parent
+						v.Enabled = false
+					end
+					if v.Name == "Head" and v:IsA("BasePart") then
+						v.CanCollide = true
+					end
+					if v:IsA("BasePart") then
+						v.CanCollide = true
+						v.Velocity = partvelo[v.Name] or Vector3.zero
+					end
+				end
+			end)
+		end,
+		Statue = function(p3, p4, p5, p6)
+			p5:BreakJoints()
+			task.spawn(function()
+				local partvelo = {}
+				for i,v in pairs(p5:GetDescendants()) do 
+					if v:IsA("BasePart") then 
+						partvelo[v.Name] = v.Velocity * 3
+					end
+				end
+				p5.Archivable = true
+				local clone = p5:Clone()
+				clone.Humanoid.Health = 100
+				clone.Parent = workspace
+				local nametag = clone:FindFirstChild("Nametag", true)
+				if nametag then nametag:Destroy() end
+				game:GetService("Debris"):AddItem(clone, 2)
+				p5:Destroy()
+				task.wait(0.01)
+				clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+				
+				local m = Instance.new("Model")
+				m.Parent = game.Workspace
+				game:GetService("Debris"):AddItem(m,10)
+				local g = clone:GetChildren()
+				clone.HumanoidRootPart.CanCollide = false
+				
+			
+				for _, v in pairs(clone:GetDescendants()) do
+					if v.Parent == clone then
+						v.Parent = m
+					end
+					if v:IsA("Motor6D") then
+						local Weld = Instance.new("Weld")
+						Weld.C0 = MainPart.CFrame:toObjectSpace(v.C1.CFrame)
+						Weld.Part0 = v.C0
+						Weld.Part1 = v.C1
+						Weld.Parent = v.Parent
+						v.Enabled = false
+					end
+					if v.Name == "AccessoryWeld" then
+						local Weld = Instance.new("Weld")
+						Weld.C0 = MainPart.CFrame:toObjectSpace(v.Part1.CFrame)
+						Weld.Part0 = v.Part0
+						Weld.Part1 = v.Part1
+						Weld.Parent = v.Parent
+						v.Enabled = false
+					end
+					if v.Name == "Head" and v:IsA("BasePart") then
+						v.CanCollide = true
+					end
+					if v:IsA("BasePart") then
+						v.CanCollide = true
+						v.Velocity = partvelo[v.Name] or Vector3.zero
+					end
+				end
+			end)
+		end
+	}
+	local KillEffect = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "KillEffect",
+		Function = function(callback)
+			if callback then 
+				lplr:SetAttribute("KillEffectType", "none")
+				oldkilleffect = DefaultKillEffect.onKill
+				DefaultKillEffect.onKill = function(p3, p4, p5, p6)
+					killeffects[KillEffectMode.Value](p3, p4, p5, p6)
 				end
 			else
 				DefaultKillEffect.onKill = oldkilleffect
 			end
 		end
 	})
-
-	deathselected = killdatboy.CreateDropdown({
-		["Name"] = "Effect",
-		["Function"] = function(cbt) if cbt then  if killdatboy["Enabled"] then  killdatboy["ToggleButton"](false) killdatboy["ToggleButton"](false) end end end,
-		["List"] = {"Classic Vape", "Ragdoll", "Statue"}
+	local modes = {}
+	for i,v in pairs(killeffects) do 
+		table.insert(modes, i)
+	end
+	KillEffectMode = KillEffect.CreateDropdown({
+		Name = "Mode",
+		Function = function() end,
+		List = modes
 	})
 end)
+
 
 runcode(function()
 	local Host = {["Enabled"] = false}
