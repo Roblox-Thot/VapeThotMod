@@ -591,7 +591,9 @@ runcode(function()
 	QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
 
 	local oldkilleffect
+	local KillEffect = {Enabled = false}
 	local customKillEffectMode = {Value = "Gravity"}
+    local bedwarsKillEffectMode = []
 	local customKilleffects = {
 		Gravity = function(p3, p4, p5, p6)
 			p5:BreakJoints()
@@ -796,6 +798,7 @@ runcode(function()
 			end)
 		end
 	}
+
 	local KillEffect = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
 		Name = "KillEffect",
 		Function = function(callback)
@@ -822,18 +825,19 @@ runcode(function()
 		Function = function(tog)
             customKillEffectMode.Object.Visible = tog
             bedwarsKillEffectMode.Object.Visible = not tog
+            KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false)
         end
 	})
 
 	customKillEffectMode = KillEffect.CreateDropdown({
 		Name = "Effect",
-		Function = function() end,
+		Function = function() KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false) end,
 		List = (function() local modes = {} for i,v in pairs(customKilleffects) do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
 	})
 
 	bedwarsKillEffectMode = KillEffect.CreateDropdown({
 		Name = "Effect",
-		Function = function() end,
+		Function = function() KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false) end,
 		List = (function() local modes = {} for i,v in BedwarsKillEffects do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
 	})
 end)
