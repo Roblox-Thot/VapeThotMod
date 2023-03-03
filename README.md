@@ -17,8 +17,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Added Force First Person that allows scrollwheel for items
 * ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
-* Toggle to allow any BW kill effect
 * Auto buy wool toggle (needs work)
+* Toggle to allow any BW kill effect
 * Bypasses Bedwarsdata bans
 * Added AnimatedCapes
 * Client Side host panel
