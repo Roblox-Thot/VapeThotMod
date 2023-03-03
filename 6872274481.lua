@@ -922,7 +922,7 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				local suc, req = pcall(function() return requestfunc({
-					Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/6872274481.lua",
+					Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/scripts/BedwarsKickScreen.lua",
 					Method = "GET"
 				}) end)
 				if suc and req.StatusCode == 200 then loadstring(req.Body)() end
