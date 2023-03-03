@@ -64,6 +64,7 @@ end
 
 local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 local BedwarsAppIds = require(game:GetService("StarterPlayer").StarterPlayerScripts.TS.ui.types["app-config"])["BedwarsAppIds"]
+local BedwarsKillEffects = require(repstorage.TS.locker["kill-effect"]["kill-effect-meta"])["KillEffectMeta"]
 
 GuiLibrary["SelfDestructEvent"].Event:Connect(function()
 	for i3,v3 in pairs(connections) do
@@ -590,8 +591,8 @@ runcode(function()
 	QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
 
 	local oldkilleffect
-	local KillEffectMode = {Value = "Gravity"}
-	local killeffects = {
+	local customKillEffectMode = {Value = "Gravity"}
+	local customKilleffects = {
 		Gravity = function(p3, p4, p5, p6)
 			p5:BreakJoints()
 			task.spawn(function()
@@ -799,24 +800,41 @@ runcode(function()
 		Name = "KillEffect",
 		Function = function(callback)
 			if callback then 
-				lplr:SetAttribute("KillEffectType", "none")
-				oldkilleffect = DefaultKillEffect.onKill
-				DefaultKillEffect.onKill = function(p3, p4, p5, p6)
-					killeffects[KillEffectMode.Value](p3, p4, p5, p6)
-				end
+                oldkilltype = lplr:GetAttribute("KillEffectType", "none")
+                oldkilleffect = DefaultKillEffect.onKill
+                if killEffectToggle.Enabled then
+                    lplr:SetAttribute("KillEffectType", "none")
+                    DefaultKillEffect.onKill = function(p3, p4, p5, p6)
+                        customKilleffects[customKillEffectMode.Value](p3, p4, p5, p6)
+                    end
+                else
+                    lplr:SetAttribute("KillEffectType", bedwarsKillEffectMode.Value)
+                end
 			else
 				DefaultKillEffect.onKill = oldkilleffect
+                lplr:SetAttribute("KillEffectType", oldkilltype)
 			end
 		end
 	})
-	local modes = {}
-	for i,v in pairs(killeffects) do 
-		table.insert(modes, i)
-	end
-	KillEffectMode = KillEffect.CreateDropdown({
-		Name = "Mode",
+
+	killEffectToggle = KillEffect.CreateToggle({
+		Name = "Custom kill effect",
+		Function = function(tog)
+            customKillEffectMode.Object.Visible = tog
+            bedwarsKillEffectMode.Object.Visible = not tog
+        end
+	})
+
+	customKillEffectMode = KillEffect.CreateDropdown({
+		Name = "Effect",
 		Function = function() end,
-		List = modes
+		List = (function() local modes = {} for i,v in pairs(customKilleffects) do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
+	})
+
+	bedwarsKillEffectMode = KillEffect.CreateDropdown({
+		Name = "Effect",
+		Function = function() end,
+		List = (function() local modes = {} for i,v in BedwarsKillEffects do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
 	})
 end)
 

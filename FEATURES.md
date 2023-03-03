@@ -2,6 +2,7 @@
 * Added Force First Person that allows scrollwheel for items
 * ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
+* Toggle to allow any BW kill effect
 * Auto buy wool toggle (needs work)
 * Bypasses Bedwarsdata bans
 * Added AnimatedCapes
