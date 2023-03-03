@@ -258,7 +258,7 @@ runcode(function()
 		  count = count + num
 		  if count > 9 then
 			count = 1
-		  elseif count < 0 then
+		  elseif count < 1 then
 			count = 9
 		  end
 		  Send(numbers[count])
