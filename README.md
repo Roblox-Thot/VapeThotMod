@@ -48,5 +48,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # ToDo
 * nothing yet I have no other ideas at this time.
 
-<img width="622" alt="image" src="https://user-images.githubusercontent.com/67937010/222311480-88a3fea5-0d93-4324-a2c0-2d904d21fc08.png"><br>
+<img width="621" alt="image" src="https://user-images.githubusercontent.com/67937010/222311480-88a3fea5-0d93-4324-a2c0-2d904d21fc08.png"><br>
 <a href="https://youtu.be/W2TE0DjdNqI">All the Vape Private bypasses have been removed on request of Xylex</a>
