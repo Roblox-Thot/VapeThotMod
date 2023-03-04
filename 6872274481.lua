@@ -593,7 +593,7 @@ runcode(function()
 	local oldkilleffect
 	local KillEffect = {Enabled = false}
 	local customKillEffectMode = {Value = "Gravity"}
-    local bedwarsKillEffectMode = []
+    local bedwarsKillEffectMode = {}
 	local customKilleffects = {
 		Gravity = function(p3, p4, p5, p6)
 			p5:BreakJoints()
