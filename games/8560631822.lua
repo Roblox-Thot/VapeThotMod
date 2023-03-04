@@ -4,7 +4,7 @@ local checkpublicrepo
 
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/6872274481.lua",
+		Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/games/6872274481.lua",
 		Method = "GET"
 	}) end)
 	if not suc then

@@ -1848,7 +1848,7 @@ local function loadVape()
 			loadstring(readfile("vape/CustomModules/"..game.PlaceId..".lua"))()
 		else
 	
-			local suc, req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/"..game.PlaceId..".lua") end)
+			local suc, req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/games/"..game.PlaceId..".lua") end)
 			if not suc then
 				suc,req = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/CustomModules/"..game.PlaceId..".lua") end)
 			end
