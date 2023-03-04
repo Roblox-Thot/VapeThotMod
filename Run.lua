@@ -15,13 +15,14 @@ local commit = (getCommit("https://github.com/7GrandDadPGN/VapeV4ForRoblox") or 
 local RTcommit = (getCommit("https://github.com/Roblox-Thot/VapeThotMod") or "main")
 
 
--- Save hashes
-writefile("vape/commithash.txt", commit)
-
-writefile("vape/RTcommithash.txt", RTcommit)
 
 if isfolder("vape") then
-	if ((not isfile("vape/commithash.txt")) or readfile("vape/commithash.txt") ~= commit or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
+	if ((not isfile("vape/commithash.txt") or readfile("vape/commithash.txt") ~= commit) or (not isfile("vape/RTcommithash.txt")) or readfile("vape/RTcommithash.txt") ~= RTcommit) then
+        -- Save hashes
+        writefile("vape/commithash.txt", commit)
+
+        writefile("vape/RTcommithash.txt", RTcommit)
+
 		for i,v in pairs({"vape/Universal.lua", "vape/MainScript.lua", "vape/GuiLibrary.lua"}) do 
 			if isfile(v) and readfile(v):find("--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.") then
 				delfile(v)
@@ -43,7 +44,11 @@ if isfolder("vape") then
 		end
 	end
 else
-	makefoler("vape")
+	makefolder("vape")
+    -- Save hashes
+    writefile("vape/commithash.txt", commit)
+
+    writefile("vape/RTcommithash.txt", RTcommit)
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..RTcommit.."/MainScript.lua", true))()
