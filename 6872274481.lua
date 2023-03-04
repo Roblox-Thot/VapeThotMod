@@ -173,6 +173,9 @@ local betterisfile = function(file)
 	return suc and res ~= nil
 end
 
+-- Removes
+GuiLibrary["RemoveObject"]("PanicOptionsButton")
+
 runcode(function()
     local vapecapeconnection
 	local animCapeVolume = {["Value"] = 0}
@@ -599,7 +602,6 @@ runcode(function()
 		["Priority"] = 3
 	})
 end)
-
 
 GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
 runcode(function()
