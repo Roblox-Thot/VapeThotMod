@@ -980,7 +980,6 @@ runcode(function()
 	-- local BowConstantsTable = debug.getupvalue(KnitClient.Controllers.ProjectileController.enableBeam, 5)
 
 	local function tele(position)
-		task.wait(1)
 		local guid = game:GetService("HttpService"):GenerateGUID()
 		if lplr.Character.InventoryFolder.Value:FindFirstChild("telepearl") then
 			local args = {
@@ -996,7 +995,10 @@ runcode(function()
 				},
 				[9] = workspace:GetServerTimeNow()
 			}
-
+			
+			-- Toggle TP redirect to set pos
+			module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
+			module["Api"]["ToggleButton"]()
 			
 			-- pos = (entity.character.HumanoidRootPart.CFrame.lookVector * 0.2)
 			-- local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-BowConstantsTable.RelX, -BowConstantsTable.RelY, -BowConstantsTable.RelZ))).p
@@ -1032,8 +1034,6 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				mouseTP["ToggleButton"](false)
-				module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
-				module["Api"]["ToggleButton"]()
 				tele(false)
 			end
 		end
