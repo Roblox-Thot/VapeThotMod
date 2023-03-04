@@ -117,18 +117,18 @@ end
 local function downloadThotAsset(path)
 	if not isfile(path) then
 		task.spawn(function()
-			local textlabel2 = Instance.new("TextLabel")
-			textlabel2.Size = UDim2.new(1, 0, 0, 36)
-			textlabel2.Text = "Downloading "..path
-			textlabel2.BackgroundTransparency = 1
-			textlabel2.TextStrokeTransparency = 0
-			textlabel2.TextSize = 30
-			textlabel2.Font = Enum.Font.SourceSans
-			textlabel2.TextColor3 = Color3.new(1, 1, 1)
-			textlabel2.Position = UDim2.new(0, 0, 0, -36)
-			textlabel2.Parent = GuiLibrary.MainGui
+			local textlabel = Instance.new("TextLabel")
+			textlabel.Size = UDim2.new(1, 0, 0, 36)
+			textlabel.Text = "Downloading "..path
+			textlabel.BackgroundTransparency = 1
+			textlabel.TextStrokeTransparency = 0
+			textlabel.TextSize = 30
+			textlabel.Font = Enum.Font.SourceSans
+			textlabel.TextColor3 = Color3.new(1, 1, 1)
+			textlabel.Position = UDim2.new(0, 0, 0, -36)
+			textlabel.Parent = GuiLibrary.MainGui
 			repeat task.wait() until isfile(path)
-			textlabel2:Destroy()
+			textlabel:Destroy()
 		end)
 		local suc, req = pcall(function() return thotGithubRequest(path:gsub("vape/assets", "assets")) end)
         if suc and req then
@@ -151,10 +151,6 @@ shared.VapeExecuted = true
 for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."Libraries", baseDirectory.."CustomModules", baseDirectory.."Profiles", "vape/assets"}) do 
 	if not isfolder(v) then makefolder(v) end
 end
-
---Download the animated cape
-downloadThotAsset("vape/assets/VapeCape.webm")
-downloadThotAsset("vape/assets/keyboard.png")
 
 task.spawn(function()
 	local success, assetver = pcall(function() return vapeGithubRequest("assetsversion.txt") end)
@@ -184,6 +180,10 @@ local saveSettingsLoop = coroutine.create(function()
 end)
 
 task.spawn(function()
+	--Download ThotMod files
+	downloadThotAsset("vape/assets/VapeCape.webm")
+	downloadThotAsset("vape/assets/keyboard.png")
+
 	local image = Instance.new("ImageLabel")
 	image.Image = downloadVapeAsset("vape/assets/CombatIcon.png")
 	image.Position = UDim2.new()
