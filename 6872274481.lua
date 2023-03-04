@@ -41,14 +41,13 @@ local publicrepo = checkpublicrepo()
 if publicrepo then
 	local regex, repin, clean = "","",publicrepo
 	
-	-- -- attempts to give lplr admin (CLIENT SIDED)
+	-- attempts to give lplr admin (CLIENT SIDED)
 	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
 	repin = "true"
 	clean = string.gsub(tostring(clean), regex,repin)
 	regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
 	repin = "true"
 	clean = string.gsub(tostring(clean), regex,repin)
-
 
 	-- Change the top ui message
 	regex = 'Moderators can ban you at any time, Always use alts%.'
@@ -62,9 +61,19 @@ if publicrepo then
     loadstring(clean)()
 end
 
+local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
 local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 local BedwarsAppIds = require(game:GetService("StarterPlayer").StarterPlayerScripts.TS.ui.types["app-config"])["BedwarsAppIds"]
 local BedwarsKillEffects = require(repstorage.TS.locker["kill-effect"]["kill-effect-meta"])["KillEffectMeta"]
+
+local function getremote(tab)
+	for i,v in pairs(tab) do
+		if v == "Client" then
+			return tab[i + 1]
+		end
+	end
+	return ""
+end
 
 GuiLibrary["SelfDestructEvent"].Event:Connect(function()
 	for i3,v3 in pairs(connections) do
@@ -961,3 +970,73 @@ runcode(function()
 		end
 	})
 end)
+
+runcode(function()
+	local entity = shared.vapeentity
+	local Client = require(repstorage.TS.remotes).default.Client
+	local ProjectileController = KnitClient.Controllers.ProjectileController
+	local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
+	-- local ProjectileMeta = require(repstorage.TS.projectile["projectile-meta"]).ProjectileMeta
+	-- local BowConstantsTable = debug.getupvalue(KnitClient.Controllers.ProjectileController.enableBeam, 5)
+
+	local function tele(position)
+		task.wait(1)
+		local guid = game:GetService("HttpService"):GenerateGUID()
+		if lplr.Character.InventoryFolder.Value:FindFirstChild("telepearl") then
+			local args = {
+				[1] = lplr.Character.InventoryFolder.Value.telepearl,
+				[2] = "telepearl",
+				[3] = "telepearl",
+				[4] = entity.character.HumanoidRootPart.Position,
+				[5] = entity.character.HumanoidRootPart.Position,
+				[6] = Vector3.new(0,-1,0),
+				[7] = guid,
+				[8] = {
+					["drawDurationSeconds"] = 10
+				},
+				[9] = workspace:GetServerTimeNow()
+			}
+
+			
+			-- pos = (entity.character.HumanoidRootPart.CFrame.lookVector * 0.2)
+			-- local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-BowConstantsTable.RelX, -BowConstantsTable.RelY, -BowConstantsTable.RelZ))).p
+			-- ProjectileController:createLocalProjectile({lplr.Character}, "telepearl", "telepearl", offsetshootpos, guid, Vector3.new(0, 60, 0), {drawDurationSeconds = 1})
+			
+			Client:Get(ProjectileRemote):CallServerAsync(unpack(args))
+			-- Client:Get(ProjectileRemote):CallServerAsync(unpack(args)):andThen(function(projectile)
+			-- 	print(T2S(projectile:GetChildren()))
+			-- 	if projectile then
+			-- 		local projectilemodel = projectile
+			-- 		if not projectilemodel then
+			-- 			projectilemodel:GetPropertyChangedSignal("PrimaryPart"):Wait()
+			-- 		end
+			-- 		local bodyforce = Instance.new("BodyForce")
+			-- 		bodyforce.Force = Vector3.new(0, projectilemodel.PrimaryPart.AssemblyMass * workspace.Gravity, 0)
+			-- 		bodyforce.Name = "AntiGravity"
+			-- 		bodyforce.Parent = projectilemodel.PrimaryPart
+
+			-- 		projectilemodel:SetPrimaryPartCFrame(CFrame.new(position))
+			-- 		createwarning("MouseTP", "something failed", 3)
+			-- 	end
+			-- 	print(projectile.CFrame)
+			-- 	createwarning("a", "b", 3)
+			-- end)
+		else
+			createwarning("MouseTP","No pearl found", 5)
+		end
+	end
+
+	mouseTP = COB("Utility", {
+		["Name"] = "MouseTP",
+		["HoverText"] = "Uses a pearl to tp",
+		["Function"] = function(callmeback)
+			if callmeback then
+				mouseTP["ToggleButton"](false)
+				module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
+				module["Api"]["ToggleButton"]()
+				tele(false)
+			end
+		end
+	})
+end)
+
