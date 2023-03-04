@@ -37,7 +37,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Working ESP
 
 # Removed 
-- None
+- Panic button
 
 # Broken
 * none
