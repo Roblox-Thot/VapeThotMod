@@ -316,7 +316,7 @@ runcode(function()
 	local entity = shared.vapeentity
 	yeetOut = COB("Blatant", {
 		["Name"] = "Yeet",
-		["HoverText"] = "Yeets into space (reset to turn off 💀)",
+		["HoverText"] = "Yeets into space (can kill you 💀)",
 		["Function"] = function(callmeback)
 			if callmeback then
 				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
@@ -327,15 +327,15 @@ runcode(function()
 					end
 				end
 
-				spawn(function()
-					repeat
-						task.wait()
-						entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
-					until (not entity.isAlive)
-				end)
+				createwarning("Yeet away","This bitch empty.", 10)
+                repeat
+                    task.wait()
+                    entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
+                until (kSwitch.Enabled) or (not entity.isAlive)
 
-				yeetOut["ToggleButton"](false)
-				createwarning("Yeet away","This bitch empty.\n(Reset to go to normal,\nmight need deathtp)", 10)
+                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
+                if kSwitch.Enabled then kSwitch["ToggleButton"](false) end
+				-- yeetOut["ToggleButton"](false)
 			end
 		end
 	})
@@ -346,6 +346,13 @@ runcode(function()
 		["Min"] = 0,
 		["Max"] = 99999999,
 		["Default"] = 6942069
+	})
+	-- don't do small numbers you need to go up fast!
+	kSwitch = yeetOut.CreateToggle({
+		["Name"] = "Kill switch",
+        ["HoverText"] = "Makes it stop tping you up",
+		["Function"] = function()end,
+		["Default"] = false
 	})
 end)
 
