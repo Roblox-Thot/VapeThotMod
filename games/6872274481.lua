@@ -40,7 +40,7 @@ end
 local publicrepo = checkpublicrepo()
 if publicrepo then
 	local regex, repin, clean = "","",publicrepo
-	
+
 	-- attempts to give lplr admin (CLIENT SIDED)
 	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
 	repin = "true"
@@ -119,8 +119,10 @@ local function AnimCape(char, texture, vol)
 	-- Hide in FirstPerson
 	spawn(function()
 		repeat wait(1/44)
-			data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
-			if data-0.51 <= 0 then 
+			-- data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
+			data = KnitClient.Controllers.CameraPerspectiveController:getCameraPerspective()
+			-- if data-0.51 <= 0 then 
+			if data == 0 then 
 				VF.Visible = false
 			else 
 				VF.Visible = true
@@ -173,7 +175,7 @@ local betterisfile = function(file)
 	return suc and res ~= nil
 end
 
--- Removes
+-- Removes panicking
 GuiLibrary["RemoveObject"]("PanicOptionsButton")
 
 runcode(function()
@@ -255,9 +257,14 @@ end)
 
 runcode(function()
 	local Send = function(Key)
-		local VM = game:GetService('VirtualInputManager')
-		VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
-		VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
+		if keyclick then
+			keyclick(Enum.KeyCode[Key])
+		else
+			-- Kept incase your shitty exploit can't keyclick
+			local VM = game:GetService('VirtualInputManager')
+			VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
+			VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
+		end
 	end
 
 	function counter()
@@ -990,10 +997,10 @@ runcode(function()
 				[3] = "telepearl",
 				[4] = entity.character.HumanoidRootPart.Position,
 				[5] = entity.character.HumanoidRootPart.Position,
-				[6] = Vector3.new(0,-1,0),
+				[6] = Vector3.new(0,-90,0),
 				[7] = guid,
 				[8] = {
-					["drawDurationSeconds"] = 10
+					["drawDurationSeconds"] = 0
 				},
 				[9] = workspace:GetServerTimeNow()
 			}
@@ -1001,7 +1008,7 @@ runcode(function()
 			-- Toggle TP redirect to set pos
 			module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
 			module["Api"]["ToggleButton"]()
-			
+
 			-- pos = (entity.character.HumanoidRootPart.CFrame.lookVector * 0.2)
 			-- local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-BowConstantsTable.RelX, -BowConstantsTable.RelY, -BowConstantsTable.RelZ))).p
 			-- ProjectileController:createLocalProjectile({lplr.Character}, "telepearl", "telepearl", offsetshootpos, guid, Vector3.new(0, 60, 0), {drawDurationSeconds = 1})
@@ -1042,3 +1049,40 @@ runcode(function()
 	})
 end)
 
+runcode(function()
+	local entity = shared.vapeentity
+					
+	local StarterGui = game:GetService("StarterGui")
+
+	local coreGuiTypeNames = {
+		leaderboard = Enum.CoreGuiType.PlayerList,
+		chat = Enum.CoreGuiType.Chat,
+		emotes = Enum.CoreGuiType.EmotesMenu,
+	}
+
+	local typeToggles = {}
+
+	old = COB("Utility", {
+		["Name"] = "CoreGuiToggle",
+		["HoverText"] = "Toggles for coreGui stuff",
+		["Function"] = function(callmeback)
+			if callmeback then
+				for name, toggle in typeToggles do
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled)
+				end
+			end
+		end
+	})
+
+	for name, enum in coreGuiTypeNames do
+		typeToggles[name] = old.CreateToggle({
+			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
+			["HoverText"] = "Toggles the "..name,
+			["Function"] = function(state)
+				old.ToggleButton(false)
+				old.ToggleButton(false)
+			end,
+			["Default"] = false
+		})
+	end
+end)

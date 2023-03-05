@@ -12,6 +12,7 @@
 * Invite all in game
 * Keypress overlay
 * Open all chests
+* CoreGui Toggle
 * MC Ban screen
 * App opener
 

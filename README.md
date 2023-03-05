@@ -27,6 +27,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Invite all in game
 * Keypress overlay
 * Open all chests
+* CoreGui Toggle
 * MC Ban screen
 * App opener
 
