@@ -1060,6 +1060,14 @@ runcode(function()
 		emotes = Enum.CoreGuiType.EmotesMenu,
 	}
 
+	local defaultToggles = (function()
+		local save = {}
+		for name, enum in coreGuiTypeNames do
+			save[name] = StarterGui:GetCoreGuiEnabled(enum)
+		end
+		return save
+	end)()
+
 	local typeToggles = {}
 
 	old = COB("Utility", {
@@ -1069,6 +1077,10 @@ runcode(function()
 			if callmeback then
 				for name, toggle in typeToggles do
 					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled)
+				end
+			else
+				for name, toggle in typeToggles do
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name])
 				end
 			end
 		end
