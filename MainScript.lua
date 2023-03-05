@@ -183,6 +183,13 @@ task.spawn(function()
 	downloadThotAsset("vape/assets/VapeCape.webm")
 	downloadThotAsset("vape/assets/keyboard.png")
 
+	-- If your exc supports it then it will set the title and icon
+	if setwindowtitle and setwindowicon then
+		downloadThotAsset("vape/assets/icon.png")
+		setwindowicon(readfile("vape/assets/icon.png"))
+		setwindowtitle("Roblox - Running Vape Thot Mod")
+	end
+
 	local image = Instance.new("ImageLabel")
 	image.Image = downloadVapeAsset("vape/assets/CombatIcon.png")
 	image.Position = UDim2.new()
