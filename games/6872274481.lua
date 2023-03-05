@@ -1079,8 +1079,10 @@ runcode(function()
 			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
 			["HoverText"] = "Toggles the "..name,
 			["Function"] = function(state)
-				old.ToggleButton(false)
-				old.ToggleButton(false)
+				if old.Enabled then
+					old.ToggleButton(false)
+					old.ToggleButton(false)
+				end
 			end,
 			["Default"] = false
 		})
