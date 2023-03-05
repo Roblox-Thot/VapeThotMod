@@ -1064,7 +1064,7 @@ runcode(function()
 
 	local typeToggles = {}
 
-	old = COB("Utility", {
+	old = COB("Render", {
 		["Name"] = "CoreGuiToggle",
 		["HoverText"] = "Toggles for coreGui stuff",
 		["Function"] = function(callmeback)
