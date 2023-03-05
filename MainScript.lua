@@ -148,7 +148,7 @@ if betterisfile("vape/CustomModules/6872274481.lua") and not readfile("vape/Cust
 assert(not shared.VapeExecuted, "Vape Already Injected")
 shared.VapeExecuted = true
 
-loadstring(thotGithubRequest("script/ChatTags.lua"))
+loadstring(thotGithubRequest("scripts/ChatTags.lua"))
 
 for i,v in pairs({baseDirectory:gsub("/", ""), "vape", baseDirectory.."Libraries", baseDirectory.."CustomModules", baseDirectory.."Profiles", "vape/assets"}) do 
 	if not isfolder(v) then makefolder(v) end
