@@ -1060,13 +1060,7 @@ runcode(function()
 		emotes = Enum.CoreGuiType.EmotesMenu,
 	}
 
-	local defaultToggles = (function()
-		local save = {}
-		for name, enum in coreGuiTypeNames do
-			save[name] = StarterGui:GetCoreGuiEnabled(enum)
-		end
-		return save
-	end)()
+	local defaultToggles = (function() local save = {} for name, enum in coreGuiTypeNames do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
 
 	local typeToggles = {}
 
