@@ -23,7 +23,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Executer (please complete the following information):**
+**Executor (please complete the following information):**
  - Name: [e.g. Synapse, SW]
  - Version:
 
