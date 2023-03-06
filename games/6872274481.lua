@@ -15,7 +15,7 @@ checkpublicrepo = function()
 	}) end)
 	if not suc then
 		checkpublicreponum = checkpublicreponum + 1
-		spawn(function()
+		task.spawn(function()
 			local textlabel = Instance.new("TextLabel")
 			textlabel.Size = UDim2.new(1, 0, 0, 36)
 			textlabel.Text = "Loading CustomModule Failed!, Attempts : "..checkpublicreponum
@@ -117,8 +117,9 @@ local function AnimCape(char, texture, vol)
 	local wave = true
 
 	-- Hide in FirstPerson
-	spawn(function()
-		repeat wait(1/44)
+	task.spawn(function()
+        local data = 1
+		repeat task.wait(1/44)
 			-- data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
 			data = KnitClient.Controllers.CameraPerspectiveController:getCameraPerspective()
 			-- if data-0.51 <= 0 then 
@@ -182,7 +183,7 @@ runcode(function()
     local vapecapeconnection
 	local animCapeVolume = {["Value"] = 0}
 	local animCapebox = {["Value"] = ""}
-    local animCape = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
+    local animCape = COB("WorldWindow",{
         ["Name"] = "AnimatedCapeBeta",
         ["HoverText"] = "Make a cape that is animated",
         ["Function"] = function(callback)
@@ -267,7 +268,7 @@ runcode(function()
 		end
 	end
 
-	function counter()
+	local function counter()
 		local count = 0
 		local numbers = {
 		  "One", "Two", "Three", "Four", "Five",
@@ -284,6 +285,9 @@ runcode(function()
 		end
 	end
 	local KeyCount = counter()
+
+    local downconnection, upconnection
+
 	COB("Utility",{
 		["Name"] = "Force FPS", 
 		["Function"] = function(callback)
@@ -313,17 +317,17 @@ end)
 
 runcode(function()
 	-- shitty because it's calling the remote and not the module
-	COB("Utility", {
+    local AutobuyWool = {Enabled = false}
+	AutobuyWool = COB("Utility", {
 		["Name"] = "Auto Buy Wool (shit)",
 		["HoverText"] = "Shit needs to be made better sometime",
 		["Function"] = function(v)
-			AutobuyWool = v
-			if AutobuyWool then
-				spawn(function()
+			if v then
+				task.spawn(function()
 					repeat
-						if (not AutobuyWool) then return end
+						if (not AutobuyWool.Enabled) then return end
 						repstorage["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].BedwarsPurchaseItem:InvokeServer({["shopItem"] = {["itemType"] = "wool_white"}})
-					until (not AutobuyWool)
+					until (not AutobuyWool.Enabled)
 				end)
 			end
 		end
@@ -333,6 +337,9 @@ end)
 -- Simi-patched
 runcode(function()
 	local entity = shared.vapeentity
+    local yeetOut = {Enabled = false}
+    local ypowerbitch = {Enabled = false}
+    local kSwitch = {Enabled = false}
 	yeetOut = COB("Blatant", {
 		["Name"] = "Yeet",
 		["HoverText"] = "Yeets into space (can kill you 💀)",
@@ -347,12 +354,13 @@ runcode(function()
 				end
 
 				createwarning("Yeet away","This bitch empty.", 10)
+
+                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
                 repeat
                     task.wait()
                     entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
                 until (kSwitch.Enabled) or (not entity.isAlive)
-
-                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
+                
                 if kSwitch.Enabled then kSwitch["ToggleButton"](false) end
 				-- yeetOut["ToggleButton"](false)
 			end
@@ -390,8 +398,7 @@ runcode(function()
 end)
 
 runcode(function()
-	local entity = shared.vapeentity
-	chatLog = COB("Utility", {
+	COB("Utility", {
 		["Name"] = "AntiLog",
 		["HoverText"] = "Attempts to stop Roblox from logging chat",
 		["Function"] = function(callmeback)
@@ -460,9 +467,7 @@ runcode(function()
 					if not game:IsLoaded() then
 						game.Loaded:wait()
 					end
-					
-					local CoreGui = game:GetService("CoreGui")
-					local TweenService = game:GetService("TweenService")
+
 					local Players = game:GetService("Players")
 					
 					local Player = Players.LocalPlayer
@@ -500,10 +505,6 @@ runcode(function()
 					if setfflag then
 						setfflag("AbuseReportScreenshot", "False")
 						setfflag("AbuseReportScreenshotPercentage", "0")
-					end
-					
-					if OldSetting then
-						StarterGui:SetCoreGuiEnabled(CoreGuiSettings[1], CoreGuiSettings[2])
 					end
 				end)
 			else
@@ -559,7 +560,7 @@ runcode(function()
         space.Text = "SPACE"
         space.Parent = main4
 
-		color = Color3.fromHSV(0,0,0)
+		local color = Color3.fromHSV(0,0,0)
 		w.BackgroundColor3 = color
 		a.BackgroundColor3 = color
 		s.BackgroundColor3 = color
@@ -600,7 +601,7 @@ runcode(function()
         end)
     end)
 
-	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
+	COB("GUIWindow",{
 		["Name"] = "Keystrokes", 
 		["Icon"] = "vape/assets/keyboard.png", 
 		["Function"] = function(callback)
@@ -612,13 +613,14 @@ end)
 
 GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
 runcode(function()
-	DefaultKillEffect = require(lplr.PlayerScripts.TS.controllers.game.locker["kill-effect"].effects["default-kill-effect"])
-	QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
+	local DefaultKillEffect = require(lplr.PlayerScripts.TS.controllers.game.locker["kill-effect"].effects["default-kill-effect"])
+	local QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
 
-	local oldkilleffect
+	local oldkilleffect, oldkilltype
 	local KillEffect = {Enabled = false}
 	local customKillEffectMode = {Value = "Gravity"}
     local bedwarsKillEffectMode = {}
+    local killEffectToggle = {}
 	local customKilleffects = {
 		Gravity = function(p3, p4, p5, p6)
 			p5:BreakJoints()
@@ -824,7 +826,7 @@ runcode(function()
 		end
 	}
 
-	local KillEffect = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+	KillEffect = COB("Render",{
 		Name = "KillEffect",
 		Function = function(callback)
 			if callback then 
@@ -869,13 +871,11 @@ end)
 
 
 runcode(function()
-	local Host = {["Enabled"] = false}
-	
-	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
+    local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
 	local OfflinePlayerUtil = v2.OfflinePlayerUtil
 	local v6 = OfflinePlayerUtil.getPlayer(lplr);
 
-    Host = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+    COB("Utility",{
         ["Name"] = "HostExploit",
 		["HoverText"] = "Client Sided",
         ["Function"] = function(callback)
@@ -889,6 +889,8 @@ runcode(function()
 end)
 
 runcode(function()
+    local Chest = {Enabled = false}
+
 	Chest = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "OpenChests",
 		["HoverText"] = "Makes all chests look opened for everyone",
@@ -917,6 +919,7 @@ end)
 
 runcode(function()
 	local OpenDaApps = {["Enabled"] = false}
+	local AppSelected = {}
 	
 	local AppController = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
 	OpenDaApps = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
@@ -944,7 +947,7 @@ runcode(function()
 	local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 
 	local InvAll = {["Enabled"] = false}
-	InvAll = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+	InvAll = COB("Utility",{
 		["Name"] = "InvAll",
 		["HoverText"] = "Invite all to your party",
 		["Function"] = function(cb)
@@ -952,7 +955,7 @@ runcode(function()
 				InvAll.ToggleButton(false)
 				createwarning("InvAll", "Inviting all.", 10)
 				for i,v in pairs(players:GetChildren()) do
-					player = OfflinePlayerUtil.getPlayer(v)
+					local player = OfflinePlayerUtil.getPlayer(v)
 					Flamework.resolveDependency("@easy-games/lobby:client/controllers/party-controller@PartyController"):invitePlayer(player)
 					task.wait() -- Don't lag game
 				end
@@ -962,7 +965,6 @@ runcode(function()
 end)
 
 runcode(function()
-	local entity = shared.vapeentity
 	COB("Utility", {
 		["Name"] = "Ban screen",
 		["HoverText"] = "Makes ban msgs look like minecraft (by xylex)",
@@ -982,6 +984,7 @@ end)
 
 runcode(function()
 	local entity = shared.vapeentity
+    local mouseTP = {Enabled = false}
 	local Client = require(repstorage.TS.remotes).default.Client
 	local ProjectileController = KnitClient.Controllers.ProjectileController
 	local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
@@ -1050,21 +1053,17 @@ runcode(function()
 end)
 
 runcode(function()
-	local entity = shared.vapeentity
-					
 	local StarterGui = game:GetService("StarterGui")
-
 	local coreGuiTypeNames = {
 		leaderboard = Enum.CoreGuiType.PlayerList,
 		chat = Enum.CoreGuiType.Chat,
 		emotes = Enum.CoreGuiType.EmotesMenu,
 	}
-
 	local defaultToggles = (function() local save = {} for name, enum in coreGuiTypeNames do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
-
 	local typeToggles = {}
 
-	old = COB("Render", {
+    local CoreGuiToggle = {Enabled = false}
+	CoreGuiToggle = COB("Render", {
 		["Name"] = "CoreGuiToggle",
 		["HoverText"] = "Toggles for coreGui stuff",
 		["Function"] = function(callmeback)
@@ -1081,13 +1080,13 @@ runcode(function()
 	})
 
 	for name, enum in coreGuiTypeNames do
-		typeToggles[name] = old.CreateToggle({
+		typeToggles[name] = CoreGuiToggle.CreateToggle({
 			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
 			["HoverText"] = "Toggles the "..name,
 			["Function"] = function(state)
-				if old.Enabled then
-					old.ToggleButton(false)
-					old.ToggleButton(false)
+				if CoreGuiToggle.Enabled then
+					CoreGuiToggle.ToggleButton(false)
+					CoreGuiToggle.ToggleButton(false)
 				end
 			end,
 			["Default"] = false
