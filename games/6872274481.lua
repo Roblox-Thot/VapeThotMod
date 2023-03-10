@@ -42,11 +42,11 @@ if publicrepo then
 	local regex, repin, clean = "","",publicrepo
 
 	-- attempts to give lplr admin (CLIENT SIDED)
-	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
-	repin = "true"
-	clean = string.gsub(tostring(clean), regex,repin)
-	regex = 'priolist%[WhitelistFunctions:CheckPlayerType%(lplr%)%] > 0'
-	repin = "true"
+	-- regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
+	-- repin = "true"
+	-- clean = string.gsub(tostring(clean), regex,repin)
+	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%)'
+	repin = "'VAPE PRIVATE'                            "
 	clean = string.gsub(tostring(clean), regex,repin)
 
 	-- Change the top ui message
@@ -54,9 +54,9 @@ if publicrepo then
 	repin = "Thanks for using Thot Mod. You are sexy!"
 	clean = string.gsub(tostring(clean), regex,repin)
 	
-	-- makes you look like you use rektsky to vp users
+	-- figure it out ur self
 	regex = '%.%.clients%.ChatStrings2%.vape'
-	repin = "..clients.ChatStrings2.rektsky"
+	repin = "                           "
 	clean = string.gsub(tostring(clean), regex,repin)
     loadstring(clean)()
 end
