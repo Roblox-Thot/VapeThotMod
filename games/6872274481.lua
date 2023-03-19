@@ -183,7 +183,7 @@ runcode(function()
     local vapecapeconnection
 	local animCapeVolume = {["Value"] = 0}
 	local animCapebox = {["Value"] = ""}
-    local animCape = COB("WorldWindow",{
+    local animCape = COB("World",{
         ["Name"] = "AnimatedCapeBeta",
         ["HoverText"] = "Make a cape that is animated",
         ["Function"] = function(callback)
@@ -601,7 +601,7 @@ runcode(function()
         end)
     end)
 
-	COB("GUIWindow",{
+	COB("GUI",{
 		["Name"] = "Keystrokes", 
 		["Icon"] = "vape/assets/keyboard.png", 
 		["Function"] = function(callback)
