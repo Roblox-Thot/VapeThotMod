@@ -10,9 +10,10 @@
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Invite all in game
+* MouseTP with perl
 * Keypress overlay
 * Open all chests
-* CoreGui Toggle
+* Core Gui Toggle
 * MC Ban screen
 * App opener
 
