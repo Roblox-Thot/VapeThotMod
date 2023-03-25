@@ -25,10 +25,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Invite all in game
-* Keystrokes
 * Open all chests
 * CoreGui Toggle
 * MC Ban screen
+* Keystrokes
 * App opener
 
 # Frontliner
