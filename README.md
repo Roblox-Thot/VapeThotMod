@@ -1,7 +1,7 @@
 # VapeThotMod
 [Support/Update Discord](https://discord.gg/tbB9SnyH58)
 
-This edit will more than likely be only for BedWars
+This edit will more than likely to be only for BedWars
 
 Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
 
@@ -15,7 +15,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 
 # Additions for Bedwars
 * Added Force First Person that allows scrollwheel for items
-* ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Anti Chat Log (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Toggle to allow any BW kill effect
@@ -25,7 +25,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Invite all in game
-* Keypress overlay
+* Keystrokes
 * Open all chests
 * CoreGui Toggle
 * MC Ban screen
