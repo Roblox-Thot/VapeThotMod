@@ -19,17 +19,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Toggle to allow any BW kill effect
-* Bypasses Bedwarsdata bans
-* Added AnimatedCapes
 * Client Side host panel
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Invite all in game
+* MouseTP with perl
 * Open all chests
-* CoreGui Toggle
+* Core Gui Toggle
 * MC Ban screen
-* Keystrokes
+* AnimatedCapes
 * App opener
+* Keypress
 
 # Frontliner
 * Working Phase

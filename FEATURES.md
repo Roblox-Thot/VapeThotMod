@@ -1,21 +1,20 @@
 # Additions for Bedwars
 * Added Force First Person that allows scrollwheel for items
-* ChatLog bypass (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Anti Chat Log (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
 * Yeet (makes you super high in the sky)
-* Toggle to allow any BW kill effect
 * Auto buy wool toggle (needs work)
-* Bypasses Bedwarsdata bans
-* Added AnimatedCapes
+* Toggle to allow any BW kill effect
 * Client Side host panel
 * Auto load Inf Yield
 * Ragdoll kill effect
 * Invite all in game
 * MouseTP with perl
-* Keypress overlay
 * Open all chests
 * Core Gui Toggle
 * MC Ban screen
+* AnimatedCapes
 * App opener
+* Keypress
 
 # Frontliner
 * Working Phase
