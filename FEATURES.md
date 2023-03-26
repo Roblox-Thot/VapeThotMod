@@ -28,8 +28,5 @@
 # Broken
 * none
 
-# Known problems
-* yeet is kinda iffy
-
 # ToDo
 * nothing yet I have no other ideas at this time.

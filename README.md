@@ -43,9 +43,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 # Broken
 * none
 
-# Known problems
-* None
-
 # ToDo
 * nothing yet I have no other ideas at this time.
 
