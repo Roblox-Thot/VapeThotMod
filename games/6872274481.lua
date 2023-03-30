@@ -118,7 +118,7 @@ local function AnimCape(char, texture, vol)
 
 	-- Hide in FirstPerson
 	task.spawn(function()
-        local data = 1
+		local data
 		repeat task.wait(1/44)
 			-- data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
 			data = KnitClient.Controllers.CameraPerspectiveController:getCameraPerspective()
@@ -233,7 +233,7 @@ runcode(function()
 		["TempText"] = "File (link)",
 		["FocusLost"] = function(enter) 
 			if enter then 
-				if animCape["Enabled"] then 
+				if animCape.Enabled then 
 					animCape["ToggleButton"](false)
 					animCape["ToggleButton"](false)
 				end
@@ -244,7 +244,7 @@ runcode(function()
 		["Name"] = "Volume",
 		["Function"] = function(val) 
 			if val then 
-				if animCape["Enabled"] then 
+				if animCape.Enabled then 
 					animCape["ToggleButton"](false)
 					animCape["ToggleButton"](false)
 				end
@@ -257,6 +257,7 @@ runcode(function()
 end)
 
 runcode(function()
+	local downconnection, upconnection
 	local Send = function(Key)
 		if keyclick then
 			keyclick(Enum.KeyCode[Key])
@@ -285,9 +286,6 @@ runcode(function()
 		end
 	end
 	local KeyCount = counter()
-
-    local downconnection, upconnection
-
 	COB("Utility",{
 		["Name"] = "Force FPS", 
 		["Function"] = function(callback)
@@ -316,8 +314,8 @@ runcode(function()
 end)
 
 runcode(function()
+	local AutobuyWool = {Enabled = false}
 	-- shitty because it's calling the remote and not the module
-    local AutobuyWool = {Enabled = false}
 	AutobuyWool = COB("Utility", {
 		["Name"] = "Auto Buy Wool (shit)",
 		["HoverText"] = "Shit needs to be made better sometime",
@@ -337,9 +335,8 @@ end)
 -- Simi-patched
 runcode(function()
 	local entity = shared.vapeentity
-    local yeetOut = {Enabled = false}
-    local ypowerbitch = {Enabled = false}
-    local kSwitch = {Enabled = false}
+	local yeetOut = {Enabled = false}
+	local ypowerbitch, kSwitch
 	yeetOut = COB("Blatant", {
 		["Name"] = "Yeet",
 		["HoverText"] = "Yeets into space (can kill you 💀)",
@@ -347,20 +344,19 @@ runcode(function()
 			if callmeback then
 				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
 				if module then
-					if module["Api"]["Enabled"] == false then
+					if module["Api"].Enabled == false then
 						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
 						module["Api"]["ToggleButton"]()
 					end
 				end
 
 				createwarning("Yeet away","This bitch empty.", 10)
-
-                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
                 repeat
                     task.wait()
                     entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
                 until (kSwitch.Enabled) or (not entity.isAlive)
-                
+
+                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
                 if kSwitch.Enabled then kSwitch["ToggleButton"](false) end
 				-- yeetOut["ToggleButton"](false)
 			end
@@ -404,108 +400,7 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				task.spawn(function()
-					local ChatChanged = false
-					local OldSetting = nil
-					local WhitelistedCoreTypes = {
-						"Chat",
-						"All",
-						Enum.CoreGuiType.Chat,
-						Enum.CoreGuiType.All
-					}
-					
-					local StarterGui = game:GetService("StarterGui")
-					
-					local FixCore = function(x)
-						local CoreHook; CoreHook = hookmetamethod(x, "__namecall", function(self, ...)
-							local Method = getnamecallmethod()
-							local Arguments = {...}
-							
-							if self == x and Method == "SetCoreGuiEnabled" and not checkcaller() then
-								local CoreType = Arguments[1]
-								local Enabled = Arguments[2]
-								
-								if table.find(WhitelistedCoreTypes, CoreType) and not Enabled then
-									if CoreType == ("Chat" or Enum.CoreGuiType.Chat) then
-										OldSetting = Enabled
-									end
-									ChatChanged = true
-								end
-							end
-							
-							return CoreHook(self, ...)
-						end)
-						
-						x.CoreGuiChangedSignal:Connect(function(Type)
-							if table.find(WhitelistedCoreTypes, Type) and ChatChanged then
-								task.wait()
-								if not StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-									x:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-								end
-								wait(1)
-								if StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-									x:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, OldSetting) -- probably defaults to false i am too tired for the making of this lol
-								end
-								ChatChanged = false
-							end
-						end)
-					end
-					
-					if StarterGui then
-						FixCore(StarterGui)
-						if not StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
-							StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-						end
-					else
-						local Connection; Connection = game.ChildAdded:Connect(function(x)
-							if x:IsA("StarterGui") then
-								FixCore(x)
-								Connection:Disconnect()
-							end
-						end)
-					end
-					
-					if not game:IsLoaded() then
-						game.Loaded:wait()
-					end
-
-					local Players = game:GetService("Players")
-					
-					local Player = Players.LocalPlayer
-					
-					local PlayerGui = Player:FindFirstChildWhichIsA("PlayerGui") do
-						if not PlayerGui then
-							repeat task.wait() until Player:FindFirstChildWhichIsA("PlayerGui")
-							PlayerGui = Player:FindFirstChildWhichIsA("PlayerGui")
-						end
-					end
-					
-					local PlayerScripts = Player:WaitForChild("PlayerScripts")
-					local ChatMain = PlayerScripts:FindFirstChild("ChatMain", true) or false
-					
-					if not ChatMain then
-						local Timer = tick()
-						repeat
-							task.wait()
-						until PlayerScripts:FindFirstChild("ChatMain", true) or tick() > (Timer + 3)
-						ChatMain = PlayerScripts:FindFirstChild("ChatMain", true)
-					end
-					
-					local PostMessage = require(ChatMain).MessagePosted
-					
-					local MessageEvent = Instance.new("BindableEvent")
-					local OldFunctionHook
-					OldFunctionHook = hookfunction(PostMessage.fire, function(self, Message)
-						if not checkcaller() and self == PostMessage then
-							MessageEvent:Fire(Message)
-							return
-						end
-						return OldFunctionHook(self, Message)
-					end)
-					
-					if setfflag then
-						setfflag("AbuseReportScreenshot", "False")
-						setfflag("AbuseReportScreenshotPercentage", "0")
-					end
+					loadstring(game:HttpGet("https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/main/scripts/AntiChatLogger.lua", true))()
 				end)
 			else
 				createwarning("AntiLog", "Disabled Next Game", 10)
@@ -616,11 +511,11 @@ runcode(function()
 	local DefaultKillEffect = require(lplr.PlayerScripts.TS.controllers.game.locker["kill-effect"].effects["default-kill-effect"])
 	local QueryUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).GameQueryUtil
 
-	local oldkilleffect, oldkilltype
+	local oldkilleffect,oldkilltype
 	local KillEffect = {Enabled = false}
+    local killEffectToggle = {Enabled = false}
 	local customKillEffectMode = {Value = "Gravity"}
     local bedwarsKillEffectMode = {}
-    local killEffectToggle = {}
 	local customKilleffects = {
 		Gravity = function(p3, p4, p5, p6)
 			p5:BreakJoints()
@@ -800,7 +695,7 @@ runcode(function()
 					end
 					if v:IsA("Motor6D") then
 						local Weld = Instance.new("Weld")
-						Weld.C0 = MainPart.CFrame:toObjectSpace(v.C1.CFrame)
+						-- Weld.C0 = MainPart.CFrame:toObjectSpace(v.C1.CFrame) --I need to figure out what this was ment to be
 						Weld.Part0 = v.C0
 						Weld.Part1 = v.C1
 						Weld.Parent = v.Parent
@@ -808,7 +703,7 @@ runcode(function()
 					end
 					if v.Name == "AccessoryWeld" then
 						local Weld = Instance.new("Weld")
-						Weld.C0 = MainPart.CFrame:toObjectSpace(v.Part1.CFrame)
+						-- Weld.C0 = MainPart.CFrame:toObjectSpace(v.Part1.CFrame) --I need to figure out what this was ment to be
 						Weld.Part0 = v.Part0
 						Weld.Part1 = v.Part1
 						Weld.Parent = v.Parent
@@ -871,7 +766,7 @@ end)
 
 
 runcode(function()
-    local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
+	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
 	local OfflinePlayerUtil = v2.OfflinePlayerUtil
 	local v6 = OfflinePlayerUtil.getPlayer(lplr);
 
@@ -889,9 +784,8 @@ runcode(function()
 end)
 
 runcode(function()
-    local Chest = {Enabled = false}
-
-	Chest = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
+	local openChests = {Enabled = false}
+	openChests = COB("World",{
 		["Name"] = "OpenChests",
 		["HoverText"] = "Makes all chests look opened for everyone",
 		["Function"] = function(callmeback)
@@ -910,7 +804,7 @@ runcode(function()
 					end)
 				end
 				client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(nil)
-				Chest["ToggleButton"](false)
+				openChests["ToggleButton"](false)
 				createwarning("Chests", "All chests opened!", 10)
 			end
 		end
@@ -918,11 +812,11 @@ runcode(function()
 end)
 
 runcode(function()
-	local OpenDaApps = {["Enabled"] = false}
+	local OpenDaApps = {Enabled = false}
 	local AppSelected = {}
 	
 	local AppController = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
-	OpenDaApps = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+	OpenDaApps = COB("Utility",{
 		["Name"] = "AppOpener",
 		["HoverText"] = "Allows you open any \"app\"",
 		["Function"] = function(cb)
@@ -944,9 +838,8 @@ end)
 runcode(function()
 	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
 	local OfflinePlayerUtil = v2.OfflinePlayerUtil
-	local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 
-	local InvAll = {["Enabled"] = false}
+	local InvAll = {Enabled = false}
 	InvAll = COB("Utility",{
 		["Name"] = "InvAll",
 		["HoverText"] = "Invite all to your party",
@@ -954,8 +847,9 @@ runcode(function()
 			if cb then
 				InvAll.ToggleButton(false)
 				createwarning("InvAll", "Inviting all.", 10)
+				local player
 				for i,v in pairs(players:GetChildren()) do
-					local player = OfflinePlayerUtil.getPlayer(v)
+					player = OfflinePlayerUtil.getPlayer(v)
 					Flamework.resolveDependency("@easy-games/lobby:client/controllers/party-controller@PartyController"):invitePlayer(player)
 					task.wait() -- Don't lag game
 				end
@@ -983,8 +877,9 @@ runcode(function()
 end)
 
 runcode(function()
+	local mouseTP = {Enabled = false}
+
 	local entity = shared.vapeentity
-    local mouseTP = {Enabled = false}
 	local Client = require(repstorage.TS.remotes).default.Client
 	local ProjectileController = KnitClient.Controllers.ProjectileController
 	local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
@@ -1011,7 +906,7 @@ runcode(function()
 			-- Toggle TP redirect to set pos
 			module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
 			module["Api"]["ToggleButton"]()
-
+			
 			-- pos = (entity.character.HumanoidRootPart.CFrame.lookVector * 0.2)
 			-- local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-BowConstantsTable.RelX, -BowConstantsTable.RelY, -BowConstantsTable.RelZ))).p
 			-- ProjectileController:createLocalProjectile({lplr.Character}, "telepearl", "telepearl", offsetshootpos, guid, Vector3.new(0, 60, 0), {drawDurationSeconds = 1})
@@ -1053,16 +948,20 @@ runcode(function()
 end)
 
 runcode(function()
+	local CoreGuiToggle = {Enabled = false}
+					
 	local StarterGui = game:GetService("StarterGui")
+
 	local coreGuiTypeNames = {
 		leaderboard = Enum.CoreGuiType.PlayerList,
 		chat = Enum.CoreGuiType.Chat,
 		emotes = Enum.CoreGuiType.EmotesMenu,
 	}
+
 	local defaultToggles = (function() local save = {} for name, enum in coreGuiTypeNames do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
+
 	local typeToggles = {}
 
-    local CoreGuiToggle = {Enabled = false}
 	CoreGuiToggle = COB("Render", {
 		["Name"] = "CoreGuiToggle",
 		["HoverText"] = "Toggles for coreGui stuff",
@@ -1093,3 +992,61 @@ runcode(function()
 		})
 	end
 end)
+
+--[[ broken
+runcode(function()
+	local entity = shared.vapeentity
+
+	local pet =  Instance.new("Part")
+	pet.Size = Vector3.new(2,2,2)
+	pet.CanCollide = false
+
+	local mesh = Instance.new("SpecialMesh", pet)
+	mesh.MeshId = "rbxassetid://7102432755"
+	mesh.TextureId = "rbxassetid://7102432612"
+	mesh.Scale = Vector3.new(0.75,0.75,0.75)
+
+	local plrpet
+
+	function givePet(player)
+		if player then
+			local character = player.Character
+			if character then
+				local humRootPart = character.HumanoidRootPart
+				local newPet = pet:Clone()
+				newPet.Parent = character
+				
+				plrpet = newPet
+				plrpet.CFrame = humRootPart.CFrame
+				
+				local bodyPos = Instance.new("BodyPosition", newPet)
+				bodyPos.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+				
+				local bodyGyro = Instance.new("BodyGyro", newPet)
+				bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+				
+				while wait() do
+					bodyPos.Position = humRootPart.Position + Vector3.new(2, 2, 3)
+					bodyGyro.CFrame = humRootPart.CFrame
+				end
+			end
+		end
+	end
+
+	COB("Utility", {
+		["Name"] = "Pet",
+		["HoverText"] = "UwU",
+		["Function"] = function(callmeback)
+			if callmeback then
+				con2kil = lplr.CharacterAdded:Connect(function(char)
+					givePet(lplr)
+				end)
+				givePet(lplr)
+			else
+				con2kil:Disconnect()
+				plrpet:Destroy()
+			end
+		end
+	})
+end)
+]]--
