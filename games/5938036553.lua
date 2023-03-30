@@ -54,6 +54,35 @@ local function getPlayerColor(plr)
 	return (friendCheck(plr, true) and Color3.fromHSV(GuiLibrary["ObjectsThatCanBeSaved"]["Friends ColorSliderColor"]["Api"]["Hue"], GuiLibrary["ObjectsThatCanBeSaved"]["Friends ColorSliderColor"]["Api"]["Sat"], GuiLibrary["ObjectsThatCanBeSaved"]["Friends ColorSliderColor"]["Api"]["Value"]) or tostring(plr.TeamColor) ~= "White" and plr.TeamColor.Color)
 end
 
+local function AllNearPosition(distance, amount, checktab)
+	local returnedplayer = {}
+	local currentamount = 0
+	checktab = checktab or {}
+    if entityLibrary.isAlive then
+		local sortedentities = {}
+		for i, v in pairs(entityLibrary.entityList) do
+			if not v.Targetable then continue end
+            if isVulnerable(v) then
+				local playerPosition = checktab.Prediction and entityLibrary.OtherPosition[v.Player] or v.RootPart.Position
+				local mag = (entityLibrary.character.HumanoidRootPart.Position - playerPosition).magnitude
+				if checktab.Prediction and mag > distance then
+					mag = (entityLibrary.LocalPosition - playerPosition).magnitude
+				end
+                if mag <= distance then
+					table.insert(sortedentities, {entity = v, Magnitude = mag})
+                end
+            end
+        end
+		table.sort(sortedentities, function(a, b) return a.Magnitude < b.Magnitude end)
+		for i,v in pairs(sortedentities) do
+			table.insert(returnedplayer, v.entity)
+			currentamount = currentamount + 1
+			if currentamount >= amount then break end
+		end
+	end
+	return returnedplayer
+end
+
 local function getcustomassetfunc(path)
 	if not isfile(path) then
 		spawn(function()
@@ -459,11 +488,11 @@ runcode(function()
 					until (not Speed.Enabled)
 				end)
 				RunLoops:BindToHeartbeat("Speed", function(delta)
-					root = getRoot()
+					local root = getRoot()
 					if isAlive() and (typeof(root) ~= "Instance" or isnetworkowner(root)) then
 						local movevec = (SpeedMoveMethod.Value == "Manual" and (CFrame.lookAt(gameCamera.CFrame.p, gameCamera.CFrame.p + Vector3.new(gameCamera.CFrame.lookVector.X, 0, gameCamera.CFrame.lookVector.Z))):VectorToWorldSpace(Vector3.new(a + d, 0, w + s)) or getRoot().Parent.fpv_humanoid.MoveDirection).Unit
 						movevec = movevec == movevec and Vector3.new(movevec.X, 0, movevec.Z) or Vector3.new()
-						SpeedRaycast.FilterDescendantsInstances = {lplr.Character, cam}
+						SpeedRaycast.FilterDescendantsInstances = {lplr.Character}
 						if SpeedMethod.Value == "Velocity" then
 							local newvelo = movevec * SpeedValue.Value
 							root.Velocity = Vector3.new(newvelo.X, root.Velocity.Y, newvelo.Z)
