@@ -76,7 +76,6 @@ local function getremote(tab)
 end
 
 local function Send(Key)
-	print(Key)
 	if keyclick then
 		keyclick(Enum.KeyCode[Key])
 	else
