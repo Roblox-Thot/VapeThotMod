@@ -75,6 +75,18 @@ local function getremote(tab)
 	return ""
 end
 
+local function Send(Key)
+	print(Key)
+	if keyclick then
+		keyclick(Enum.KeyCode[Key])
+	else
+		-- Kept incase your shitty exploit can't keyclick
+		local VM = game:GetService('VirtualInputManager')
+		VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
+		VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
+	end
+end
+
 GuiLibrary["SelfDestructEvent"].Event:Connect(function()
 	for i3,v3 in pairs(connections) do
 		if v3.Disconnect then pcall(function() v3:Disconnect() end) end
@@ -131,7 +143,7 @@ local function AnimCape(char, texture, vol)
 		until not p or p.Parent ~= torso.Parent
 	end)
 
-	repeat wait(1/44)
+	repeat task.wait(1/44)
 		local ang = 0.1
 		local oldmag = torso.Velocity.magnitude
 		local mv = 0.002
@@ -258,16 +270,6 @@ end)
 
 runcode(function()
 	local downconnection, upconnection
-	local Send = function(Key)
-		if keyclick then
-			keyclick(Enum.KeyCode[Key])
-		else
-			-- Kept incase your shitty exploit can't keyclick
-			local VM = game:GetService('VirtualInputManager')
-			VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
-			VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
-		end
-	end
 
 	local function counter()
 		local count = 0
@@ -400,7 +402,11 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				task.spawn(function()
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/main/scripts/AntiChatLogger.lua", true))()
+					local suc, req = pcall(function() return requestfunc({
+						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/main/scripts/AntiChatLogger.lua",
+						Method = "GET"
+					}) end)
+					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
 				end)
 			else
 				createwarning("AntiLog", "Disabled Next Game", 10)
@@ -993,60 +999,32 @@ runcode(function()
 	end
 end)
 
---[[ broken
 runcode(function()
-	local entity = shared.vapeentity
-
-	local pet =  Instance.new("Part")
-	pet.Size = Vector3.new(2,2,2)
-	pet.CanCollide = false
-
-	local mesh = Instance.new("SpecialMesh", pet)
-	mesh.MeshId = "rbxassetid://7102432755"
-	mesh.TextureId = "rbxassetid://7102432612"
-	mesh.Scale = Vector3.new(0.75,0.75,0.75)
-
-	local plrpet
-
-	function givePet(player)
-		if player then
-			local character = player.Character
-			if character then
-				local humRootPart = character.HumanoidRootPart
-				local newPet = pet:Clone()
-				newPet.Parent = character
-				
-				plrpet = newPet
-				plrpet.CFrame = humRootPart.CFrame
-				
-				local bodyPos = Instance.new("BodyPosition", newPet)
-				bodyPos.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-				
-				local bodyGyro = Instance.new("BodyGyro", newPet)
-				bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
-				
-				while wait() do
-					bodyPos.Position = humRootPart.Position + Vector3.new(2, 2, 3)
-					bodyGyro.CFrame = humRootPart.CFrame
-				end
-			end
-		end
-	end
-
+	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
+	local ViewmodelMode = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-mode"]).ViewmodelMode
+	math.randomseed(tick())
 	COB("Utility", {
-		["Name"] = "Pet",
-		["HoverText"] = "UwU",
+		["Name"] = "Show hands",
+		["HoverText"] = "Shows hands and enables bob in fistperson",
 		["Function"] = function(callmeback)
 			if callmeback then
-				con2kil = lplr.CharacterAdded:Connect(function(char)
-					givePet(lplr)
-				end)
-				givePet(lplr)
+				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.SHOW_ARMS);
 			else
-				con2kil:Disconnect()
-				plrpet:Destroy()
+				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.HIDE_ARMS);
 			end
+			local number = math.random(1, 8)
+			local hotbarSlot = CS:getState().Inventory.observedInventory.hotbarSlot
+			if number == hotbarSlot +1 then
+				number = number + 1
+			end
+			
+			local numbers = {
+				"One", "Two", "Three", "Four", "Five",
+				"Six", "Seven", "Eight", "Nine"
+			}
+			Send(numbers[number])
+			task.wait(0.02)
+			Send(numbers[hotbarSlot+1])
 		end
 	})
 end)
-]]--
