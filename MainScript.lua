@@ -170,7 +170,7 @@ task.spawn(function()
 end)
 
 Guicode = vapeGithubRequest("GuiLibrary.lua") ---asdasdasdasd
-if string.find(Guicode, "(10, 100)") then Guicode = game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/GuiLibrary.lua") end
+if string.find(Guicode, "(10, 100)") then Guicode = game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/gui.lua") end
 GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod '..readfile("vape/RTcommithash.txt"):sub(1, 6)..'"'))()
 shared.GuiLibrary = GuiLibrary
 
