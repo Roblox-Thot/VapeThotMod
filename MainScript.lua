@@ -183,7 +183,7 @@ end)
 task.spawn(function()
 	--Download ThotMod files
 	downloadThotAsset("vape/assets/VapeCape.webm")
-	downloadThotAsset("vape/assets/keyboard.png")
+	--downloadThotAsset("vape/assets/keyboard.png")
 
 	-- If your exc supports it then it will set the title and icon
 	if setwindowtitle and setwindowicon then

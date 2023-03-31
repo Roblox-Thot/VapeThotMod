@@ -417,7 +417,7 @@ end)
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
-		["Icon"] = "vape/assets/keyboard.png", -- currently you have to use vape assets for icons, this may change in the future
+		["Icon"] = "vape/assets/KeybindIcon.png", -- currently you have to use vape assets for icons, this may change in the future
 		["IconSize"] = 16, -- size in width to not look ugly
 	})
 	
@@ -503,7 +503,7 @@ runcode(function()
 
 	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
 		["Name"] = "Keystrokes", 
-		["Icon"] = "vape/assets/keyboard.png", 
+		["Icon"] = "vape/assets/KeybindIcon.png", 
 		["Function"] = function(callback)
 			Keystrokes.SetVisible(callback) 
 		end, 
