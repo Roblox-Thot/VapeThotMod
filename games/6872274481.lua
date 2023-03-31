@@ -998,18 +998,115 @@ runcode(function()
 	end
 end)
 
+GuiLibrary.RemoveObject("NoBobOptionsButton")
+runcode(function() --includes fixes for if BW shows the hands
+	local nobobdepth = {Value = 8}
+	local nobobhorizontal = {Value = 8}
+	local nobobvertical = {Value = -2}
+	local rotationx = {Value = 0}
+	local rotationy = {Value = 0}
+	local rotationz = {Value = 0}
+	local oldc1
+	local nobob = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "NoBob",
+		Function = function(callback) 
+			local viewmodel = KnitClient.Controllers.ViewmodelController:getViewModel()
+			if viewmodel then
+				if callback then
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", -(nobobdepth.Value / 10))
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_HORIZONTAL_OFFSET", (nobobhorizontal.Value / 10))
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_VERTICAL_OFFSET", (nobobvertical.Value / 10))
+					oldc1 = viewmodel.RightHand.RightWrist.C1
+					viewmodel.RightHand.RightWrist.C1 = oldc1 * CFrame.Angles(math.rad(rotationx.Value), math.rad(rotationy.Value), math.rad(rotationz.Value))
+				else
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", 0)
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_HORIZONTAL_OFFSET", 0)
+					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_VERTICAL_OFFSET", 0)
+					viewmodel.RightHand.RightWrist.C1 = oldc1
+				end
+			end
+		end,
+		HoverText = "Makes sword farther"
+	})
+	nobobdepth = nobob.CreateSlider({
+		Name = "Depth",
+		Min = 0,
+		Max = 24,
+		Default = 8,
+		Function = function(val)
+			if nobob.Enabled then
+				lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", -(val / 10))
+			end
+		end
+	})
+	nobobhorizontal = nobob.CreateSlider({
+		Name = "Horizontal",
+		Min = 0,
+		Max = 24,
+		Default = 8,
+		Function = function(val)
+			if nobob.Enabled then
+				lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_HORIZONTAL_OFFSET", (val / 10))
+			end
+		end
+	})
+	nobobvertical= nobob.CreateSlider({
+		Name = "Vertical",
+		Min = 0,
+		Max = 24,
+		Default = -2,
+		Function = function(val)
+			if nobob.Enabled then
+				lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_VERTICAL_OFFSET", (val / 10))
+			end
+		end
+	})
+	rotationx = nobob.CreateSlider({
+		Name = "RotX",
+		Min = 0,
+		Max = 360,
+		Function = function(val)
+			if nobob.Enabled then
+				KnitClient.Controllers.ViewmodelController:getViewModel().RightHand.RightWrist.C1 = oldc1 * CFrame.Angles(math.rad(rotationx.Value), math.rad(rotationy.Value), math.rad(rotationz.Value))
+			end
+		end
+	})
+	rotationy = nobob.CreateSlider({
+		Name = "RotY",
+		Min = 0,
+		Max = 360,
+		Function = function(val)
+			if nobob.Enabled then
+				KnitClient.Controllers.ViewmodelController:getViewModel().RightHand.RightWrist.C1 = oldc1 * CFrame.Angles(math.rad(rotationx.Value), math.rad(rotationy.Value), math.rad(rotationz.Value))
+			end
+		end
+	})
+	rotationz = nobob.CreateSlider({
+		Name = "RotZ",
+		Min = 0,
+		Max = 360,
+		Function = function(val)
+			if nobob.Enabled then
+				KnitClient.Controllers.ViewmodelController:getViewModel().RightHand.RightWrist.C1 = oldc1 * CFrame.Angles(math.rad(rotationx.Value), math.rad(rotationy.Value), math.rad(rotationz.Value))
+			end
+		end
+	})
+end)
+
 runcode(function()
+	local showArms, hideLeft = {Enabled = false}
 	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
 	local ViewmodelMode = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-mode"]).ViewmodelMode
 	math.randomseed(tick())
-	COB("Render", {
+
+	showArms = COB("Render", {
 		["Name"] = "Show hands",
 		["HoverText"] = "Shows hands and enables bob in fistperson",
 		["Function"] = function(callmeback)
 			if callmeback then
 				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.SHOW_ARMS);
 			else
-				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.DEFAULT);
+				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.HIDE_ARMS);
 			end
 			local number = math.random(1, 8)
 			local hotbarSlot = CS:getState().Inventory.observedInventory.hotbarSlot
@@ -1024,6 +1121,41 @@ runcode(function()
 			Send(numbers[number])
 			task.wait(0.02)
 			Send(numbers[hotbarSlot+1])
+
+			if hideLeft.Enabled then
+				local left = {
+					"LeftUpperArm",
+					"LeftLowerArm",
+					"LeftHand"
+				}
+				for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+					if table.find(left, v.Name) ~= nil then
+						v.Transparency = 1
+					end
+				end
+			end
 		end
+	})
+	
+	hideLeft = showArms.CreateToggle({
+		["Name"] = "Hide left",
+		["HoverText"] = "Hides your left arm. Usefull for 'nobob' movements",
+		["Function"] = function(state)
+			local left = {
+				"LeftUpperArm",
+				"LeftLowerArm",
+				"LeftHand"
+			}
+			for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+				if table.find(left, v.Name) ~= nil then
+					if hideLeft.Enabled then
+						v.Transparency = 1
+					else
+						v.Transparency = 0
+					end
+				end
+			end
+		end,
+		["Default"] = false
 	})
 end)
