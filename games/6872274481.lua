@@ -1002,7 +1002,7 @@ runcode(function()
 	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
 	local ViewmodelMode = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-mode"]).ViewmodelMode
 	math.randomseed(tick())
-	COB("Utility", {
+	COB("Render", {
 		["Name"] = "Show hands",
 		["HoverText"] = "Shows hands and enables bob in fistperson",
 		["Function"] = function(callmeback)
