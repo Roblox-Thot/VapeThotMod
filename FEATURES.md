@@ -1,9 +1,10 @@
 # Additions for Bedwars
 * Added Force First Person that allows scrollwheel for items
-* Anti Chat Log (taken from [AnthonyIsntHere's](https://github.com/AnthonyIsntHere/anthonysrepository/blob/main/scripts/AntiChatLogger.lua) GitHub)
+* Anti Chat Log (Loads from AnthonyIsntHere's GitHub)
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Toggle to allow any BW kill effect
+* Show Hands w/ fix to NoBob
 * Client Side host panel
 * Auto load Inf Yield
 * Ragdoll kill effect
