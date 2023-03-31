@@ -402,7 +402,7 @@ runcode(function()
 			if callmeback then
 				task.spawn(function()
 					local suc, req = pcall(function() return requestfunc({
-						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/main/scripts/AntiChatLogger.lua",
+						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
 						Method = "GET"
 					}) end)
 					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
