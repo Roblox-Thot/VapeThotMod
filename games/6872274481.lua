@@ -1009,7 +1009,7 @@ runcode(function()
 			if callmeback then
 				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.SHOW_ARMS);
 			else
-				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.HIDE_ARMS);
+				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.DEFAULT);
 			end
 			local number = math.random(1, 8)
 			local hotbarSlot = CS:getState().Inventory.observedInventory.hotbarSlot
