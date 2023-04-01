@@ -1826,11 +1826,11 @@ GUISettings.CreateButton2({
 		end
 	end
 })
+
 GeneralSettings.CreateButton2({
 	Name = "UNINJECT",
 	Function = GuiLibrary.SelfDestruct
 })
-
 
 local function loadVape()
 	if not shared.VapeIndependent then

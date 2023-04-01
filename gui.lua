@@ -6291,8 +6291,6 @@ if shared.VapeExecuted then
             end)
 			return textGuiLibrary
 		end
-
-
 		return windowapi
 	end
 
