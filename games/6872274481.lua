@@ -1115,24 +1115,31 @@ runcode(function()
 	})
 end)
 
---[[
-runcode(function()
+pcall(function()
+	local CloneFunction = clonefunction
+	local CheckCaller = CloneFunction(checkcaller)
+	local HookFunction = CloneFunction(hookfunction)
+	local PostMessage = require(lplr:WaitForChild("PlayerScripts"):WaitForChild("ChatScript"):WaitForChild("ChatMain")).MessagePosted
+	local MessageEvent = Instance.new("BindableEvent")
+
+	local OldFunctionHook
+
 	COB("Utility", {
 		["Name"] = "AntiLog",
 		["HoverText"] = "Attempts to stop Roblox from logging chat",
 		["Function"] = function(callmeback)
 			if callmeback then
-				pcall(function()
-					local suc, req = pcall(function() return requestfunc({
-						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
-						Method = "GET"
-					}) end)
-					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
-				end)
+				local PostMessageHook = function(self, msg)
+					if not CheckCaller() and self == PostMessage then
+						MessageEvent:Fire(msg)
+						return
+					end
+					return OldFunctionHook(self, msg)
+				end
+				OldFunctionHook = HookFunction(PostMessage.fire, PostMessageHook)
 			else
-				createwarning("AntiLog", "Disabled Next Game", 10)
+				HookFunction(PostMessage.fire, OldFunctionHook) -- Revert? idk, idc, just keep it on
 			end
 		end
 	})
 end)
-]]
