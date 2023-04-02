@@ -1115,7 +1115,8 @@ runcode(function()
 	})
 end)
 
-pcall(function()
+runcode(function()
+	if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then return end -- If they update the chat this wont work so this will prevent it from showing up :epic:
 	local CloneFunction = clonefunction
 	local CheckCaller = CloneFunction(checkcaller)
 	local HookFunction = CloneFunction(hookfunction)
@@ -1137,8 +1138,10 @@ pcall(function()
 					return OldFunctionHook(self, msg)
 				end
 				OldFunctionHook = HookFunction(PostMessage.fire, PostMessageHook)
+				print("Hooked me bbg")
 			else
 				HookFunction(PostMessage.fire, OldFunctionHook) -- Revert? idk, idc, just keep it on
+				print("Unhooked... why?")
 			end
 		end
 	})
