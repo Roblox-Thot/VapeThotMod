@@ -394,26 +394,6 @@ runcode(function()
 	})
 end)
 
--- runcode(function()
--- 	COB("Utility", {
--- 		["Name"] = "AntiLog",
--- 		["HoverText"] = "Attempts to stop Roblox from logging chat",
--- 		["Function"] = function(callmeback)
--- 			if callmeback then
--- 				pcall(function()
--- 					local suc, req = pcall(function() return requestfunc({
--- 						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
--- 						Method = "GET"
--- 					}) end)
--- 					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
--- 				end)
--- 			else
--- 				createwarning("AntiLog", "Disabled Next Game", 10)
--- 			end
--- 		end
--- 	})
--- end)
-
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
@@ -887,8 +867,6 @@ runcode(function()
 	local Client = require(repstorage.TS.remotes).default.Client
 	local ProjectileController = KnitClient.Controllers.ProjectileController
 	local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
-	-- local ProjectileMeta = require(repstorage.TS.projectile["projectile-meta"]).ProjectileMeta
-	-- local BowConstantsTable = debug.getupvalue(KnitClient.Controllers.ProjectileController.enableBeam, 5)
 
 	local function tele(position)
 		local guid = game:GetService("HttpService"):GenerateGUID()
@@ -911,29 +889,7 @@ runcode(function()
 			module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
 			module["Api"]["ToggleButton"]()
 			
-			-- pos = (entity.character.HumanoidRootPart.CFrame.lookVector * 0.2)
-			-- local offsetshootpos = (CFrame.new(pos, pos + Vector3.new(0, -60, 0)) * CFrame.new(Vector3.new(-BowConstantsTable.RelX, -BowConstantsTable.RelY, -BowConstantsTable.RelZ))).p
-			-- ProjectileController:createLocalProjectile({lplr.Character}, "telepearl", "telepearl", offsetshootpos, guid, Vector3.new(0, 60, 0), {drawDurationSeconds = 1})
-			
 			Client:Get(ProjectileRemote):CallServerAsync(unpack(args))
-			-- Client:Get(ProjectileRemote):CallServerAsync(unpack(args)):andThen(function(projectile)
-			-- 	print(T2S(projectile:GetChildren()))
-			-- 	if projectile then
-			-- 		local projectilemodel = projectile
-			-- 		if not projectilemodel then
-			-- 			projectilemodel:GetPropertyChangedSignal("PrimaryPart"):Wait()
-			-- 		end
-			-- 		local bodyforce = Instance.new("BodyForce")
-			-- 		bodyforce.Force = Vector3.new(0, projectilemodel.PrimaryPart.AssemblyMass * workspace.Gravity, 0)
-			-- 		bodyforce.Name = "AntiGravity"
-			-- 		bodyforce.Parent = projectilemodel.PrimaryPart
-
-			-- 		projectilemodel:SetPrimaryPartCFrame(CFrame.new(position))
-			-- 		createwarning("MouseTP", "something failed", 3)
-			-- 	end
-			-- 	print(projectile.CFrame)
-			-- 	createwarning("a", "b", 3)
-			-- end)
 		else
 			createwarning("MouseTP","No pearl found", 5)
 		end
@@ -1158,3 +1114,25 @@ runcode(function()
 		["Default"] = false
 	})
 end)
+
+--[[
+runcode(function()
+	COB("Utility", {
+		["Name"] = "AntiLog",
+		["HoverText"] = "Attempts to stop Roblox from logging chat",
+		["Function"] = function(callmeback)
+			if callmeback then
+				pcall(function()
+					local suc, req = pcall(function() return requestfunc({
+						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
+						Method = "GET"
+					}) end)
+					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
+				end)
+			else
+				createwarning("AntiLog", "Disabled Next Game", 10)
+			end
+		end
+	})
+end)
+]]
