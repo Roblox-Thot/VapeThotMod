@@ -394,25 +394,25 @@ runcode(function()
 	})
 end)
 
-runcode(function()
-	COB("Utility", {
-		["Name"] = "AntiLog",
-		["HoverText"] = "Attempts to stop Roblox from logging chat",
-		["Function"] = function(callmeback)
-			if callmeback then
-				task.spawn(function()
-					local suc, req = pcall(function() return requestfunc({
-						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
-						Method = "GET"
-					}) end)
-					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
-				end)
-			else
-				createwarning("AntiLog", "Disabled Next Game", 10)
-			end
-		end
-	})
-end)
+-- runcode(function()
+-- 	COB("Utility", {
+-- 		["Name"] = "AntiLog",
+-- 		["HoverText"] = "Attempts to stop Roblox from logging chat",
+-- 		["Function"] = function(callmeback)
+-- 			if callmeback then
+-- 				pcall(function()
+-- 					local suc, req = pcall(function() return requestfunc({
+-- 						Url = "https://raw.githubusercontent.com/AnthonyIsntHere/anthonysrepository/ecca0022d1c272c35f93212a3c38b6a601f7e426/scripts/AntiChatLogger.lua",
+-- 						Method = "GET"
+-- 					}) end)
+-- 					if suc and req.StatusCode == 200 then loadstring(req.Body)() end
+-- 				end)
+-- 			else
+-- 				createwarning("AntiLog", "Disabled Next Game", 10)
+-- 			end
+-- 		end
+-- 	})
+-- end)
 
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
