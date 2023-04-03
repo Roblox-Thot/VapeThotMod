@@ -174,7 +174,7 @@ GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePriva
 shared.GuiLibrary = GuiLibrary
 
 -- If you got that sexy syn notif then it will use that (good for hiding that you hack on stream)
-if type(syn.toast_notification) == "function" and identifyexecutor() == "Synapse X" then
+if type(syn.toast_notification) == "function" and identifyexecutor and identifyexecutor() == "Synapse X" then
 	notif = shared.GuiLibrary.CreateNotification
 	restorefunction(notif)
 	hookfunction(notif,function(top, bottom, duration, customicon)
