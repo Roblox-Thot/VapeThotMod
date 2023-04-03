@@ -27,7 +27,7 @@ checkpublicrepo = function()
 			textlabel.Position = UDim2.new(0, 0, 0, -36)
 			textlabel.Parent = GuiLibrary["MainGui"]
 			task.wait(2)
-			textlabel:Remove()
+			textlabel:Destroy()
 		end)
 		task.wait(2)
 		return checkpublicrepo()
