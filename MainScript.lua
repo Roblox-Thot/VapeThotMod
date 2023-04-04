@@ -1660,16 +1660,6 @@ GUISettings.CreateToggle({
 	Default = true,
 	HoverText = "Shows notifications"
 })
-local ToggleNotifications
-ToggleNotifications = GUISettings.CreateToggle({
-	Name = "Toggle Alert", 
-	Function = function(callback) GuiLibrary.ToggleNotifications = callback end,
-	Default = true,
-	HoverText = "Notifies you if a module is enabled/disabled."
-})
-ToggleNotifications.Object.BackgroundTransparency = 0
-ToggleNotifications.Object.BorderSizePixel = 0
-ToggleNotifications.Object.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 
 if type(syn.toast_notification) == "function" and identifyexecutor and identifyexecutor() == "Synapse X" then
 	GUISettings.CreateToggle({
@@ -1679,12 +1669,14 @@ if type(syn.toast_notification) == "function" and identifyexecutor and identifye
 			notif = shared.GuiLibrary.CreateNotification
 			if callback then
 				hookfunction(notif,function(top, bottom, duration, customicon)
-					syn.toast_notification({
-								Type = 4,
-								Title = string.gsub(top, "<[^>]+>", ""),
-								Content = string.gsub(bottom, "<[^>]+>", ""),
-								Duration = duration
-					})
+					if GuiLibrary.Notifications then -- So if the user has notifs off it wont show
+						syn.toast_notification({
+									Type = 4,
+									Title = string.gsub(top, "<[^>]+>", ""),
+									Content = string.gsub(bottom, "<[^>]+>", ""),
+									Duration = duration
+						})
+					end
 					do -- this to prevent notif errors lol
 						local frame = Instance.new("Frame")
 						frame.Visible = false
@@ -1719,6 +1711,16 @@ if type(syn.toast_notification) == "function" and identifyexecutor and identifye
 	})
 end
 
+local ToggleNotifications
+ToggleNotifications = GUISettings.CreateToggle({
+	Name = "Toggle Alert", 
+	Function = function(callback) GuiLibrary.ToggleNotifications = callback end,
+	Default = true,
+	HoverText = "Notifies you if a module is enabled/disabled."
+})
+ToggleNotifications.Object.BackgroundTransparency = 0
+ToggleNotifications.Object.BorderSizePixel = 0
+ToggleNotifications.Object.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 GUISettings.CreateSlider({
 	Name = "Rainbow Speed",
 	Function = function(val)
