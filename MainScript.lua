@@ -173,44 +173,6 @@ Guicode = vapeGithubRequest("GuiLibrary.lua") ---asdasdasdasd
 GuiLibrary = loadstring(string.gsub(tostring(Guicode), '"%.%.%(shared%.VapePrivate and " PRIVATE" or ""%)',' Thot Mod '..readfile("vape/RTcommithash.txt"):sub(1, 6)..'"'))()
 shared.GuiLibrary = GuiLibrary
 
--- If you got that sexy syn notif then it will use that (good for hiding that you hack on stream)
-if type(syn.toast_notification) == "function" and identifyexecutor and identifyexecutor() == "Synapse X" then
-	notif = shared.GuiLibrary.CreateNotification
-	restorefunction(notif)
-	hookfunction(notif,function(top, bottom, duration, customicon)
-		syn.toast_notification({
-					Type = 4,
-					Title = string.gsub(top, "<[^>]+>", ""),
-					Content = string.gsub(bottom, "<[^>]+>", ""),
-					Duration = duration
-		})
-		do -- this to prevent notif errors lol
-			local frame = Instance.new("Frame")
-			frame.Visible = false
-			local image = Instance.new("ImageLabel")
-			image.Name = "Frame"
-			image.Parent = frame
-			local uicorner = Instance.new("UICorner")
-			uicorner.Parent = frame
-			local frame2 = Instance.new("ImageLabel")
-			frame2.Name = "Frame"
-			frame2.Parent = image
-			local icon = Instance.new("ImageLabel")
-			icon.Name = "IconLabel"
-			icon.Parent = frame
-			local icon2 = icon:Clone()
-			icon2.Parent = icon
-			local textlabel1 = Instance.new("TextLabel")
-			textlabel1.Parent = frame
-			local textlabel2 = textlabel1:Clone()
-			textlabel2.Parent = frame
-			local textlabel3 = textlabel2:Clone()
-			textlabel3.Parent = textlabel2
-			return frame
-		end
-	end)
-end
-
 local saveSettingsLoop = coroutine.create(function()
 	repeat
 		GuiLibrary.SaveSettings()
@@ -1708,6 +1670,55 @@ ToggleNotifications = GUISettings.CreateToggle({
 ToggleNotifications.Object.BackgroundTransparency = 0
 ToggleNotifications.Object.BorderSizePixel = 0
 ToggleNotifications.Object.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+
+if type(syn.toast_notification) == "function" and identifyexecutor and identifyexecutor() == "Synapse X" then
+	GUISettings.CreateToggle({
+		Name = "Syn Notifications", 
+		Function = function(callback) 
+			-- If you got that sexy syn notif then it will use that (good for hiding that you hack on stream)
+			notif = shared.GuiLibrary.CreateNotification
+			if callback then
+				hookfunction(notif,function(top, bottom, duration, customicon)
+					syn.toast_notification({
+								Type = 4,
+								Title = string.gsub(top, "<[^>]+>", ""),
+								Content = string.gsub(bottom, "<[^>]+>", ""),
+								Duration = duration
+					})
+					do -- this to prevent notif errors lol
+						local frame = Instance.new("Frame")
+						frame.Visible = false
+						local image = Instance.new("ImageLabel")
+						image.Name = "Frame"
+						image.Parent = frame
+						local uicorner = Instance.new("UICorner")
+						uicorner.Parent = frame
+						local frame2 = Instance.new("ImageLabel")
+						frame2.Name = "Frame"
+						frame2.Parent = image
+						local icon = Instance.new("ImageLabel")
+						icon.Name = "IconLabel"
+						icon.Parent = frame
+						local icon2 = icon:Clone()
+						icon2.Parent = icon
+						local textlabel1 = Instance.new("TextLabel")
+						textlabel1.Parent = frame
+						local textlabel2 = textlabel1:Clone()
+						textlabel2.Parent = frame
+						local textlabel3 = textlabel2:Clone()
+						textlabel3.Parent = textlabel2
+						return frame
+					end
+				end)
+			else
+				restorefunction(notif)
+			end
+		end,
+		Default = true,
+		HoverText = "Shows notifications using synapse"
+	})
+end
+
 GUISettings.CreateSlider({
 	Name = "Rainbow Speed",
 	Function = function(val)
