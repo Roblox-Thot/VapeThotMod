@@ -180,8 +180,8 @@ if type(syn.toast_notification) == "function" and identifyexecutor and identifye
 	hookfunction(notif,function(top, bottom, duration, customicon)
 		syn.toast_notification({
 					Type = 4,
-					Title = top,
-					Content = bottom,
+					Title = string.gsub(top, "<[^>]+>", ""),
+					Content = string.gsub(bottom, "<[^>]+>", ""),
 					Duration = duration
 		})
 		do -- this to prevent notif errors lol
