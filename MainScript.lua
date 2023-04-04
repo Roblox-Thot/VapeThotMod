@@ -1661,7 +1661,7 @@ GUISettings.CreateToggle({
 	HoverText = "Shows notifications"
 })
 
-if type(syn.toast_notification) == "function" and identifyexecutor and identifyexecutor() == "Synapse X" then
+if identifyexecutor and identifyexecutor() == "Synapse X" and syn and type(syn.toast_notification) == "function" then
 	GUISettings.CreateToggle({
 		Name = "Syn Notifications", 
 		Function = function(callback) 
