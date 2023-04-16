@@ -1089,6 +1089,19 @@ runcode(function()
 					end
 				end
 			end
+
+			if hideRight.Enabled then
+				local left = {
+					"RightUpperArm",
+					"RightLowerArm",
+					"RightHand"
+				}
+				for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+					if table.find(left, v.Name) ~= nil then
+						v.Transparency = 1
+					end
+				end
+			end
 		end
 	})
 	
@@ -1100,6 +1113,28 @@ runcode(function()
 				"LeftUpperArm",
 				"LeftLowerArm",
 				"LeftHand"
+			}
+			for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+				if table.find(left, v.Name) ~= nil then
+					if hideLeft.Enabled then
+						v.Transparency = 1
+					else
+						v.Transparency = 0
+					end
+				end
+			end
+		end,
+		["Default"] = false
+	})
+	
+	hideRight = showArms.CreateToggle({
+		["Name"] = "Hide right",
+		["HoverText"] = "Hides your right arm. Usefull for 'nobob' movements",
+		["Function"] = function(state)
+			local left = {
+				"RightUpperArm",
+				"RightLowerArm",
+				"RightHand"
 			}
 			for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
 				if table.find(left, v.Name) ~= nil then
