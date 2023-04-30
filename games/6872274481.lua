@@ -1147,35 +1147,35 @@ runcode(function()
 	})
 end)
 
-runcode(function()
-	pcall(function()
-		if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then return end -- If they update the chat this wont work so this will prevent it from showing up :epic:
-		local CheckCaller = checkcaller
-		local HookFunction = hookfunction
-		local PostMessage = require(lplr:WaitForChild("PlayerScripts"):WaitForChild("ChatScript"):WaitForChild("ChatMain")).MessagePosted
-		local MessageEvent = Instance.new("BindableEvent")
+-- runcode(function()
+-- 	pcall(function()
+-- 		if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then return end -- If they update the chat this wont work so this will prevent it from showing up :epic:
+-- 		local CheckCaller = checkcaller
+-- 		local HookFunction = hookfunction
+-- 		local PostMessage = require(lplr:WaitForChild("PlayerScripts"):WaitForChild("ChatScript"):WaitForChild("ChatMain")).MessagePosted
+-- 		local MessageEvent = Instance.new("BindableEvent")
 
-		local OldFunctionHook
+-- 		local OldFunctionHook
 
-		COB("Utility", {
-			["Name"] = "AntiLog",
-			["HoverText"] = "Attempts to stop Roblox from logging chat",
-			["Function"] = function(callmeback)
-				if callmeback then
-					local PostMessageHook = function(self, msg)
-						if not CheckCaller() and self == PostMessage then
-							MessageEvent:Fire(msg)
-							return
-						end
-						return OldFunctionHook(self, msg)
-					end
-					OldFunctionHook = HookFunction(PostMessage.fire, PostMessageHook)
-					print("Hooked me bbg")
-				else
-					HookFunction(PostMessage.fire, OldFunctionHook) -- Revert? idk, idc, just keep it on
-					print("Unhooked... why?")
-				end
-			end
-		})
-	end)
-end)
+-- 		COB("Utility", {
+-- 			["Name"] = "AntiLog",
+-- 			["HoverText"] = "Attempts to stop Roblox from logging chat",
+-- 			["Function"] = function(callmeback)
+-- 				if callmeback then
+-- 					local PostMessageHook = function(self, msg)
+-- 						if not CheckCaller() and self == PostMessage then
+-- 							MessageEvent:Fire(msg)
+-- 							return
+-- 						end
+-- 						return OldFunctionHook(self, msg)
+-- 					end
+-- 					OldFunctionHook = HookFunction(PostMessage.fire, PostMessageHook)
+-- 					print("Hooked me bbg")
+-- 				else
+-- 					HookFunction(PostMessage.fire, OldFunctionHook) -- Revert? idk, idc, just keep it on
+-- 					print("Unhooked... why?")
+-- 				end
+-- 			end
+-- 		})
+-- 	end)
+-- end)
