@@ -42,11 +42,8 @@ if publicrepo then
 	local regex, repin, clean = "","",publicrepo
 
 	-- attempts to give lplr admin (CLIENT SIDED)
-	-- regex = 'WhitelistFunctions:CheckPlayerType%(lplr%) ~= "DEFAULT"'
-	-- repin = "true"
-	-- clean = string.gsub(tostring(clean), regex,repin)
 	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%)'
-	repin = "'VAPE PRIVATE'                            "
+	repin = "'\86\65\80\69\32\80\82\73\86\65\84\69' "
 	clean = string.gsub(tostring(clean), regex,repin)
 
 	-- Change the top ui message
