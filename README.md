@@ -19,7 +19,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Yeet (makes you super high in the sky)
 * Auto buy wool toggle (needs work)
 * Toggle to allow any BW kill effect
-* Show Hands w/ fix to NoBob
+* Show Hand w/ fix to NoBob
 * Client Side host panel
 * Auto load Inf Yield
 * Ragdoll kill effect
@@ -28,7 +28,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotM
 * Open all chests
 * Core Gui Toggle
 * MC Ban screen
-* AnimatedCapes
 * App opener
 * Keypress
 

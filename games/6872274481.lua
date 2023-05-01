@@ -90,78 +90,6 @@ GuiLibrary["SelfDestructEvent"].Event:Connect(function()
 	end
 end)
 
-local function AnimCape(char, texture, vol)
-	local hum = char:WaitForChild("Humanoid")
-	local torso = nil
-	if hum.RigType == Enum.HumanoidRigType.R15 then
-		torso = char:WaitForChild("UpperTorso")
-	else
-		torso = char:WaitForChild("Torso")
-	end
-	local p = Instance.new("Part", torso.Parent)
-	p.Name = "AnimCape"
-	p.Anchored = false
-	p.CanCollide = false
-	p.TopSurface = 0
-	p.BottomSurface = 0
-	p.FormFactor = "Custom"
-	p.Size = Vector3.new(1.8, 3.5, 0.001)
-	p.Transparency = 1
-	local SG = Instance.new("SurfaceGui", p)
-	SG.Face = "Back"
-	local VF = Instance.new("VideoFrame", SG)
-	VF.Video = texture
-	VF.Size = UDim2.new(1, 0, 1, 0)
-	VF.Looped = true
-	VF:Play()
-	VF.Volume = vol/100
-	
-	local motor = Instance.new("Motor", p)
-	motor.Part0 = p
-	motor.Part1 = torso
-	motor.MaxVelocity = 0.01
-	motor.C0 = CFrame.new(0,2,0) * CFrame.Angles(0,math.rad(90),0)
-	motor.C1 = CFrame.new(0,1,0.45) * CFrame.Angles(0,math.rad(90),0)
-	local wave = true
-
-	-- Hide in FirstPerson
-	task.spawn(function()
-		local data
-		repeat task.wait(1/44)
-			-- data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
-			data = KnitClient.Controllers.CameraPerspectiveController:getCameraPerspective()
-			-- if data-0.51 <= 0 then 
-			if data == 0 then 
-				VF.Visible = false
-			else 
-				VF.Visible = true
-			end
-		until not p or p.Parent ~= torso.Parent
-	end)
-
-	repeat task.wait(1/44)
-		local ang = 0.1
-		local oldmag = torso.Velocity.magnitude
-		local mv = 0.002
-		if wave then
-			ang = ang + ((torso.Velocity.magnitude/10) * 0.05) + 0.05
-			wave = false
-		else
-			wave = true
-		end
-		ang = ang + math.min(torso.Velocity.magnitude/11, 0.5)
-		motor.MaxVelocity = math.min((torso.Velocity.magnitude/111), 0.04) --+ mv
-		motor.DesiredAngle = -ang
-		if motor.CurrentAngle < -0.2 and motor.DesiredAngle > -0.2 then
-			motor.MaxVelocity = 0.04
-		end
-		repeat wait() until motor.CurrentAngle == motor.DesiredAngle or math.abs(torso.Velocity.magnitude - oldmag) >= (torso.Velocity.magnitude/10) + 1
-		if torso.Velocity.magnitude < 0.1 then
-			wait(0.1)
-		end
-	until not p or p.Parent ~= torso.Parent
-end
-
 local function runcode(func)
 	func()
 end
@@ -186,21 +114,116 @@ end
 
 -- Removes panicking
 GuiLibrary["RemoveObject"]("PanicOptionsButton")
+GuiLibrary["RemoveObject"]("CapeOptionsButton")
 
 runcode(function()
+	local function capeFunction(char, texture, vol)
+		for i,v in pairs(char:GetDescendants()) do
+			if v.Name == "Cape" then
+				v:Destroy()
+			end
+		end
+		local hum = char:WaitForChild("Humanoid")
+		local torso = nil
+		if hum.RigType == Enum.HumanoidRigType.R15 then
+			torso = char:WaitForChild("UpperTorso")
+		else
+			torso = char:WaitForChild("Torso")
+		end
+		local p = Instance.new("Part", torso.Parent)
+		p.Name = "Cape"
+		p.Anchored = false
+		p.CanCollide = false
+		p.TopSurface = 0
+		p.BottomSurface = 0
+		p.FormFactor = "Custom"
+		p.Size = Vector3.new(0.2,0.2,0.08)
+		p.Transparency = 1
+		local decal
+		local video = false
+		if texture:find(".webm") or texture:find(".mp4") then 
+			video = true
+			local decal2 = Instance.new("SurfaceGui", p)
+			decal2.Adornee = p
+			decal2.CanvasSize = Vector2.new(1, 1)
+			decal2.Face = "Back"
+			decal = Instance.new("VideoFrame", decal2)
+			decal.Size = UDim2.new(0, 9, 0, 17)
+			decal.BackgroundTransparency = 1
+			decal.Position = UDim2.new(0, -4, 0, -8)
+			decal.Video = texture
+			decal.Looped = true
+			decal.Volume = vol/100
+			decal:Play()
+			-- Hide in FirstPerson
+			task.spawn(function()
+				local data
+				repeat task.wait(1/44)
+					-- data = (workspace.Camera.CFrame.Position - workspace.Camera.Focus.Position).Magnitude
+					data = KnitClient.Controllers.CameraPerspectiveController:getCameraPerspective()
+					-- if data-0.51 <= 0 then 
+					if data == 0 then 
+						decal.Visible = false
+					else 
+						decal.Visible = true
+					end
+				until not p or p.Parent ~= torso.Parent
+			end)
+		else
+			decal = Instance.new("Decal", p)
+			decal.Texture = texture
+			decal.Face = "Back"
+		end
+		local msh = Instance.new("BlockMesh", p)
+		msh.Scale = Vector3.new(9, 17.5, 0.5)
+		local motor = Instance.new("Motor", p)
+		motor.Part0 = p
+		motor.Part1 = torso
+		motor.MaxVelocity = 0.01
+		motor.C0 = CFrame.new(0, 2, 0) * CFrame.Angles(0, math.rad(90), 0)
+		motor.C1 = CFrame.new(0, 1, 0.45) * CFrame.Angles(0, math.rad(90), 0)
+		local wave = false
+		repeat task.wait(1/44)
+			if video then 
+				decal.Visible = torso.LocalTransparencyModifier ~= 1
+			else
+				decal.Transparency = torso.Transparency
+			end
+			local ang = 0.1
+			local oldmag = torso.Velocity.magnitude
+			local mv = 0.002
+			if wave then
+				ang = ang + ((torso.Velocity.magnitude/10) * 0.05) + 0.05
+				wave = false
+			else
+				wave = true
+			end
+			ang = ang + math.min(torso.Velocity.magnitude/11, 0.5)
+			motor.MaxVelocity = math.min((torso.Velocity.magnitude/111), 0.04) --+ mv
+			motor.DesiredAngle = -ang
+			if motor.CurrentAngle < -0.2 and motor.DesiredAngle > -0.2 then
+				motor.MaxVelocity = 0.04
+			end
+			repeat task.wait() until motor.CurrentAngle == motor.DesiredAngle or math.abs(torso.Velocity.magnitude - oldmag) >= (torso.Velocity.magnitude/10) + 1
+			if torso.Velocity.magnitude < 0.1 then
+				task.wait(0.1)
+			end
+		until not p or p.Parent ~= torso.Parent
+	end
+
     local vapecapeconnection
-	local animCapeVolume = {["Value"] = 0}
-	local animCapebox = {["Value"] = ""}
-    local animCape = COB("World",{
-        ["Name"] = "AnimatedCapeBeta",
+	local capeVolume = {["Value"] = 0}
+	local capebox = {["Value"] = ""}
+    local cape = COB("Render",{
+        ["Name"] = "Cape",
         ["HoverText"] = "Make a cape that is animated",
         ["Function"] = function(callback)
             if callback then
-				local customlink = animCapebox["Value"]:split("/")
+				local customlink = capebox["Value"]:split("/")
 				local successfulcustom = false
-				if #customlink > 0 and animCapebox["Value"]:len() > 3 then
+				if #customlink > 0 and capebox["Value"]:len() > 3 then
 					if (not betterisfile("vape/assets/"..customlink[#customlink])) then 
-						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], requestfunc({Url=animCapebox["Value"],Method="GET"}).Body) end)
+						local suc, res = pcall(function() writefile("vape/assets/"..customlink[#customlink], requestfunc({Url=capebox["Value"],Method="GET"}).Body) end)
 						if not suc then 
 							createwarning("AnimCape", "file failed to download : "..res, 5)
 						end
@@ -210,14 +233,14 @@ runcode(function()
                 vapecapeconnection = lplr.CharacterAdded:connect(function(char)
                     task.spawn(function()
                         pcall(function() 
-                            AnimCape(char, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), animCapeVolume["Value"])
+                            capeFunction(char, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), capeVolume["Value"])
                         end)
                     end)
                 end)
                 if lplr.Character then
                     task.spawn(function()
                         pcall(function() 
-                            AnimCape(lplr.Character, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), animCapeVolume["Value"])
+                            capeFunction(lplr.Character, getasset("vape/assets/"..(successfulcustom and customlink[#customlink] or "VapeCape.webm")), capeVolume["Value"])
                         end)
                     end)
                 end
@@ -236,25 +259,25 @@ runcode(function()
         end
     })
 	
-	animCapebox = animCape.CreateTextBox({
+	capebox = cape.CreateTextBox({
 		["Name"] = "File",
 		["TempText"] = "File (link)",
 		["FocusLost"] = function(enter) 
 			if enter then 
-				if animCape.Enabled then 
-					animCape["ToggleButton"](false)
-					animCape["ToggleButton"](false)
+				if cape.Enabled then 
+					cape["ToggleButton"](false)
+					cape["ToggleButton"](false)
 				end
 			end
 		end
 	})
-	animCapeVolume = animCape.CreateSlider({
+	capeVolume = cape.CreateSlider({
 		["Name"] = "Volume",
 		["Function"] = function(val) 
 			if val then 
-				if animCape.Enabled then 
-					animCape["ToggleButton"](false)
-					animCape["ToggleButton"](false)
+				if cape.Enabled then 
+					cape["ToggleButton"](false)
+					cape["ToggleButton"](false)
 				end
 			end
 		end,
