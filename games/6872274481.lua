@@ -742,7 +742,7 @@ runcode(function()
 	bedwarsKillEffectMode = KillEffect.CreateDropdown({
 		Name = "Effect",
 		Function = function() KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false) end,
-		List = (function() local modes = {} for i,v in BedwarsKillEffects do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
+		List = (function() local modes = {} for i,v in pairs(BedwarsKillEffects) do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
 	})
 end)
 
@@ -915,7 +915,7 @@ runcode(function()
 		emotes = Enum.CoreGuiType.EmotesMenu,
 	}
 
-	local defaultToggles = (function() local save = {} for name, enum in coreGuiTypeNames do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
+	local defaultToggles = (function() local save = {} for name, enum in pairs(coreGuiTypeNames) do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
 
 	local typeToggles = {}
 
@@ -924,18 +924,18 @@ runcode(function()
 		["HoverText"] = "Toggles for coreGui stuff",
 		["Function"] = function(callmeback)
 			if callmeback then
-				for name, toggle in typeToggles do
+				for name, toggle in pairs(typeToggles) do
 					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled)
 				end
 			else
-				for name, toggle in typeToggles do
+				for name, toggle in pairs(typeToggles) do
 					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name])
 				end
 			end
 		end
 	})
 
-	for name, enum in coreGuiTypeNames do
+	for name, enum in pairs(coreGuiTypeNames) do
 		typeToggles[name] = CoreGuiToggle.CreateToggle({
 			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
 			["HoverText"] = "Toggles the "..name,
@@ -1074,27 +1074,21 @@ runcode(function()
 			task.wait(0.02)
 			Send(numbers[hotbarSlot+1])
 
-			if hideLeft.Enabled then
+			if hideLeft.Enabled or hideRight.Enabled then
 				local left = {
 					"LeftUpperArm",
 					"LeftLowerArm",
 					"LeftHand"
 				}
-				for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
-					if table.find(left, v.Name) ~= nil then
-						v.Transparency = 1
-					end
-				end
-			end
-
-			if hideRight.Enabled then
-				local left = {
+				local right = {
 					"RightUpperArm",
 					"RightLowerArm",
 					"RightHand"
 				}
-				for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
-					if table.find(left, v.Name) ~= nil then
+				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+					if table.find(left, v.Name) ~= nil and hideLeft.Enabled then
+						v.Transparency = 1
+					elseif table.find(right, v.Name) ~= nil and hideRight.Enabled then
 						v.Transparency = 1
 					end
 				end
@@ -1111,7 +1105,7 @@ runcode(function()
 				"LeftLowerArm",
 				"LeftHand"
 			}
-			for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+			for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
 				if table.find(left, v.Name) ~= nil then
 					if hideLeft.Enabled then
 						v.Transparency = 1
@@ -1133,7 +1127,7 @@ runcode(function()
 				"RightLowerArm",
 				"RightHand"
 			}
-			for i, v in KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren() do
+			for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
 				if table.find(left, v.Name) ~= nil then
 					if hideLeft.Enabled then
 						v.Transparency = 1
@@ -1146,36 +1140,3 @@ runcode(function()
 		["Default"] = false
 	})
 end)
-
--- runcode(function()
--- 	pcall(function()
--- 		if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then return end -- If they update the chat this wont work so this will prevent it from showing up :epic:
--- 		local CheckCaller = checkcaller
--- 		local HookFunction = hookfunction
--- 		local PostMessage = require(lplr:WaitForChild("PlayerScripts"):WaitForChild("ChatScript"):WaitForChild("ChatMain")).MessagePosted
--- 		local MessageEvent = Instance.new("BindableEvent")
-
--- 		local OldFunctionHook
-
--- 		COB("Utility", {
--- 			["Name"] = "AntiLog",
--- 			["HoverText"] = "Attempts to stop Roblox from logging chat",
--- 			["Function"] = function(callmeback)
--- 				if callmeback then
--- 					local PostMessageHook = function(self, msg)
--- 						if not CheckCaller() and self == PostMessage then
--- 							MessageEvent:Fire(msg)
--- 							return
--- 						end
--- 						return OldFunctionHook(self, msg)
--- 					end
--- 					OldFunctionHook = HookFunction(PostMessage.fire, PostMessageHook)
--- 					print("Hooked me bbg")
--- 				else
--- 					HookFunction(PostMessage.fire, OldFunctionHook) -- Revert? idk, idc, just keep it on
--- 					print("Unhooked... why?")
--- 				end
--- 			end
--- 		})
--- 	end)
--- end)
