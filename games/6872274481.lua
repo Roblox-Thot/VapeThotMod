@@ -1209,9 +1209,26 @@ end)
 
 runcode(function()
 	pcall(function()
-		if not (identifyexecutor and (identifyexecutor() == "Synapse X" or identifyexecutor() == "Script-Ware")) then return end
+		if not clonefunction and not type(clonefunction) == "function" then
+			function CloneFunction(f)
+				local lol = xpcall(setfenv, function(a,b)
+					return a,b
+				end, f, getfenv(f))
+				if lol then
+					return function(...)
+						return f(...)
+					end
+				end
+				return coroutine.wrap(function(...)
+					while true do
+						f = coroutine.yield(f(...))
+					end
+				end)
+			end
+		else
+			CloneFunction = clonefunction
+		end
 		if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then return end -- If they update the chat this wont work so this will prevent it from showing up :epic:
-		local CloneFunction = clonefunction
 		local CheckCaller = CloneFunction(checkcaller)
 		local HookFunction = CloneFunction(hookfunction)
 		local PostMessage = require(lplr:WaitForChild("PlayerScripts"):WaitForChild("ChatScript"):WaitForChild("ChatMain")).MessagePosted
