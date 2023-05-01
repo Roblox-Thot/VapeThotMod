@@ -1045,6 +1045,7 @@ runcode(function() --includes fixes for if BW shows the hands
 	})
 end)
 
+--[[ To be rewritten
 runcode(function()
 	local showArms, hideLeft = {Enabled = false}
 	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
@@ -1057,41 +1058,41 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.SHOW_ARMS);
-			else
-				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.HIDE_ARMS);
-			end
-			local number = math.random(1, 8)
-			local hotbarSlot = CS:getState().Inventory.observedInventory.hotbarSlot
-			if number == hotbarSlot +1 then
-				number = number + 1
-			end
-			
-			local numbers = {
-				"One", "Two", "Three", "Four", "Five",
-				"Six", "Seven", "Eight", "Nine"
-			}
-			Send(numbers[number])
-			task.wait(0.02)
-			Send(numbers[hotbarSlot+1])
+				local number = math.random(1, 8)
+				local hotbarSlot = CS:getState().Inventory.observedInventory.hotbarSlot
+				if number == hotbarSlot +1 then
+					number = number + 1
+				end
+				
+				local numbers = {
+					"One", "Two", "Three", "Four", "Five",
+					"Six", "Seven", "Eight", "Nine"
+				}
+				Send(numbers[number])
+				task.wait(0.02)
+				Send(numbers[hotbarSlot+1])
 
-			if hideLeft.Enabled or hideRight.Enabled then
-				local left = {
-					"LeftUpperArm",
-					"LeftLowerArm",
-					"LeftHand"
-				}
-				local right = {
-					"RightUpperArm",
-					"RightLowerArm",
-					"RightHand"
-				}
-				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
-					if table.find(left, v.Name) ~= nil and hideLeft.Enabled then
-						v.Transparency = 1
-					elseif table.find(right, v.Name) ~= nil and hideRight.Enabled then
-						v.Transparency = 1
+				if hideLeft.Enabled or hideRight.Enabled then
+					-- local left = {
+					-- 	"LeftUpperArm",
+					-- 	"LeftLowerArm",
+					-- 	"LeftHand"
+					-- }
+					-- local right = {
+					-- 	"RightUpperArm",
+					-- 	"RightLowerArm",
+					-- 	"RightHand"
+					-- }
+					for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+						if table.find(left, v.Name) ~= nil and hideLeft.Enabled then
+							v.Transparency = 1
+						elseif table.find(right, v.Name) ~= nil and hideRight.Enabled then
+							v.Transparency = 1
+						end
 					end
 				end
+			else
+				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.HIDE_ARMS);
 			end
 		end
 	})
@@ -1100,11 +1101,11 @@ runcode(function()
 		["Name"] = "Hide left",
 		["HoverText"] = "Hides your left arm. Usefull for 'nobob' movements",
 		["Function"] = function(state)
-			local left = {
-				"LeftUpperArm",
-				"LeftLowerArm",
-				"LeftHand"
-			}
+			-- local left = {
+			-- 	"LeftUpperArm",
+			-- 	"LeftLowerArm",
+			-- 	"LeftHand"
+			-- }
 			for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
 				if table.find(left, v.Name) ~= nil then
 					if hideLeft.Enabled then
@@ -1122,13 +1123,13 @@ runcode(function()
 		["Name"] = "Hide right",
 		["HoverText"] = "Hides your right arm. Usefull for 'nobob' movements",
 		["Function"] = function(state)
-			local left = {
-				"RightUpperArm",
-				"RightLowerArm",
-				"RightHand"
-			}
+			-- local right = {
+			-- 	"RightUpperArm",
+			-- 	"RightLowerArm",
+			-- 	"RightHand"
+			-- }
 			for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
-				if table.find(left, v.Name) ~= nil then
+				if table.find(right, v.Name) ~= nil then
 					if hideLeft.Enabled then
 						v.Transparency = 1
 					else
@@ -1138,5 +1139,47 @@ runcode(function()
 			end
 		end,
 		["Default"] = false
+	})
+end)
+]]--
+
+
+runcode(function()
+	local showArms, hideLeft = {Enabled = false}
+	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
+	local ViewmodelMode = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-mode"]).ViewmodelMode
+	math.randomseed(tick())
+
+	local right = {
+		"RightUpperArm",
+		"RightLowerArm",
+		"RightHand"
+	}
+
+	showArms = COB("Render", {
+		["Name"] = "Show hand",
+		["HoverText"] = "Shows hand right hand",
+		["Function"] = function(callmeback)
+			if callmeback then
+				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+					if table.find(right, v.Name) ~= nil then
+						v.Transparency = 0
+					end
+				end
+				for i,v in pairs(lplr.Character:GetDescendants()) do
+					if v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
+						v:Clone().Parent = KnitClient.Controllers.ViewmodelController:getViewModel()
+					end
+				end
+			else
+				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+					if table.find(right, v.Name) ~= nil then
+						v.Transparency = 1
+					elseif v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
+						v:Destroy()
+					end
+				end
+			end
+		end
 	})
 end)
