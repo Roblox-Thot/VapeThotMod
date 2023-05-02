@@ -983,7 +983,7 @@ runcode(function()
 	local rotationy = {Value = 0}
 	local rotationz = {Value = 0}
 	local VMC = KnitClient.Controllers.ViewmodelController
-	local animtype = require(replicatedStorageService.TS.animation["animation-type"]).AnimationType
+	local animtype = require(ReplicatedStorage.TS.animation["animation-type"]).AnimationType
 	local oldc1
 	local nobob = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
 		Name = "NoBob",
