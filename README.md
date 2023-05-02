@@ -3,7 +3,7 @@
 
 This edit will more than likely to be only for BedWars
 
-Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template)
+<!--Want to make your own mod? [Template here!](https://github.com/Roblox-Thot/VapeMod-Template) -->
 
 # LoadString
 ```lua
