@@ -983,7 +983,7 @@ runcode(function()
 	local rotationy = {Value = 0}
 	local rotationz = {Value = 0}
 	local VMC = KnitClient.Controllers.ViewmodelController
-	-- local animtype = require(ReplicatedStorage.TS.animation["animation-type"]).AnimationType
+	local animtype = require(game:GetService("ReplicatedStorage").TS.animation["animation-type"]).AnimationType
 	local oldc1
 	local nobob = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
 		Name = "NoBob",
@@ -991,20 +991,20 @@ runcode(function()
 			local viewmodel = VMC:getViewModel()
 			if viewmodel then
 				if callback then
-					-- oldfunc = VMC.playAnimation
-					-- VMC.playAnimation = function(self, animid, details)
-					-- 	if animid == animtype.FP_WALK then
-					-- 		return
-					-- 	end
-					-- 	return oldfunc(self, animid, details)
-					-- end
+					oldfunc = VMC.playAnimation
+					VMC.playAnimation = function(self, animid, details)
+						if animid == animtype.FP_WALK then
+							return
+						end
+						return oldfunc(self, animid, details)
+					end
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", -(nobobdepth.Value / 10))
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_HORIZONTAL_OFFSET", (nobobhorizontal.Value / 10))
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_VERTICAL_OFFSET", (nobobvertical.Value / 10))
 					oldc1 = viewmodel.RightHand.RightWrist.C1
 					viewmodel.RightHand.RightWrist.C1 = oldc1 * CFrame.Angles(math.rad(rotationx.Value), math.rad(rotationy.Value), math.rad(rotationz.Value))
 				else
-					-- VMC.playAnimation = oldfunc
+					VMC.playAnimation = oldfunc
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", 0)
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_HORIZONTAL_OFFSET", 0)
 					lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_VERTICAL_OFFSET", 0)
@@ -1013,17 +1013,6 @@ runcode(function()
 			end
 		end,
 		HoverText = "Makes sword farther"
-	})
-	nobobdepth = nobob.CreateSlider({
-		Name = "Depth",
-		Min = 0,
-		Max = 24,
-		Default = 8,
-		Function = function(val)
-			if nobob.Enabled then
-				lplr.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-controller"]:SetAttribute("ConstantManager_DEPTH_OFFSET", -(val / 10))
-			end
-		end
 	})
 	nobobhorizontal = nobob.CreateSlider({
 		Name = "Horizontal",
