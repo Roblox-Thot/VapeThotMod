@@ -117,7 +117,7 @@ GuiLibrary["RemoveObject"]("PanicOptionsButton")
 GuiLibrary["RemoveObject"]("CapeOptionsButton")
 
 runcode(function()
-	local function capeFunction(char, texture, vol)
+	local function capeFunction(char, texture, vol) -- function stolen from Vape just edited to allow .mp4
 		for i,v in pairs(char:GetDescendants()) do
 			if v.Name == "Cape" then
 				v:Destroy()
@@ -336,7 +336,7 @@ end)
 
 runcode(function()
 	local AutobuyWool = {Enabled = false}
-	-- shitty because it's calling the remote and not the module
+	-- shitty because it's calling the remote and not the remote in the module
 	AutobuyWool = COB("Utility", {
 		["Name"] = "Auto Buy Wool (shit)",
 		["HoverText"] = "Shit needs to be made better sometime",
@@ -383,15 +383,18 @@ runcode(function()
 			end
 		end
 	})
-	-- don't do small numbers you need to go up fast!
+	-- Is this jank way to do this?
+	-- Yes
+	-- Am I going to redo this
+	-- No
 	ypowerbitch = yeetOut.CreateSlider({
 		["Name"] = "Y Powwa",
 		["Function"] = function()end,
-		["Min"] = 0,
+		["Min"] = 10000000,
 		["Max"] = 99999999,
 		["Default"] = 6942069
 	})
-	-- don't do small numbers you need to go up fast!
+	
 	kSwitch = yeetOut.CreateToggle({
 		["Name"] = "Kill switch",
         ["HoverText"] = "Makes it stop tping you up",
@@ -401,6 +404,7 @@ runcode(function()
 end)
 
 runcode(function()
+	-- Only here because I'm lazy and use it sometimes
 	COB("Utility", {
 		["Name"] = "Inf Yield",
 		["HoverText"] = "Load infiniteyield",
@@ -417,11 +421,11 @@ end)
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
-		["Icon"] = "vape/assets/KeybindIcon.png", -- currently you have to use vape assets for icons, this may change in the future
-		["IconSize"] = 16, -- size in width to not look ugly
+		["Icon"] = "vape/assets/KeybindIcon.png",
+		["IconSize"] = 16
 	})
 	
-    task.spawn(function()
+    task.spawn(function() -- I have no idea what any of this does I took it from somewhere i forgor
         local ts = game:GetService("TweenService")
         local main4 = Instance.new("Frame")
         main4.BackgroundTransparency = 1
@@ -622,14 +626,13 @@ runcode(function()
 				p5:Destroy()
 				task.wait(0.01)
 				clone.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
-				
+
 				local m = Instance.new("Model")
 				m.Parent = game.Workspace
 				game:GetService("Debris"):AddItem(m,10)
 				local g = clone:GetChildren()
 				clone.HumanoidRootPart.CanCollide = false
-				
-			
+
 				for _, v in pairs(clone:GetDescendants()) do
 					if v.Parent == clone then
 						v.Parent = m
@@ -693,7 +696,6 @@ runcode(function()
 				local g = clone:GetChildren()
 				clone.HumanoidRootPart.CanCollide = false
 				
-			
 				for _, v in pairs(clone:GetDescendants()) do
 					if v.Parent == clone then
 						v.Parent = m
@@ -747,7 +749,7 @@ runcode(function()
 		end
 	})
 
-	killEffectToggle = KillEffect.CreateToggle({
+	killEffectToggle = KillEffect.CreateToggle({ -- toggles between custom and bedwars in a kinda bad way
 		Name = "Custom kill effect",
 		Function = function(tog)
             customKillEffectMode.Object.Visible = tog
@@ -756,13 +758,13 @@ runcode(function()
         end
 	})
 
-	customKillEffectMode = KillEffect.CreateDropdown({
+	customKillEffectMode = KillEffect.CreateDropdown({ -- Lists the custom kill effects
 		Name = "Effect",
 		Function = function() KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false) end,
 		List = (function() local modes = {} for i,v in pairs(customKilleffects) do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
 	})
 
-	bedwarsKillEffectMode = KillEffect.CreateDropdown({
+	bedwarsKillEffectMode = KillEffect.CreateDropdown({ -- Litst Bedwar's kill effects
 		Name = "Effect",
 		Function = function() KillEffect["ToggleButton"](false) KillEffect["ToggleButton"](false) end,
 		List = (function() local modes = {} for i,v in pairs(BedwarsKillEffects) do  table.insert(modes, i) end table.sort(modes, function(a, b) return tostring(a) < tostring(b) end) return modes end)()
@@ -770,18 +772,17 @@ runcode(function()
 end)
 
 runcode(function()
-	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
-	local OfflinePlayerUtil = v2.OfflinePlayerUtil
-	local v6 = OfflinePlayerUtil.getPlayer(lplr);
+	local OfflinePlayerUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).OfflinePlayerUtil
+	local LocalPlayerData = OfflinePlayerUtil.getPlayer(lplr);
 
     COB("Utility",{
         ["Name"] = "HostExploit",
 		["HoverText"] = "Client Sided",
         ["Function"] = function(callback)
             if callback then
-				v6:SetAttribute("Cohost", true)
+				LocalPlayerData:SetAttribute("Cohost", true)
 			else
-				v6:SetAttribute("Cohost", false)
+				LocalPlayerData:SetAttribute("Cohost", false)
             end
 		end
     })
@@ -800,10 +801,7 @@ runcode(function()
 						if v:FindFirstChild("ChestFolderValue") then
 							local chest = v:FindFirstChild("ChestFolderValue")
 							chest = chest and chest.Value or nil
-							local chestitems = chest and chest:GetChildren() or {}
-							if #chestitems > 0 then
-								client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(chest)
-							end
+							client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(chest) -- Tells the server you opened a chest ig
 						end
 					end)
 				end
@@ -840,8 +838,7 @@ runcode(function()
 end)
 
 runcode(function()
-	local v2 = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out)
-	local OfflinePlayerUtil = v2.OfflinePlayerUtil
+	local OfflinePlayerUtil = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out).OfflinePlayerUtil
 
 	local InvAll = {Enabled = false}
 	InvAll = COB("Utility",{
@@ -849,7 +846,6 @@ runcode(function()
 		["HoverText"] = "Invite all to your party",
 		["Function"] = function(cb)
 			if cb then
-				InvAll.ToggleButton(false)
 				createwarning("InvAll", "Inviting all.", 10)
 				local player
 				for i,v in pairs(players:GetChildren()) do
@@ -857,12 +853,14 @@ runcode(function()
 					Flamework.resolveDependency("@easy-games/lobby:client/controllers/party-controller@PartyController"):invitePlayer(player)
 					task.wait() -- Don't lag game
 				end
+				InvAll.ToggleButton(false)
 			end
 		end
 	})
 end)
 
 runcode(function()
+	-- Hell ya theft is fun
 	COB("Utility", {
 		["Name"] = "Ban screen",
 		["HoverText"] = "Makes ban msgs look like minecraft (by xylex)",
@@ -881,6 +879,7 @@ runcode(function()
 end)
 
 runcode(function()
+	-- Janky + not 100% + l + why did i do this
 	local mouseTP = {Enabled = false}
 
 	local entity = shared.vapeentity
@@ -948,24 +947,24 @@ runcode(function()
 		["Function"] = function(callmeback)
 			if callmeback then
 				for name, toggle in pairs(typeToggles) do
-					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled)
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled) -- Sets each GUI type to what you set
 				end
 			else
 				for name, toggle in pairs(typeToggles) do
-					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name])
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name]) -- hopefuly esets it to what it was
 				end
 			end
 		end
 	})
 
 	for name, enum in pairs(coreGuiTypeNames) do
-		typeToggles[name] = CoreGuiToggle.CreateToggle({
+		typeToggles[name] = CoreGuiToggle.CreateToggle({ -- Loops through the CoreGuis and makes a button for each
 			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
 			["HoverText"] = "Toggles the "..name,
 			["Function"] = function(state)
 				if CoreGuiToggle.Enabled then
 					CoreGuiToggle.ToggleButton(false)
-					CoreGuiToggle.ToggleButton(false)
+					CoreGuiToggle.ToggleButton(false) -- TODO: #3 I need to make this better later 
 				end
 			end,
 			["Default"] = false
@@ -974,7 +973,9 @@ runcode(function()
 end)
 
 GuiLibrary.RemoveObject("NoBobOptionsButton")
-runcode(function() --includes fixes for if BW shows the hands
+runcode(function()
+	-- includes fixes for if BW shows the hands
+	-- Other than that I have no idea what any of this does
 	local nobobdepth = {Value = 8}
 	local nobobhorizontal = {Value = 8}
 	local nobobvertical = {Value = -2}
@@ -1186,20 +1187,20 @@ runcode(function()
 			if callmeback then
 				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
 					if table.find(right, v.Name) ~= nil then
-						v.Transparency = 0
+						v.Transparency = 0 -- Shows the parts
 					end
 				end
 				for i,v in pairs(lplr.Character:GetDescendants()) do
 					if v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
-						v:Clone().Parent = KnitClient.Controllers.ViewmodelController:getViewModel()
+						v:Clone().Parent = KnitClient.Controllers.ViewmodelController:getViewModel() -- Clones shirt and body colors to the view model
 					end
 				end
 			else
 				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
 					if table.find(right, v.Name) ~= nil then
-						v.Transparency = 1
+						v.Transparency = 1 -- Hides Parts
 					elseif v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
-						v:Destroy()
+						v:Destroy() -- makes viewmodel nakie
 					end
 				end
 			end
