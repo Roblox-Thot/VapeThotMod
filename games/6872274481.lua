@@ -1167,13 +1167,7 @@ runcode(function()
 end)
 ]]--
 
-
 runcode(function()
-	local showArms, hideLeft = {Enabled = false}
-	local CS = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
-	local ViewmodelMode = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.global.viewmodel["viewmodel-mode"]).ViewmodelMode
-	math.randomseed(tick())
-
 	local right = {
 		"RightUpperArm",
 		"RightLowerArm",
