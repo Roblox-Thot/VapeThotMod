@@ -963,8 +963,7 @@ runcode(function()
 			["HoverText"] = "Toggles the "..name,
 			["Function"] = function(state)
 				if CoreGuiToggle.Enabled then
-					CoreGuiToggle.ToggleButton(false)
-					CoreGuiToggle.ToggleButton(false) -- TODO: #3 I need to make this better later 
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], state)
 				end
 			end,
 			["Default"] = false
