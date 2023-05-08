@@ -1,3 +1,6 @@
+# Not being updated till a decent computer exploit updates
+
+
 # VapeThotMod
 [Support/Update Discord](https://discord.gg/tbB9SnyH58)
 
