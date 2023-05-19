@@ -808,7 +808,7 @@ runcode(function()
 					end)
 				end
 				client:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(nil)
-				openChests["ToggleButton"](false)
+				if openChests.Enabled then openChests["ToggleButton"](false) end
 				createwarning("Chests", "All chests opened!", 10)
 			end
 		end
