@@ -418,6 +418,7 @@ runcode(function()
 	})
 end)
 
+--[[
 runcode(function()
 	local Keystrokes = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Keystrokes", 
@@ -514,6 +515,7 @@ runcode(function()
 		["Priority"] = 3
 	})
 end)
+]]--
 
 GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
 runcode(function()
