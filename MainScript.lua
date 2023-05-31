@@ -94,7 +94,7 @@ if inputService:GetPlatform() ~= Enum.Platform.Windows then
 	getcustomasset = nil
 end
 local getcustomasset = getsynasset or getcustomasset or function(location) return vapeAssetTable[location] or "" end
-local customassetcheck = (getsynasset or getcustomasset) and true
+local customassetcheck = false
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
 local delfile = delfile or function(file) writefile(file, "") end
 
@@ -147,6 +147,26 @@ local function vapeGithubRequest(scripturl)
 		if not suc or res == "404: Not Found" then
 			suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
 		end
+        if not suc or res == "404: Not Found" then
+			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
+			error(res)
+		end
+		if scripturl:find(".lua") then res = "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..res end
+		writefile("vape/"..scripturl, res)
+	end
+	return readfile("vape/"..scripturl)
+end
+
+local function thotGithubRequest(scripturl)
+	if not isfile("vape/"..scripturl) then
+		local suc, res
+		task.delay(15, function()
+			if not res and not errorPopupShown then 
+				errorPopupShown = true
+				displayErrorPopup("The connection to github is taking a while, Please be patient.")
+			end
+		end)
+		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/"..scripturl, true) end)
         if not suc or res == "404: Not Found" then
 			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
 			error(res)
