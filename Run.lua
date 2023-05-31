@@ -13,7 +13,7 @@ end
 
 -- Get the commit hashes or if failed set it to "main" to attempt to grab the code
 local commit = (getCommit("https://github.com/7GrandDadPGN/VapeV4ForRoblox") or "main")
-
+task.wait()
 local RTcommit = (getCommit("https://github.com/Roblox-Thot/VapeThotMod") or "main")
 
 
