@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+return "disabled"
 -- get newest commit ids
 local function getCommit(url)
 	for i,v in pairs(game:HttpGet(url):split("\n")) do 
