@@ -880,53 +880,55 @@ runcode(function()
 	})
 end)
 
--- runcode(function()
--- 	-- Janky + not 100% + l + why did i do this
--- 	local mouseTP = {Enabled = false}
+--[[
+	runcode(function()
+		-- Janky + not 100% + l + why did i do this
+		local mouseTP = {Enabled = false}
 
--- 	local entity = shared.vapeentity
--- 	local Client = require(repstorage.TS.remotes).default.Client
--- 	local ProjectileController = KnitClient.Controllers.ProjectileController
--- 	local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
+		local entity = shared.vapeentity
+		local Client = require(repstorage.TS.remotes).default.Client
+		local ProjectileController = KnitClient.Controllers.ProjectileController
+		local ProjectileRemote = getremote(debug.getconstants(debug.getupvalues(getmetatable(ProjectileController)["launchProjectileWithValues"])[2]))
 
--- 	local function tele(position)
--- 		local guid = game:GetService("HttpService"):GenerateGUID()
--- 		if lplr.Character.InventoryFolder.Value:FindFirstChild("telepearl") then
--- 			local args = {
--- 				[1] = lplr.Character.InventoryFolder.Value.telepearl,
--- 				[2] = "telepearl",
--- 				[3] = "telepearl",
--- 				[4] = entity.character.HumanoidRootPart.Position,
--- 				[5] = entity.character.HumanoidRootPart.Position,
--- 				[6] = Vector3.new(0,-90,0),
--- 				[7] = guid,
--- 				[8] = {
--- 					["drawDurationSeconds"] = 0
--- 				},
--- 				[9] = workspace:GetServerTimeNow()
--- 			}
-			
--- 			-- Toggle TP redirect to set pos
--- 			module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
--- 			module["Api"]["ToggleButton"]()
-			
--- 			Client:Get(ProjectileRemote):CallServerAsync(unpack(args))
--- 		else
--- 			createwarning("MouseTP","No pearl found", 5)
--- 		end
--- 	end
+		local function tele(position)
+			local guid = game:GetService("HttpService"):GenerateGUID()
+			if lplr.Character.InventoryFolder.Value:FindFirstChild("telepearl") then
+				local args = {
+					[1] = lplr.Character.InventoryFolder.Value.telepearl,
+					[2] = "telepearl",
+					[3] = "telepearl",
+					[4] = entity.character.HumanoidRootPart.Position,
+					[5] = entity.character.HumanoidRootPart.Position,
+					[6] = Vector3.new(0,-90,0),
+					[7] = guid,
+					[8] = {
+						["drawDurationSeconds"] = 0
+					},
+					[9] = workspace:GetServerTimeNow()
+				}
+				
+				-- Toggle TP redirect to set pos
+				module = GuiLibrary["ObjectsThatCanBeSaved"]["TPRedirectionOptionsButton"]
+				module["Api"]["ToggleButton"]()
+				
+				Client:Get(ProjectileRemote):CallServerAsync(unpack(args))
+			else
+				createwarning("MouseTP","No pearl found", 5)
+			end
+		end
 
--- 	mouseTP = COB("Utility", {
--- 		["Name"] = "MouseTP",
--- 		["HoverText"] = "Uses a pearl to tp",
--- 		["Function"] = function(callmeback)
--- 			if callmeback then
--- 				mouseTP["ToggleButton"](false)
--- 				tele(false)
--- 			end
--- 		end
--- 	})
--- end)
+		mouseTP = COB("Utility", {
+			["Name"] = "MouseTP",
+			["HoverText"] = "Uses a pearl to tp",
+			["Function"] = function(callmeback)
+				if callmeback then
+					mouseTP["ToggleButton"](false)
+					tele(false)
+				end
+			end
+		})
+	end)
+]]--
 
 runcode(function()
 	local CoreGuiToggle = {Enabled = false}
