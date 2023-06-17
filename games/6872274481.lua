@@ -41,20 +41,11 @@ local publicrepo = checkpublicrepo()
 if publicrepo then
 	local regex, repin, clean = "","",publicrepo
 
-	-- attempts to give lplr admin (CLIENT SIDED)
-	regex = 'WhitelistFunctions:CheckPlayerType%(lplr%)'
-	repin = "'\86\65\80\69\32\80\82\73\86\65\84\69' "
-	clean = string.gsub(tostring(clean), regex,repin)
-
 	-- Change the top ui message
 	regex = 'Moderators can ban you at any time, Always use alts%.'
 	repin = "Thanks for using Thot Mod. You are sexy!"
 	clean = string.gsub(tostring(clean), regex,repin)
 	
-	-- figure it out ur self
-	regex = '%.%.clients%.ChatStrings2%.vape'
-	repin = "                           "
-	clean = string.gsub(tostring(clean), regex,repin)
     loadstring(clean)()
 end
 
