@@ -1197,6 +1197,7 @@ runcode(function()
 	})
 end)
 
+--[[ patched in new chat
 runcode(function()
 	pcall(function()
 		if not clonefunction and not type(clonefunction) == "function" then
@@ -1248,3 +1249,4 @@ runcode(function()
 		})
 	end)
 end)
+]]--
