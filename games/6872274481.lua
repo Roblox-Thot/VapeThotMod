@@ -50,6 +50,7 @@ if publicrepo then
 end
 
 local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+local client = require(repstorage.TS.remotes).default.Client
 local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
 local BedwarsAppIds = require(game:GetService("StarterPlayer").StarterPlayerScripts.TS.ui.types["app-config"])["BedwarsAppIds"]
 local BedwarsKillEffects = require(repstorage.TS.locker["kill-effect"]["kill-effect-meta"])["KillEffectMeta"]
@@ -203,12 +204,12 @@ runcode(function()
 	end
 
     local vapecapeconnection
-	local capeVolume = {["Value"] = 0}
-	local capebox = {["Value"] = ""}
+	local capeVolume = {Value = 0}
+	local capebox = {Value = ""}
     local cape = COB("Render",{
-        ["Name"] = "Cape",
-        ["HoverText"] = "Make a cape that is animated",
-        ["Function"] = function(callback)
+        Name = "Cape",
+        HoverText = "Make a cape that is animated",
+        Function = function(callback)
             if callback then
 				local customlink = capebox["Value"]:split("/")
 				local successfulcustom = false
@@ -251,9 +252,9 @@ runcode(function()
     })
 	
 	capebox = cape.CreateTextBox({
-		["Name"] = "File",
-		["TempText"] = "File (link)",
-		["FocusLost"] = function(enter) 
+		Name = "File",
+		TempText = "File (link)",
+		FocusLost = function(enter) 
 			if enter then 
 				if cape.Enabled then 
 					cape["ToggleButton"](false)
@@ -263,8 +264,8 @@ runcode(function()
 		end
 	})
 	capeVolume = cape.CreateSlider({
-		["Name"] = "Volume",
-		["Function"] = function(val) 
+		Name = "Volume",
+		Function = function(val) 
 			if val then 
 				if cape.Enabled then 
 					cape["ToggleButton"](false)
@@ -272,9 +273,9 @@ runcode(function()
 				end
 			end
 		end,
-		["Min"] = 0,
-		["Max"] = 100,
-		["Default"] = 0
+		Min = 0,
+		Max = 100,
+		Default = 0
 	})
 end)
 
@@ -284,23 +285,23 @@ runcode(function()
 	local function counter()
 		local count = 0
 		local numbers = {
-		  "One", "Two", "Three", "Four", "Five",
-		  "Six", "Seven", "Eight", "Nine"
+			"One", "Two", "Three", "Four", "Five",
+			"Six", "Seven", "Eight", "Nine"
 		}
 		return function(num)
-		  count = count + num
-		  if count > 9 then
-			count = 1
-		  elseif count < 1 then
-			count = 9
-		  end
-		  Send(numbers[count])
+			count = count + num
+			if count > 9 then
+				count = 1
+			elseif count < 1 then
+				count = 9
+			end
+			Send(numbers[count])
 		end
 	end
 	local KeyCount = counter()
 	COB("Utility",{
-		["Name"] = "Force FPS", 
-		["Function"] = function(callback)
+		Name = "Force FPS", 
+		Function = function(callback)
 			if callback then
 				lplr.CameraMode = "LockFirstPerson"
 				local mouse = lplr:GetMouse()
@@ -321,192 +322,27 @@ runcode(function()
 				upconnection:Disconnect()
 			end
 		end,
-        ["HoverText"] = "Locks your camera to first person and allow scrollwheel"
+        HoverText = "Locks your camera to first person and allow scrollwheel"
 	})
 end)
 
 runcode(function()
 	local AutobuyWool = {Enabled = false}
-	-- shitty because it's calling the remote and not the remote in the module
 	AutobuyWool = COB("Utility", {
-		["Name"] = "Auto Buy Wool (shit)",
-		["HoverText"] = "Shit needs to be made better sometime",
-		["Function"] = function(v)
+		Name = "Auto Buy Wool (shit)",
+		HoverText = "Shit needs to be made better sometime",
+		Function = function(v)
 			if v then
 				task.spawn(function()
 					repeat
 						if (not AutobuyWool.Enabled) then return end
-						repstorage["rbxts_include"]["node_modules"]["@rbxts"].net.out["_NetManaged"].BedwarsPurchaseItem:InvokeServer({["shopItem"] = {["itemType"] = "wool_white"}})
+						Client:Get("BedwarsPurchaseItem"):CallServerAsync({["shopItem"] = {["itemType"] = "wool_white"}});
 					until (not AutobuyWool.Enabled)
 				end)
 			end
 		end
 	})
 end)
-
--- Simi-patched
-runcode(function()
-	local entity = shared.vapeentity
-	local yeetOut = {Enabled = false}
-	local ypowerbitch, kSwitch
-	yeetOut = COB("Blatant", {
-		["Name"] = "Yeet",
-		["HoverText"] = "Yeets into space (can kill you 💀)",
-		["Function"] = function(callmeback)
-			if callmeback then
-				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
-				if module then
-					if module["Api"].Enabled == false then
-						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
-						module["Api"]["ToggleButton"]()
-					end
-				end
-
-				createwarning("Yeet away","This bitch empty.", 10)
-                repeat
-                    task.wait()
-                    entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
-                until (kSwitch.Enabled) or (not entity.isAlive)
-
-                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
-                if kSwitch.Enabled then kSwitch["ToggleButton"](false) end
-				-- yeetOut["ToggleButton"](false)
-			end
-		end
-	})
-	-- Is this jank way to do this?
-	-- Yes
-	-- Am I going to redo this
-	-- No
-	ypowerbitch = yeetOut.CreateSlider({
-		["Name"] = "Y Powwa",
-		["Function"] = function()end,
-		["Min"] = 10000000,
-		["Max"] = 99999999,
-		["Default"] = 6942069
-	})
-	
-	kSwitch = yeetOut.CreateToggle({
-		["Name"] = "Kill switch",
-        ["HoverText"] = "Makes it stop tping you up",
-		["Function"] = function()end,
-		["Default"] = false
-	})
-end)
-
-runcode(function()
-	-- Only here because I'm lazy and use it sometimes
-	COB("Utility", {
-		["Name"] = "Inf Yield",
-		["HoverText"] = "Load infiniteyield",
-		["Function"] = function(callmeback)
-			if callmeback then
-				loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-			else
-				createwarning("InfYield", "Will no longer auto run", 10)
-			end
-		end
-	})
-end)
-
---[[
-runcode(function()
-	local Keystrokes = GuiLibrary.CreateCustomWindow({
-		["Name"] = "Keystrokes", 
-		["Icon"] = "vape/assets/KeybindIcon.png",
-		["IconSize"] = 16
-	})
-	
-    task.spawn(function() -- I have no idea what any of this does I took it from somewhere i forgor
-        local ts = game:GetService("TweenService")
-        local main4 = Instance.new("Frame")
-        main4.BackgroundTransparency = 1
-        main4.Size = UDim2.new(0, 195, 0, 205)
-        main4.Position = UDim2.new(0.02, 0, 0.127, 0)
-        main4.BorderSizePixel = 0
-        main4.Parent = Keystrokes.GetCustomChildren()
-        local w = Instance.new("TextLabel")
-        w.BackgroundColor3 = Color3.fromHSV(1, 0, 0)
-        w.BackgroundTransparency = 0.5
-        w.BorderSizePixel = 0
-        w.Size = UDim2.new(0, 65, 0, 65)
-        w.Position = UDim2.new(0.333, 0, 0, 0)
-        w.Text = "W"
-        w.Font = Enum.Font.GothamMedium
-        w.TextSize = 28
-        w.TextTransparency = 0.2
-        w.TextColor3 = Color3.fromRGB(255, 255, 255)
-        Instance.new("UICorner", w)
-        w.Parent = main4
-        local a = w:Clone()
-        a.Text = "A"
-        a.Position = UDim2.new(0, 0, 0.317, 0)
-        a.Parent = main4
-        local s = w:Clone()
-        s.Text = "S"
-        s.Position = UDim2.new(0.333, 0, 0.317, 0)
-        s.Parent = main4
-        local d = w:Clone()
-        d.Text = "D"
-        d.Position = UDim2.new(0.667, 0, 0.317, 0)
-        d.Parent = main4
-        local space = w:Clone()
-        space.Size = UDim2.new(0, 195, 0, 30)
-        space.Position = UDim2.new(0, 0, 0.678, 0)
-        space.Text = "SPACE"
-        space.Parent = main4
-
-		local color = Color3.fromHSV(0,0,0)
-		w.BackgroundColor3 = color
-		a.BackgroundColor3 = color
-		s.BackgroundColor3 = color
-		d.BackgroundColor3 = color
-		space.BackgroundColor3 = color
-
-		Keystrokes.GetCustomChildren().Parent:GetPropertyChangedSignal("Size"):Connect(function()
-			main4.Position = UDim2.new(0, 0, 0, (Keystrokes.GetCustomChildren().Parent.Size.Y.Offset == 0 and 45 or 0))
-		end)
-        
-        Keystrokes["Bypass"] = true
-
-        connections[#connections+1] = game:GetService("UserInputService").InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.W then
-                ts:Create(w, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
-            elseif input.KeyCode == Enum.KeyCode.A then
-                ts:Create(a, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
-            elseif input.KeyCode == Enum.KeyCode.S then
-                ts:Create(s, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
-            elseif input.KeyCode == Enum.KeyCode.D then
-                ts:Create(d, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
-            elseif input.KeyCode == Enum.KeyCode.Space then
-                ts:Create(space, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
-            end
-        end)
-        connections[#connections+1] = game:GetService("UserInputService").InputEnded:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.W then
-                ts:Create(w, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
-            elseif input.KeyCode == Enum.KeyCode.A then
-                ts:Create(a, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
-            elseif input.KeyCode == Enum.KeyCode.S then
-                ts:Create(s, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
-            elseif input.KeyCode == Enum.KeyCode.D then
-                ts:Create(d, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
-            elseif input.KeyCode == Enum.KeyCode.Space then
-                ts:Create(space, TweenInfo.new(0.5), {BackgroundTransparency = 0.5}):Play()
-            end
-        end)
-    end)
-
-	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
-		["Name"] = "Keystrokes", 
-		["Icon"] = "vape/assets/KeybindIcon.png", 
-		["Function"] = function(callback)
-			Keystrokes.SetVisible(callback) 
-		end, 
-		["Priority"] = 3
-	})
-end)
-]]--
 
 GuiLibrary["RemoveObject"]("KillEffectOptionsButton")
 runcode(function()
@@ -769,9 +605,9 @@ runcode(function()
 	local LocalPlayerData = OfflinePlayerUtil.getPlayer(lplr);
 
     COB("Utility",{
-        ["Name"] = "HostExploit",
-		["HoverText"] = "Client Sided",
-        ["Function"] = function(callback)
+        Name = "HostExploit",
+		HoverText = "Client Sided",
+        Function = function(callback)
             if callback then
 				LocalPlayerData:SetAttribute("Cohost", true)
 			else
@@ -784,11 +620,10 @@ end)
 runcode(function()
 	local openChests = {Enabled = false}
 	openChests = COB("World",{
-		["Name"] = "OpenChests",
-		["HoverText"] = "Makes all chests look opened for everyone",
-		["Function"] = function(callmeback)
+		Name = "OpenChests",
+		HoverText = "Makes all chests look opened for everyone",
+		Function = function(callmeback)
 			if callmeback then
-				local client = require(repstorage.TS.remotes).default.Client
 				for i,v in pairs(game:GetService("CollectionService"):GetTagged("chest")) do
 					task.spawn(function()
 						if v:FindFirstChild("ChestFolderValue") then
@@ -812,9 +647,9 @@ runcode(function()
 	
 	local AppController = require(repstorage["rbxts_include"]["node_modules"]["@easy-games"]["game-core"].out.client.controllers["app-controller"]).AppController
 	OpenDaApps = COB("Utility",{
-		["Name"] = "AppOpener",
-		["HoverText"] = "Allows you open any \"app\"",
-		["Function"] = function(cb)
+		Name = "AppOpener",
+		HoverText = "Allows you open any \"app\"",
+		Function = function(cb)
 			if cb then
 				OpenDaApps.ToggleButton(false)
 				AppController:openApp(AppSelected["Value"], {})
@@ -823,9 +658,9 @@ runcode(function()
 	})
 
 	AppSelected = OpenDaApps.CreateDropdown({
-		["Name"] = "App",
-		["HoverText"] = "What app to open",
-		["Function"] = function() end,
+		Name = "App",
+		HoverText = "What app to open",
+		Function = function() end,
 		["List"] = (function() local list = {} for _, value in pairs(BedwarsAppIds) do table.insert(list, value) end table.sort(list, function(a, b) return tostring(a) < tostring(b) end) return list end)()
 	})
 end)
@@ -835,9 +670,9 @@ runcode(function()
 
 	local InvAll = {Enabled = false}
 	InvAll = COB("Utility",{
-		["Name"] = "InvAll",
-		["HoverText"] = "Invite all to your party",
-		["Function"] = function(cb)
+		Name = "InvAll",
+		HoverText = "Invite all to your party",
+		Function = function(cb)
 			if cb then
 				createwarning("InvAll", "Inviting all.", 10)
 				local player
@@ -855,9 +690,9 @@ end)
 runcode(function()
 	-- Hell ya theft is fun
 	COB("Utility", {
-		["Name"] = "Ban screen",
-		["HoverText"] = "Makes ban msgs look like minecraft (by xylex)",
-		["Function"] = function(callmeback)
+		Name = "Ban screen",
+		HoverText = "Makes ban msgs look like minecraft (by xylex)",
+		Function = function(callmeback)
 			if callmeback then
 				local suc, req = pcall(function() return requestfunc({
 					Url = "https://raw.githubusercontent.com/Roblox-Thot/VapeThotMod/"..readfile("vape/RTcommithash.txt").."/scripts/BedwarsKickScreen.lua",
@@ -869,51 +704,6 @@ runcode(function()
 			end
 		end
 	})
-end)
-
-runcode(function()
-	local CoreGuiToggle = {Enabled = false}
-					
-	local StarterGui = game:GetService("StarterGui")
-
-	local coreGuiTypeNames = {
-		leaderboard = Enum.CoreGuiType.PlayerList,
-		chat = Enum.CoreGuiType.Chat,
-		emotes = Enum.CoreGuiType.EmotesMenu,
-	}
-
-	local defaultToggles = (function() local save = {} for name, enum in pairs(coreGuiTypeNames) do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
-
-	local typeToggles = {}
-
-	CoreGuiToggle = COB("Render", {
-		["Name"] = "CoreGuiToggle",
-		["HoverText"] = "Toggles for coreGui stuff",
-		["Function"] = function(callmeback)
-			if callmeback then
-				for name, toggle in pairs(typeToggles) do
-					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled) -- Sets each GUI type to what you set
-				end
-			else
-				for name, toggle in pairs(typeToggles) do
-					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name]) -- hopefuly esets it to what it was
-				end
-			end
-		end
-	})
-
-	for name, enum in pairs(coreGuiTypeNames) do
-		typeToggles[name] = CoreGuiToggle.CreateToggle({ -- Loops through the CoreGuis and makes a button for each
-			["Name"] = string.gsub(name, "^%l", function(c) return string.upper(c) end),
-			["HoverText"] = "Toggles the "..name,
-			["Function"] = function(state)
-				if CoreGuiToggle.Enabled then
-					StarterGui:SetCoreGuiEnabled(enum, state)
-				end
-			end,
-			["Default"] = false
-		})
-	end
 end)
 
 GuiLibrary.RemoveObject("NoBobOptionsButton")
@@ -1014,6 +804,156 @@ runcode(function()
 	})
 end)
 
+runcode(function()
+	local right = {
+		"RightUpperArm",
+		"RightLowerArm",
+		"RightHand"
+	}
+
+	showArms = COB("Render", {
+		Name = "Show hand",
+		HoverText = "Shows hand right hand",
+		Function = function(callmeback)
+			if callmeback then
+				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+					if table.find(right, v.Name) ~= nil then
+						v.Transparency = 0 -- Shows the parts
+					end
+				end
+				for i,v in pairs(lplr.Character:GetDescendants()) do
+					if v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
+						v:Clone().Parent = KnitClient.Controllers.ViewmodelController:getViewModel() -- Clones shirt and body colors to the view model
+					end
+				end
+			else
+				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
+					if table.find(right, v.Name) ~= nil then
+						v.Transparency = 1 -- Hides Parts
+					elseif v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
+						v:Destroy() -- makes viewmodel nakie
+					end
+				end
+			end
+		end
+	})
+end)
+
+--[[ Just use Inf Fly
+runcode(function()
+	local entity = shared.vapeentity
+	local yeetOut = {Enabled = false}
+	local ypowerbitch, kSwitch
+	yeetOut = COB("Blatant", {
+		Name = "Yeet",
+		HoverText = "Yeets into space (can kill you 💀)",
+		Function = function(callmeback)
+			if callmeback then
+				module = GuiLibrary["ObjectsThatCanBeSaved"]["SpeedOptionsButton"]
+				if module then
+					if module["Api"].Enabled == false then
+						createwarning("Yeet away","Auto turning on Speed\nas it is needed!", 10)
+						module["Api"]["ToggleButton"]()
+					end
+				end
+
+				createwarning("Yeet away","This bitch empty.", 10)
+                repeat
+                    task.wait()
+                    entity.character.HumanoidRootPart.Velocity = Vector3.new(math.huge, tonumber(ypowerbitch["Value"]), math.huge)
+                until (kSwitch.Enabled) or (not entity.isAlive)
+
+                if yeetOut.Enabled then yeetOut["ToggleButton"](false) end
+                if kSwitch.Enabled then kSwitch["ToggleButton"](false) end
+				-- yeetOut["ToggleButton"](false)
+			end
+		end
+	})
+	-- Is this jank way to do this?
+	-- Yes
+	-- Am I going to redo this
+	-- No
+	ypowerbitch = yeetOut.CreateSlider({
+		Name = "Y Powwa",
+		Function = function()end,
+		Min = 10000000,
+		Max = 99999999,
+		Default = 6942069
+	})
+	
+	kSwitch = yeetOut.CreateToggle({
+		Name = "Kill switch",
+        HoverText = "Makes it stop tping you up",
+		Function = function()end,
+		Default = false
+	})
+end)
+]]
+
+--[[
+runcode(function()
+	-- Only here because I'm lazy and use it sometimes
+	COB("Utility", {
+		Name = "Inf Yield",
+		HoverText = "Load infiniteyield",
+		Function = function(callmeback)
+			if callmeback then
+				loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+			else
+				createwarning("InfYield", "Will no longer auto run", 10)
+			end
+		end
+	})
+end)
+]]
+
+--[[ redundent now (UICleanup)
+runcode(function()
+	local CoreGuiToggle = {Enabled = false}
+					
+	local StarterGui = game:GetService("StarterGui")
+
+	local coreGuiTypeNames = {
+		leaderboard = Enum.CoreGuiType.PlayerList,
+		chat = Enum.CoreGuiType.Chat,
+		emotes = Enum.CoreGuiType.EmotesMenu,
+	}
+
+	local defaultToggles = (function() local save = {} for name, enum in pairs(coreGuiTypeNames) do save[name] = StarterGui:GetCoreGuiEnabled(enum) end return save end)()
+
+	local typeToggles = {}
+
+	CoreGuiToggle = COB("Render", {
+		Name = "CoreGuiToggle",
+		HoverText = "Toggles for coreGui stuff",
+		Function = function(callmeback)
+			if callmeback then
+				for name, toggle in pairs(typeToggles) do
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], toggle.Enabled) -- Sets each GUI type to what you set
+				end
+			else
+				for name, toggle in pairs(typeToggles) do
+					StarterGui:SetCoreGuiEnabled(coreGuiTypeNames[name], defaultToggles[name]) -- hopefuly esets it to what it was
+				end
+			end
+		end
+	})
+
+	for name, enum in pairs(coreGuiTypeNames) do
+		typeToggles[name] = CoreGuiToggle.CreateToggle({ -- Loops through the CoreGuis and makes a button for each
+			Name = string.gsub(name, "^%l", function(c) return string.upper(c) end),
+			HoverText = "Toggles the "..name,
+			Function = function(state)
+				if CoreGuiToggle.Enabled then
+					StarterGui:SetCoreGuiEnabled(enum, state)
+				end
+			end,
+			Default = false
+		})
+	end
+end)
+]]--
+
 --[[ To be rewritten
 runcode(function()
 	local showArms, hideLeft = {Enabled = false}
@@ -1022,9 +962,9 @@ runcode(function()
 	math.randomseed(tick())
 
 	showArms = COB("Render", {
-		["Name"] = "Show hands",
-		["HoverText"] = "Shows hands and enables bob in fistperson",
-		["Function"] = function(callmeback)
+		Name = "Show hands",
+		HoverText = "Shows hands and enables bob in fistperson",
+		Function = function(callmeback)
 			if callmeback then
 				KnitClient.Controllers.ViewmodelController:setViewModelMode(ViewmodelMode.SHOW_ARMS);
 				local number = math.random(1, 8)
@@ -1067,9 +1007,9 @@ runcode(function()
 	})
 	
 	hideLeft = showArms.CreateToggle({
-		["Name"] = "Hide left",
-		["HoverText"] = "Hides your left arm. Usefull for 'nobob' movements",
-		["Function"] = function(state)
+		Name = "Hide left",
+		HoverText = "Hides your left arm. Usefull for 'nobob' movements",
+		Function = function(state)
 			-- local left = {
 			-- 	"LeftUpperArm",
 			-- 	"LeftLowerArm",
@@ -1085,13 +1025,13 @@ runcode(function()
 				end
 			end
 		end,
-		["Default"] = false
+		Default = false
 	})
 	
 	hideRight = showArms.CreateToggle({
-		["Name"] = "Hide right",
-		["HoverText"] = "Hides your right arm. Usefull for 'nobob' movements",
-		["Function"] = function(state)
+		Name = "Hide right",
+		HoverText = "Hides your right arm. Usefull for 'nobob' movements",
+		Function = function(state)
 			-- local right = {
 			-- 	"RightUpperArm",
 			-- 	"RightLowerArm",
@@ -1107,45 +1047,10 @@ runcode(function()
 				end
 			end
 		end,
-		["Default"] = false
+		Default = false
 	})
 end)
 ]]--
-
-runcode(function()
-	local right = {
-		"RightUpperArm",
-		"RightLowerArm",
-		"RightHand"
-	}
-
-	showArms = COB("Render", {
-		["Name"] = "Show hand",
-		["HoverText"] = "Shows hand right hand",
-		["Function"] = function(callmeback)
-			if callmeback then
-				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
-					if table.find(right, v.Name) ~= nil then
-						v.Transparency = 0 -- Shows the parts
-					end
-				end
-				for i,v in pairs(lplr.Character:GetDescendants()) do
-					if v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
-						v:Clone().Parent = KnitClient.Controllers.ViewmodelController:getViewModel() -- Clones shirt and body colors to the view model
-					end
-				end
-			else
-				for i, v in pairs(KnitClient.Controllers.ViewmodelController:getViewModel():GetChildren()) do
-					if table.find(right, v.Name) ~= nil then
-						v.Transparency = 1 -- Hides Parts
-					elseif v:IsA("Clothing") or v:IsA("ShirtGraphic") or v:IsA("BodyColors") then
-						v:Destroy() -- makes viewmodel nakie
-					end
-				end
-			end
-		end
-	})
-end)
 
 --[[ patched in new chat
 runcode(function()
@@ -1178,9 +1083,9 @@ runcode(function()
 		local OldFunctionHook
 
 		COB("Utility", {
-			["Name"] = "AntiLog",
-			["HoverText"] = "Attempts to stop Roblox from logging chat",
-			["Function"] = function(callmeback)
+			Name = "AntiLog",
+			HoverText = "Attempts to stop Roblox from logging chat",
+			Function = function(callmeback)
 				if callmeback then
 					local PostMessageHook = function(self, msg)
 						if not CheckCaller() and self == PostMessage then
