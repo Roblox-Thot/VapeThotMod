@@ -7,5 +7,5 @@ This is mainly here so i don't keep losing it
 contains:
 - HostExploit (client side)
 - axolotl_bucket
-- AppOpene
+- AppOpener
 - Force FPS
