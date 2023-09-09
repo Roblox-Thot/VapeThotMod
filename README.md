@@ -1,5 +1,4 @@
-# Not being updated till a decent computer exploit updates
-
+# Waiting for Vape rewrite to be public
 
 # VapeThotMod
 [Support/Update Discord](https://discord.gg/tbB9SnyH58)
