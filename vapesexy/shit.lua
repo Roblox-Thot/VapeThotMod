@@ -1,17 +1,59 @@
 
-
 runFunction(function()
-    GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-        Name = 'Force FPS',
-        Function = function(callback)
-            if callback then
-                lplr.CameraMode = 'LockFirstPerson'
-            else
-                lplr.CameraMode = 'Classic'
-            end
-        end,
+	local downconnection, upconnection
+	local function Send(Key)
+		if keyclick then
+			keyclick(Enum.KeyCode[Key])
+		else
+			-- Kept incase your shitty exploit can't keyclick
+			local VM = game:GetService('VirtualInputManager')
+			VM:SendKeyEvent(true,Enum.KeyCode[Key],false,game)
+			VM:SendKeyEvent(false,Enum.KeyCode[Key],false,game)
+		end
+	end
+
+	local function counter()
+		local count = 0
+		local numbers = {
+			'One', 'Two', 'Three', 'Four', 'Five',
+			'Six', 'Seven', 'Eight', 'Nine'
+		}
+		return function(num)
+			count = count + num
+			if count > 9 then
+				count = 1
+			elseif count < 1 then
+				count = 9
+			end
+			Send(numbers[count])
+		end
+	end
+	local KeyCount = counter()
+	GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = 'Force FPS', 
+		Function = function(callback)
+			if callback then
+				lplr.CameraMode = 'LockFirstPerson'
+				local mouse = lplr:GetMouse()
+
+				local function onWheelBackward()
+					KeyCount(-1)
+				end
+				downconnection = mouse.WheelBackward:Connect(onWheelBackward)
+
+				local function onWheelForward()
+					KeyCount(1)
+				end
+				upconnection = mouse.WheelForward:Connect(onWheelForward)
+
+			else
+				lplr.CameraMode = 'Classic'
+				downconnection:Disconnect()
+				upconnection:Disconnect()
+			end
+		end,
         HoverText = 'Locks your camera to first person and allow scrollwheel'
-    })
+	})
 end)
 
 runFunction(function()
