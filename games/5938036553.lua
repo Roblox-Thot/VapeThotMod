@@ -10,7 +10,15 @@ local inputService = game:GetService("UserInputService")
 local localmouse = lplr:GetMouse()
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local getasset = getsynasset or getcustomasset
-
+local networkownerswitch = tick()
+local isnetworkowner = isnetworkowner or function(part)
+	local suc, res = pcall(function() return gethiddenproperty(part, "NetworkOwnershipRule") end)
+	if suc and res == Enum.NetworkOwnership.Manual then 
+		sethiddenproperty(part, "NetworkOwnershipRule", Enum.NetworkOwnership.Automatic)
+		networkownerswitch = tick() + 8
+	end
+	return networkownerswitch <= tick()
+end
 local RenderStepTable = {}
 local StepTable = {}
 
@@ -376,13 +384,13 @@ runcode(function()
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
-		Max = 150, 
+		Max = 50, 
 		Function = function(val) end
 	})
 	FlyVerticalSpeed = Fly.CreateSlider({
 		Name = "Vertical Speed",
 		Min = 1,
-		Max = 150, 
+		Max = 50, 
 		Function = function(val) end
 	})
 	FlyPlatformStanding = Fly.CreateToggle({
@@ -409,8 +417,9 @@ runcode(function()
 			else
 				RunLoops:UnbindFromStepped("Phase")
 				task.wait()
-				
-				getRoot().CanCollide = true
+				if isAlive() then
+					getRoot().CanCollide = true
+				end
 			end
 		end,
 		HoverText = "Lets you Phase/Clip through walls. (Hold shift to use Phase over spider)"
@@ -551,7 +560,7 @@ runcode(function()
 	SpeedValue = Speed.CreateSlider({
 		Name = "Speed", 
 		Min = 1,
-		Max = 150, 
+		Max = 50, 
 		Function = function(val) end
 	})
 	SpeedDelay = Speed.CreateSlider({
