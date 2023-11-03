@@ -1,4 +1,4 @@
-# Waiting for Vape rewrite to be public
+# As of now I currently don't plan on continuing 🖖 
 
 # VapeThotMod
 [Support/Update Discord](https://discord.gg/tbB9SnyH58)
